@@ -34,7 +34,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Outfit', 'Inter', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         'glow-emerald': '0 0 25px -5px rgba(16, 185, 129, 0.3)',

@@ -25,14 +25,14 @@ export default function DynamicQRPage({
               <span>Back to Home</span>
             </button>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
                 Dynamic QR Code Studio
               </h1>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-brand-500/15 text-brand-700 dark:text-brand-300 border border-brand-500/30">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-mono">
                 Live Redirects
               </span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Design a fully trackable dynamic QR code. Update the destination URL anytime without re-printing.
             </p>
           </div>

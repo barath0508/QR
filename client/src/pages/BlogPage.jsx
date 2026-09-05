@@ -194,10 +194,10 @@ Smartphone camera sensors are optimized to find **dark modules on a light backgr
               <BookOpen className="w-3.5 h-3.5 text-brand-500" />
               <span>Developer & Marketer Knowledge Hub</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-display font-black text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
               QR Code Guides & Insights
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
               Technical guides, print preparation tutorials, and the truth about commercial QR code paywalls.
             </p>
           </div>

@@ -19,14 +19,14 @@ export default function StaticQRPage({ onBackToHome, onNavigateToDynamic }) {
               <span>Back to Home</span>
             </button>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
                 Static QR Code Generator
               </h1>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-mono">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-mono">
                 100% Instant • No Login
               </span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Generate permanent, offline-capable static QR codes. Direct data encoding with zero server tracking or expiration.
             </p>
           </div>

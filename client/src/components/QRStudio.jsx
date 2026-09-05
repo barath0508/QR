@@ -925,7 +925,7 @@ export default function QRStudio({
                     Dynamic Link Live!
                   </span>
                   <a
-                    href={`http://localhost:5000/r/${savedSuccessQR.short_code}`}
+                    href={savedSuccessQR.redirect_url || `${window.location.origin}/r/${savedSuccessQR.short_code}`}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-1 hover:underline text-[11px] text-brand-700 dark:text-brand-200"
@@ -935,7 +935,7 @@ export default function QRStudio({
                   </a>
                 </div>
                 <p className="font-mono text-[11px] break-all bg-white dark:bg-dark-950/80 p-2 rounded border border-brand-500/20 text-slate-800 dark:text-slate-200">
-                  http://localhost:5000/r/{savedSuccessQR.short_code}
+                  {savedSuccessQR.redirect_url || `${window.location.origin}/r/${savedSuccessQR.short_code}`}
                 </p>
                 <div className="flex items-center justify-between pt-1 text-[11px]">
                   <span className="text-slate-500 dark:text-slate-400">Target: {savedSuccessQR.destination_url}</span>

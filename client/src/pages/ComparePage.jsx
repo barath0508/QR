@@ -64,10 +64,10 @@ export default function ComparePage({ onNavigateToStudio }) {
           <Sparkles className="w-3.5 h-3.5 text-brand-500" />
           <span>The Transparent Truth About QR Generators</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-display font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
           Why Pay $35/mo Just to Point a QR Code to a Website?
         </h1>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
           Most QR code generators lure you in with "free" dynamic codes, let you print thousands of stickers, and then hold your links hostage behind expensive recurring subscriptions.
         </p>
       </div>

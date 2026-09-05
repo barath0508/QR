@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Sparkles, 
   Zap, 
@@ -8,19 +8,13 @@ import {
   ArrowRight, 
   CheckCircle2, 
   QrCode, 
-  Cpu, 
-  Smartphone, 
-  Globe2, 
+  Wifi,
   BookOpen, 
   Check, 
-  Layers, 
-  ShieldAlert, 
   ExternalLink,
-  ChevronRight,
-  Wifi,
-  UserCheck
+  Lock,
+  Layers
 } from 'lucide-react';
-import AdBanner from '../components/AdBanner';
 
 export default function LandingPage({ 
   onNavigateToDynamic, 
@@ -29,166 +23,161 @@ export default function LandingPage({
   onNavigateToCompare, 
   onNavigateToDashboard 
 }) {
-  const [demoStyle, setDemoStyle] = useState('rounded');
-  const [demoColor, setDemoColor] = useState('#10B981');
-
   return (
-    <div className="space-y-20 pb-16">
-      
-      {/* Top Header Sponsor Ad */}
-      <AdBanner type="leaderboard" className="pt-2" />
+    <div className="space-y-24 pb-20 pt-8 sm:pt-14">
 
       {/* 1. Hero Section */}
-      <section className="max-w-5xl mx-auto px-4 text-center space-y-6 pt-4 sm:pt-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs font-semibold shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-brand-500" />
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-semibold shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
           <span>The Open Dynamic QR Platform • 100% Free Forever</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black text-slate-900 dark:text-white tracking-tight leading-[1.1]">
-          Dynamic QR Codes That{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-emerald-400 to-cyanGlow-500">
+        {/* Hero Title */}
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white tracking-[-0.03em] leading-[1.12]">
+          Dynamic QR Codes That <br className="hidden sm:inline" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500">
             Never Expire.
           </span>
         </h1>
 
-        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          High-resolution QR code generator with real-time redirect tracking, deep scan analytics, and vector exports. Change destination URLs anytime without re-printing physical materials.
+        {/* Subtitle */}
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
+          High-resolution QR code generator with real-time redirect tracking, deep scan telemetry, and lossless vector exports. Change destination URLs anytime without re-printing physical materials.
         </p>
 
-        {/* Primary Call to Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+        {/* Call to Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
           <button
             onClick={onNavigateToDynamic}
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-500 to-emerald-600 hover:brightness-110 text-dark-950 font-extrabold text-sm flex items-center justify-center gap-2.5 shadow-glow-emerald transition-all transform hover:-translate-y-0.5"
+            className="w-full sm:w-auto h-12 px-7 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:brightness-105 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5"
           >
-            <Zap className="w-4 h-4 fill-dark-950" />
+            <Zap className="w-4 h-4 fill-white text-white" />
             <span>Create Dynamic QR Code</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <button
             onClick={onNavigateToStatic}
-            className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white dark:bg-dark-900 hover:bg-slate-100 dark:hover:bg-dark-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-white/10 font-bold text-sm flex items-center justify-center gap-2 shadow-xs transition-all"
+            className="w-full sm:w-auto h-12 px-6 rounded-xl bg-white dark:bg-dark-900 hover:bg-slate-50 dark:hover:bg-dark-850 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all"
           >
+            <QrCode className="w-4 h-4 text-cyan-500" />
             <span>Quick Static Generator</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 font-mono">
-              NO LOGIN
-            </span>
           </button>
         </div>
 
-        {/* Feature Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-6 pt-6 text-xs text-slate-500 dark:text-slate-400">
+        {/* Trust Badges */}
+        <div className="flex flex-wrap items-center justify-center gap-y-2.5 gap-x-8 pt-4 text-xs font-medium text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-brand-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
             <span>Sub-50ms Fast 302 Redirects</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-brand-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
             <span>Vector SVG & Print-Ready PDF</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-brand-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
             <span>No 14-Day Expiration Trap</span>
           </div>
         </div>
       </section>
 
       {/* 2. Dynamic vs Static Visual Comparison Matrix */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-12">
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
             Choose the Right QR Code for Your Needs
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2.5 leading-relaxed">
             Whether you need permanent offline encoding or trackable redirect links, QRLoop has you covered.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           
           {/* Dynamic Card */}
-          <div className="rounded-3xl border-2 border-brand-500/30 bg-gradient-to-br from-brand-50/50 via-white to-emerald-50/20 dark:from-brand-950/30 dark:via-dark-900 dark:to-dark-950 p-6 sm:p-8 backdrop-blur-xl shadow-md dark:shadow-2xl flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-4 right-4">
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-brand-500 text-dark-950 font-mono shadow-xs">
-                RECOMMENDED FOR PRINT
+          <div className="rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-white to-teal-50/20 dark:from-emerald-950/20 dark:via-dark-900 dark:to-dark-950 p-7 sm:p-9 backdrop-blur-xl shadow-md dark:shadow-xl flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-5 right-5">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-emerald-500 text-dark-950 font-mono shadow-xs">
+                RECOMMENDED
               </span>
             </div>
 
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-600 dark:text-brand-400">
+            <div className="space-y-5">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                 <Zap className="w-6 h-6" />
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Dynamic QR Codes</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display">Dynamic QR Codes</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
                   The destination URL can be changed anytime from your dashboard without re-printing.
                 </p>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-500 flex-shrink-0" />
-                  <span><strong>Change links anytime:</strong> fix typos or switch campaigns</span>
+              <ul className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span><strong>Change destination anytime:</strong> Fix typos or swap marketing campaigns without changing printed material.</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-500 flex-shrink-0" />
-                  <span><strong>Live scan telemetry:</strong> total scans, devices, OS, and countries</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span><strong>Live scan telemetry:</strong> Track total scans, device types, operating systems, and top geographic locations.</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-500 flex-shrink-0" />
-                  <span><strong>Clean scannable matrix:</strong> short URL prevents pixel crowding</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span><strong>Clean scannable matrix:</strong> Uses short redirect URLs to keep QR dots large and instantly camera-readable.</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-slate-200 dark:border-white/10">
+            <div className="pt-7 mt-7 border-t border-slate-200/80 dark:border-white/10">
               <button
                 onClick={onNavigateToDynamic}
-                className="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-dark-950 font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald transition-all"
+                className="w-full h-11 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
               >
-                <span>Launch Dynamic QR Studio</span>
+                <span>Launch Dynamic Studio</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           {/* Static Card */}
-          <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 p-6 sm:p-8 backdrop-blur-xl shadow-sm dark:shadow-none flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+          <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 p-7 sm:p-9 backdrop-blur-xl shadow-sm dark:shadow-none flex flex-col justify-between">
+            <div className="space-y-5">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
                 <Wifi className="w-6 h-6" />
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Static QR Codes</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                  Data is burned directly into the black and white pixel pattern. No server needed.
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display">Static QR Codes</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
+                  Data is permanently burned directly into the black and white pixel pattern.
                 </p>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0" />
-                  <span><strong>Works 100% offline:</strong> no server or internet routing needed</span>
+              <ul className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0 mt-0.5" />
+                  <span><strong>100% offline & permanent:</strong> Works forever with no servers or internet routing required.</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0" />
-                  <span><strong>Instant download:</strong> no account or login required</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0 mt-0.5" />
+                  <span><strong>Zero login required:</strong> Generate and download instant PNG, SVG, or print-ready PDF in seconds.</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0" />
-                  <span><strong>Ideal for Wi-Fi & vCards:</strong> permanent static payloads</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0 mt-0.5" />
+                  <span><strong>Ideal for Wi-Fi & vCards:</strong> Embed fixed passwords, contact cards, or direct text payloads.</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-slate-200 dark:border-white/10">
+            <div className="pt-7 mt-7 border-t border-slate-200/80 dark:border-white/10">
               <button
                 onClick={onNavigateToStatic}
-                className="w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 dark:border-white/5 transition-all"
+                className="w-full h-11 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-750 text-slate-800 dark:text-slate-200 font-semibold text-sm flex items-center justify-center gap-2 border border-slate-200/80 dark:border-white/5 transition-all"
               >
                 <span>Launch Static Generator</span>
                 <ArrowRight className="w-4 h-4" />
@@ -200,36 +189,36 @@ export default function LandingPage({
       </section>
 
       {/* 3. Three Core Pillars */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          <div className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 hover:border-brand-500/40 transition-all shadow-xs dark:shadow-none">
-            <div className="w-10 h-10 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500">
+          <div className="p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 hover:border-emerald-500/40 transition-all shadow-xs dark:shadow-none">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
               <Zap className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Sub-50ms Fast Redirects</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Asynchronous scan logging means visitors are redirected to your website immediately without delay or intermediate splash screens.
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">Sub-50ms Fast Redirects</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Asynchronous scan logging redirects visitors immediately with HTTP 302 without delay or intermediate splash screens.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 hover:border-cyan-500/40 transition-all shadow-xs dark:shadow-none">
-            <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
+          <div className="p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 hover:border-cyan-500/40 transition-all shadow-xs dark:shadow-none">
+            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
               <Download className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Print-Ready PDF & SVG</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">Print-Ready PDF & SVG</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               Export lossless vector SVG for commercial printing or auto-generate centered A4 printable table standees with one click.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 hover:border-purple-500/40 transition-all shadow-xs dark:shadow-none">
-            <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500">
+          <div className="p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 hover:border-purple-500/40 transition-all shadow-xs dark:shadow-none">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500">
               <BarChart3 className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Real-Time Scan Telemetry</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Monitor scan spikes, operating systems (iOS vs Android), browsers, and top geographic locations without setting up heavy analytics scripts.
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">Real-Time Scan Telemetry</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Monitor scan spikes, device breakdown, operating systems, and top geographic locations without setting up heavy analytics scripts.
             </p>
           </div>
 
@@ -237,65 +226,65 @@ export default function LandingPage({
       </section>
 
       {/* 4. Blog & Educational Guides Teaser */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-brand-500" />
-              <span className="text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+              <BookOpen className="w-4 h-4 text-emerald-500" />
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
                 Knowledge Hub
               </span>
             </div>
-            <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mt-1">
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white mt-1.5">
               Latest Guides & Tutorials
             </h2>
           </div>
 
           <button
             onClick={onNavigateToBlog}
-            className="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1"
+            className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 flex items-center gap-1.5 transition-colors"
           >
             <span>View All Articles</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             onClick={onNavigateToBlog}
-            className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-brand-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2 group"
+            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group"
           >
-            <span className="text-[10px] uppercase font-bold text-red-600 dark:text-red-400">Industry Warning</span>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+            <span className="text-[11px] uppercase font-bold text-red-600 dark:text-red-400 font-mono">Industry Warning</span>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
               The 14-Day QR Paywall Trap: How Paid Services Hold Your Links Hostage
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
               Learn how commercial generators bait users into printing brochures before locking links behind monthly subscriptions.
             </p>
           </div>
 
           <div
             onClick={onNavigateToBlog}
-            className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-brand-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2 group"
+            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group"
           >
-            <span className="text-[10px] uppercase font-bold text-brand-600 dark:text-brand-400">Best Practices</span>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+            <span className="text-[11px] uppercase font-bold text-emerald-600 dark:text-emerald-400 font-mono">Best Practices</span>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
               Dynamic vs Static QR Codes: The Complete Business Guide
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
               A comprehensive checklist to choose between static and dynamic codes for product packaging and marketing.
             </p>
           </div>
 
           <div
             onClick={onNavigateToBlog}
-            className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-brand-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2 group"
+            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group"
           >
-            <span className="text-[10px] uppercase font-bold text-cyan-600 dark:text-cyan-400">Print & Design</span>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+            <span className="text-[11px] uppercase font-bold text-cyan-600 dark:text-cyan-400 font-mono">Print & Design</span>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
               Professional QR Print Specifications: The 10:1 Scanning Rule
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
               Essential guidelines on resolution, quiet zone margins, and contrast ratios for crisp camera scanning.
             </p>
           </div>
@@ -303,26 +292,26 @@ export default function LandingPage({
       </section>
 
       {/* 5. Competitor Comparison Teaser */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 rounded-3xl border border-slate-200 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md dark:shadow-2xl transition-colors">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="p-8 sm:p-10 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-xl transition-colors">
           <div className="space-y-2 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2">
-              <ShieldCheck className="w-5 h-5 text-brand-500" />
-              <span className="text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+              <ShieldCheck className="w-5 h-5 text-emerald-500" />
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
                 100% Free • No Subscription
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
               Why pay $35/month for dynamic QR codes?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
-              See how QRLoop compares against QRCode Monkey, Bitly, and Uniqode. No scan limits, no locked links.
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+              See how QRLoop compares against QRCode Monkey, Bitly, and Uniqode. Lifetime redirects with zero scan limits.
             </p>
           </div>
 
           <button
             onClick={onNavigateToCompare}
-            className="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-800 dark:hover:bg-white/20 text-white font-bold text-xs flex items-center gap-2 border border-slate-900 dark:border-white/10 transition-all flex-shrink-0 shadow-sm"
+            className="h-11 px-6 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-800 dark:hover:bg-white/20 text-white font-semibold text-sm flex items-center gap-2 border border-slate-900 dark:border-white/10 transition-all flex-shrink-0 shadow-sm"
           >
             <span>Compare vs Paid Tools</span>
             <ArrowRight className="w-4 h-4" />
