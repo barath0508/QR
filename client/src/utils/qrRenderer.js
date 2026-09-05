@@ -1,0 +1,205 @@
+import QRCode from 'qrcode';
+
+/**
+ * Checks if a matrix coordinate belongs to one of the three 7x7 corner eye finder patterns
+ */
+export function isFinderPattern(r, c, size) {
+  if (r <= 6 && c <= 6) return true; // Top-left
+  if (r <= 6 && c >= size - 7) return true; // Top-right
+  if (r >= size - 7 && c <= 6) return true; // Bottom-left
+  return false;
+}
+
+/**
+ * Checks if a coordinate is within the central logo exclusion zone
+ */
+export function isLogoZone(r, c, size, hasLogo) {
+  if (!hasLogo) return false;
+  const center = Math.floor(size / 2);
+  const radius = Math.floor(size * 0.16);
+  return Math.abs(r - center) <= radius && Math.abs(c - center) <= radius;
+}
+
+/**
+ * Draws a styled corner finder eye with custom outer frame and inner pupil
+ */
+export function drawCornerEye(ctx, x, y, cellSize, outerColor, innerColor, bgColor, style) {
+  const eyeSize = 7 * cellSize;
+
+  // 1. Outer Ring Frame
+  ctx.fillStyle = outerColor;
+  if (style === 'circle') {
+    const radius = eyeSize / 2;
+    ctx.beginPath();
+    ctx.arc(x + radius, y + radius, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = bgColor;
+    ctx.beginPath();
+    ctx.arc(x + radius, y + radius, radius - cellSize, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (style === 'rounded') {
+    const rad = cellSize * 2;
+    ctx.beginPath();
+    ctx.roundRect(x, y, eyeSize, eyeSize, rad);
+    ctx.fill();
+
+    ctx.fillStyle = bgColor;
+    ctx.beginPath();
+    ctx.roundRect(x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize, rad * 0.7);
+    ctx.fill();
+  } else {
+    // Square
+    ctx.fillRect(x, y, eyeSize, eyeSize);
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize);
+  }
+
+  // 2. Inner Pupil
+  ctx.fillStyle = innerColor;
+  const centerOffset = 2 * cellSize;
+  const centerSize = 3 * cellSize;
+
+  if (style === 'circle') {
+    const centerRadius = centerSize / 2;
+    ctx.beginPath();
+    ctx.arc(x + centerOffset + centerRadius, y + centerOffset + centerRadius, centerRadius, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (style === 'rounded') {
+    ctx.beginPath();
+    ctx.roundRect(x + centerOffset, y + centerOffset, centerSize, centerSize, cellSize * 0.8);
+    ctx.fill();
+  } else {
+    // Square
+    ctx.fillRect(x + centerOffset, y + centerOffset, centerSize, centerSize);
+  }
+}
+
+/**
+ * Universal styled QR code canvas drawing function
+ * Renders dots, rounded squares, custom corner eyes, colors, and badge icons
+ */
+export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}, canvasDim = 640, logoImage = null) {
+  if (!canvas) return;
+
+  // Parse config safely
+  let style = rawStyleConfig || {};
+  if (typeof style === 'string') {
+    try {
+      style = JSON.parse(style);
+    } catch (e) {
+      style = {};
+    }
+  }
+
+  const fgColor = style.fgColor || '#0F172A';
+  const bgColor = style.bgColor || '#FFFFFF';
+  const dotStyle = style.dotStyle || 'rounded';
+  const eyeStyle = style.eyeStyle || 'rounded';
+  const useSeparateEyeColors = style.useSeparateEyeColors !== false;
+  const effectiveOuterEye = useSeparateEyeColors && style.eyeOuterColor ? style.eyeOuterColor : fgColor;
+  const effectiveInnerEye = useSeparateEyeColors && style.eyeInnerColor ? style.eyeInnerColor : fgColor;
+  const errorCorrection = style.errorCorrection || 'H';
+  const logoPreset = style.logoPreset || null;
+  const logoShape = style.logoShape || 'circle';
+  const logoPadding = style.logoPadding ?? 6;
+  const hasLogo = !!(logoImage || logoPreset);
+
+  try {
+    const qr = QRCode.create(textToEncode || 'https://qrloop.io', {
+      errorCorrectionLevel: errorCorrection,
+    });
+
+    const modules = qr.modules;
+    const size = modules.size;
+
+    canvas.width = canvasDim;
+    canvas.height = canvasDim;
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvasDim, canvasDim);
+
+    // Background
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvasDim, canvasDim);
+
+    const marginCells = 2;
+    const totalCells = size + marginCells * 2;
+    const cellSize = canvasDim / totalCells;
+
+    ctx.fillStyle = fgColor;
+
+    // Draw Modules
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (isFinderPattern(r, c, size)) continue;
+        if (isLogoZone(r, c, size, hasLogo)) continue;
+
+        if (modules.get(r, c)) {
+          const x = (c + marginCells) * cellSize;
+          const y = (r + marginCells) * cellSize;
+
+          if (dotStyle === 'dots') {
+            const radius = (cellSize * 0.85) / 2;
+            ctx.beginPath();
+            ctx.arc(x + cellSize / 2, y + cellSize / 2, radius, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (dotStyle === 'rounded') {
+            const radius = cellSize * 0.35;
+            ctx.beginPath();
+            ctx.roundRect(x + 0.5, y + 0.5, cellSize - 1, cellSize - 1, radius);
+            ctx.fill();
+          } else if (dotStyle === 'smooth') {
+            const radius = cellSize * 0.45;
+            ctx.beginPath();
+            ctx.roundRect(x, y, cellSize, cellSize, radius);
+            ctx.fill();
+          } else {
+            // Square
+            ctx.fillRect(x, y, cellSize, cellSize);
+          }
+        }
+      }
+    }
+
+    // Draw the 3 Corner Eye Finder Patterns
+    drawCornerEye(ctx, marginCells * cellSize, marginCells * cellSize, cellSize, effectiveOuterEye, effectiveInnerEye, bgColor, eyeStyle);
+    drawCornerEye(ctx, (size - 7 + marginCells) * cellSize, marginCells * cellSize, cellSize, effectiveOuterEye, effectiveInnerEye, bgColor, eyeStyle);
+    drawCornerEye(ctx, marginCells * cellSize, (size - 7 + marginCells) * cellSize, cellSize, effectiveOuterEye, effectiveInnerEye, bgColor, eyeStyle);
+
+    // Draw Logo / Preset Badge if configured
+    if (hasLogo) {
+      const logoSizePx = canvasDim * 0.22;
+      const logoCenter = canvasDim / 2;
+      const logoX = logoCenter - logoSizePx / 2;
+      const logoY = logoCenter - logoSizePx / 2;
+
+      ctx.fillStyle = bgColor;
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+      ctx.shadowBlur = 8;
+      if (logoShape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(logoCenter, logoCenter, (logoSizePx / 2) + logoPadding, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.roundRect(logoX - logoPadding, logoY - logoPadding, logoSizePx + logoPadding * 2, logoSizePx + logoPadding * 2, 12);
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+
+      if (logoImage) {
+        ctx.drawImage(logoImage, logoX, logoY, logoSizePx, logoSizePx);
+      } else if (logoPreset) {
+        ctx.fillStyle = fgColor;
+        ctx.font = `bold ${logoSizePx * 0.6}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const iconChar = logoPreset === 'globe' ? '🌐' : logoPreset === 'wifi' ? '📶' : logoPreset === 'user' ? '👤' : '✨';
+        ctx.fillText(iconChar, logoCenter, logoCenter + 2);
+      }
+    }
+  } catch (err) {
+    console.error('Error drawing styled QR code:', err);
+  }
+}

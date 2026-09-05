@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import { downloadCanvasAsPNG, downloadSVG, downloadPrintPDF, copyCanvasToClipboard } from '../utils/qrExporter';
+import { drawStyledQRCode } from '../utils/qrRenderer';
 import EditQRModal from '../components/EditQRModal';
 import AdBanner from '../components/AdBanner';
 
@@ -31,19 +32,12 @@ function QRCardThumbnail({ qr }) {
 
   useEffect(() => {
     if (!canvasRef.current || !qr) return;
-    const redirectUrl = qr.redirect_url || qr.short_url || `${window.location.origin}/r/${qr.short_code}`;
-    QRCode.toCanvas(canvasRef.current, redirectUrl, {
-      width: 140,
-      margin: 1,
-      color: {
-        dark: qr.style_config?.fgColor || '#0F172A',
-        light: qr.style_config?.bgColor || '#FFFFFF',
-      },
-    }).catch(console.error);
+    const redirectUrl = qr.redirect_url || qr.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${qr.short_code}`;
+    drawStyledQRCode(canvasRef.current, redirectUrl, qr.style_config, 320);
   }, [qr]);
 
   return (
-    <div className="relative p-2 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center">
+    <div className="relative p-2 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center flex-shrink-0">
       <canvas ref={canvasRef} className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg shadow-sm" />
     </div>
   );
