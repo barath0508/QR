@@ -3,27 +3,31 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AuthModal from './components/AuthModal';
 import LandingPage from './pages/LandingPage';
+import DynamicQRPage from './pages/DynamicQRPage';
+import StaticQRPage from './pages/StaticQRPage';
 import DashboardPage from './pages/DashboardPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import BlogPage from './pages/BlogPage';
 import ComparePage from './pages/ComparePage';
 import { api, authStorage } from './services/api';
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState('studio'); // 'studio' | 'dashboard' | 'analytics' | 'compare'
+  // Routes: 'home' | 'dynamic-qr' | 'static-qr' | 'dashboard' | 'analytics' | 'blog' | 'compare'
+  const [currentTab, setCurrentTab] = useState('home');
   const [selectedQrId, setSelectedQrId] = useState(null);
   const [user, setUser] = useState(authStorage.getUser());
   const [systemStatus, setSystemStatus] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState('login');
+  const [authCustomPrompt, setAuthCustomPrompt] = useState('');
 
   // Theme state ('dark' | 'light')
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('qrloop_theme');
     if (saved) return saved;
-    return 'dark'; // default to dark
+    return 'dark';
   });
 
-  // Apply theme to document element
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -38,7 +42,6 @@ export default function App() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  // Verify auth session and system status on mount
   useEffect(() => {
     async function init() {
       try {
@@ -62,8 +65,9 @@ export default function App() {
     init();
   }, []);
 
-  const handleOpenAuth = (mode = 'login') => {
+  const handleOpenAuth = (mode = 'login', promptMessage = '') => {
     setAuthModalMode(mode);
+    setAuthCustomPrompt(promptMessage);
     setAuthModalOpen(true);
   };
 
@@ -76,37 +80,22 @@ export default function App() {
     setUser(null);
   };
 
-  const handleNavigateToAnalytics = (qrId) => {
-    setSelectedQrId(qrId);
-    setCurrentTab('analytics');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigateToDashboard = () => {
-    setCurrentTab('dashboard');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigateToStudio = () => {
-    setCurrentTab('studio');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigateToCompare = () => {
-    setCurrentTab('compare');
+  const handleNavigate = (tab, param = null) => {
+    if (param) setSelectedQrId(param);
+    setCurrentTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-dark-950 text-slate-900 dark:text-slate-100 flex flex-col bg-grid-pattern relative transition-colors duration-200">
-      {/* Ambient background lighting effects */}
+      {/* Background ambient glow */}
       <div className="fixed top-0 left-1/4 w-[600px] h-[600px] bg-brand-500/5 dark:bg-brand-500/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="fixed top-1/3 right-1/4 w-[500px] h-[500px] bg-cyanGlow-500/5 dark:bg-cyanGlow-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Main Header Navbar */}
       <Navbar
         currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
+        setCurrentTab={handleNavigate}
         user={user}
         onOpenAuth={handleOpenAuth}
         onLogout={handleLogout}
@@ -115,23 +104,40 @@ export default function App() {
         toggleTheme={toggleTheme}
       />
 
-      {/* Main View Area */}
+      {/* Main View Router */}
       <main className="flex-1 z-10">
-        {currentTab === 'studio' && (
+        {currentTab === 'home' && (
           <LandingPage
+            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+            onNavigateToStatic={() => handleNavigate('static-qr')}
+            onNavigateToBlog={() => handleNavigate('blog')}
+            onNavigateToCompare={() => handleNavigate('compare')}
+            onNavigateToDashboard={() => handleNavigate('dashboard')}
+          />
+        )}
+
+        {currentTab === 'dynamic-qr' && (
+          <DynamicQRPage
             user={user}
-            onSavedQR={() => {}}
-            onNavigateToDashboard={handleNavigateToDashboard}
-            onNavigateToAnalytics={handleNavigateToAnalytics}
-            onNavigateToCompare={handleNavigateToCompare}
+            onOpenAuth={handleOpenAuth}
+            onNavigateToDashboard={() => handleNavigate('dashboard')}
+            onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
+            onBackToHome={() => handleNavigate('home')}
+          />
+        )}
+
+        {currentTab === 'static-qr' && (
+          <StaticQRPage
+            onBackToHome={() => handleNavigate('home')}
+            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
           />
         )}
 
         {currentTab === 'dashboard' && (
           <DashboardPage
             user={user}
-            onNavigateToStudio={handleNavigateToStudio}
-            onNavigateToAnalytics={handleNavigateToAnalytics}
+            onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+            onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
             onOpenAuth={handleOpenAuth}
           />
         )}
@@ -139,29 +145,34 @@ export default function App() {
         {currentTab === 'analytics' && (
           <AnalyticsPage
             selectedQrId={selectedQrId}
-            onBack={handleNavigateToDashboard}
-            onNavigateToStudio={handleNavigateToStudio}
+            onBack={() => handleNavigate('dashboard')}
+            onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+          />
+        )}
+
+        {currentTab === 'blog' && (
+          <BlogPage
+            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+            onNavigateToStatic={() => handleNavigate('static-qr')}
           />
         )}
 
         {currentTab === 'compare' && (
           <ComparePage
-            onNavigateToStudio={handleNavigateToStudio}
+            onNavigateToStudio={() => handleNavigate('dynamic-qr')}
           />
         )}
       </main>
 
       {/* Global Footer */}
-      <Footer onNavigate={(tab) => {
-        setCurrentTab(tab);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }} />
+      <Footer onNavigate={(tab) => handleNavigate(tab)} />
 
-      {/* Auth Modal (Sign In / Register) */}
+      {/* Auth Modal with contextual prompt support */}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
         initialMode={authModalMode}
+        customPrompt={authCustomPrompt}
         onAuthSuccess={handleAuthSuccess}
       />
     </div>

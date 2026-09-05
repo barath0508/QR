@@ -25,12 +25,19 @@ import { downloadCanvasAsPNG, downloadSVG, downloadPrintPDF, copyCanvasToClipboa
 import { api } from '../services/api';
 import AdBanner from './AdBanner';
 
-export default function QRStudio({ user, onSavedQR, onNavigateToDashboard, onNavigateToAnalytics }) {
+export default function QRStudio({ 
+  user, 
+  onSavedQR, 
+  onNavigateToDashboard, 
+  onNavigateToAnalytics,
+  forcedDynamic,
+  onRequireAuth 
+}) {
   // Active QR Content Type
   const [activeType, setActiveType] = useState('url'); // 'url' | 'wifi' | 'vcard' | 'text' | 'email' | 'phone'
   
   // Dynamic vs Static toggle
-  const [isDynamic, setIsDynamic] = useState(true);
+  const [isDynamic, setIsDynamic] = useState(forcedDynamic !== undefined ? forcedDynamic : true);
   const [customAlias, setCustomAlias] = useState('');
   const [qrTitle, setQrTitle] = useState('My Dynamic QR');
 
@@ -331,6 +338,16 @@ export default function QRStudio({ user, onSavedQR, onNavigateToDashboard, onNav
   };
 
   const handleSaveDynamicQR = async () => {
+    // Prompt for login or registration if guest
+    if (!user) {
+      if (onRequireAuth) {
+        onRequireAuth('Create a free account or sign in to activate dynamic redirect tracking and save this QR code.');
+      } else {
+        setSaveError('Please sign in or create a free account to save dynamic QR codes.');
+      }
+      return;
+    }
+
     setIsSaving(true);
     setSaveError('');
 
@@ -389,29 +406,37 @@ export default function QRStudio({ user, onSavedQR, onNavigateToDashboard, onNav
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-slate-900 dark:text-white">Dynamic Tracking Enabled</span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-brand-500/15 text-brand-700 dark:text-brand-300">
-                Live Redirects
+              <span className="text-sm font-bold text-slate-900 dark:text-white">
+                {isDynamic ? 'Dynamic Tracking Enabled' : 'Static Offline QR Mode'}
+              </span>
+              <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full ${
+                isDynamic ? 'bg-brand-500/15 text-brand-700 dark:text-brand-300' : 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
+              }`}>
+                {isDynamic ? 'Live Redirects' : 'Direct Data (No Server)'}
               </span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-              Change where this QR code points at any time — even after it is printed on flyers, stickers, or packaging.
+              {isDynamic 
+                ? 'Change where this QR code points at any time — even after it is printed on flyers, stickers, or packaging.'
+                : 'Data is encoded directly into the image. Works 100% offline forever without requiring an account.'}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 self-stretch md:self-auto justify-end">
-          <button
-            onClick={() => setIsDynamic(!isDynamic)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
-              isDynamic
-                ? 'bg-brand-500/15 text-brand-700 dark:text-brand-300 border-brand-500/30'
-                : 'bg-slate-200 dark:bg-dark-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-white/10'
-            }`}
-          >
-            <span>{isDynamic ? 'Dynamic Mode: ON' : 'Static Mode (Uneditable)'}</span>
-          </button>
-        </div>
+        {forcedDynamic === undefined && (
+          <div className="flex items-center gap-2 self-stretch md:self-auto justify-end">
+            <button
+              onClick={() => setIsDynamic(!isDynamic)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+                isDynamic
+                  ? 'bg-brand-500/15 text-brand-700 dark:text-brand-300 border-brand-500/30'
+                  : 'bg-slate-200 dark:bg-dark-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-white/10'
+              }`}
+            >
+              <span>{isDynamic ? 'Dynamic Mode: ON' : 'Static Mode (Uneditable)'}</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -943,6 +968,11 @@ export default function QRStudio({ user, onSavedQR, onNavigateToDashboard, onNav
                 >
                   {isSaving ? (
                     <RefreshCw className="w-4 h-4 animate-spin" />
+                  ) : !user ? (
+                    <>
+                      <Zap className="w-4 h-4 fill-dark-950" />
+                      <span>Sign In to Deploy Dynamic QR</span>
+                    </>
                   ) : (
                     <>
                       <Zap className="w-4 h-4 fill-dark-950" />
@@ -950,6 +980,11 @@ export default function QRStudio({ user, onSavedQR, onNavigateToDashboard, onNav
                     </>
                   )}
                 </button>
+                {!user && (
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 text-center mt-2">
+                    Free account required to save dynamic links & track scans.
+                  </p>
+                )}
               </div>
             )}
 

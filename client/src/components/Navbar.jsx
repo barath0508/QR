@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { QrCode, BarChart3, LayoutDashboard, Sparkles, User, LogOut, Menu, X, Sun, Moon } from 'lucide-react';
+import { 
+  QrCode, 
+  BarChart3, 
+  LayoutDashboard, 
+  Sparkles, 
+  User, 
+  LogOut, 
+  Menu, 
+  X, 
+  Sun, 
+  Moon, 
+  Zap, 
+  BookOpen, 
+  CheckCircle2 
+} from 'lucide-react';
 
 export default function Navbar({ 
   currentTab, 
@@ -17,9 +31,9 @@ export default function Navbar({
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-white/5 bg-white/80 dark:bg-dark-950/80 backdrop-blur-xl transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Brand Logo -> Routes to Home */}
         <div 
-          onClick={() => setCurrentTab('studio')}
+          onClick={() => setCurrentTab('home')}
           className="flex items-center gap-3 cursor-pointer group select-none"
         >
           <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-cyanGlow-500 shadow-glow-emerald transition-transform group-hover:scale-105">
@@ -42,41 +56,65 @@ export default function Navbar({
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 dark:bg-dark-900/60 p-1 rounded-xl border border-slate-200 dark:border-white/5">
+        <nav className="hidden xl:flex items-center gap-1 bg-slate-100/80 dark:bg-dark-900/60 p-1 rounded-xl border border-slate-200 dark:border-white/5">
           <button
-            onClick={() => setCurrentTab('studio')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-              currentTab === 'studio'
+            onClick={() => setCurrentTab('dynamic-qr')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              currentTab === 'dynamic-qr'
                 ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm border border-slate-200 dark:border-brand-500/30'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-            Generator Studio
+            <Zap className="w-3.5 h-3.5 text-brand-500" />
+            <span>Dynamic Studio</span>
+          </button>
+
+          <button
+            onClick={() => setCurrentTab('static-qr')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              currentTab === 'static-qr'
+                ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm border border-slate-200 dark:border-brand-500/30'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
+            }`}
+          >
+            <span>Static QR</span>
+            <span className="text-[9px] px-1 py-0.2 rounded bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 font-mono">NO LOGIN</span>
           </button>
 
           <button
             onClick={() => setCurrentTab('dashboard')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               currentTab === 'dashboard'
                 ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm border border-slate-200 dark:border-brand-500/30'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
             }`}
           >
             <LayoutDashboard className="w-3.5 h-3.5 text-cyanGlow-500" />
-            My QR Codes
+            <span>My QR Codes</span>
           </button>
 
           <button
             onClick={() => setCurrentTab('analytics')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               currentTab === 'analytics'
                 ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm border border-slate-200 dark:border-brand-500/30'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5 text-purple-500" />
-            Scan Analytics
+            <span>Analytics</span>
+          </button>
+
+          <button
+            onClick={() => setCurrentTab('blog')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              currentTab === 'blog'
+                ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm border border-slate-200 dark:border-brand-500/30'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+            <span>Blog & Guides</span>
           </button>
 
           <button
@@ -87,15 +125,12 @@ export default function Navbar({
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
             }`}
           >
-            <span>Compare vs Paid</span>
-            <span className="text-[9px] px-1 py-0.2 rounded bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-mono">100% FREE</span>
+            <span>Why Free</span>
           </button>
         </nav>
 
-        {/* Right Section: Theme Toggle, System status pill & Auth */}
+        {/* Right Section: Theme Toggle, Health status, Auth */}
         <div className="hidden lg:flex items-center gap-3">
-          
-          {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle dark/light mode"
@@ -103,19 +138,15 @@ export default function Navbar({
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-amber-400 transition-transform rotate-0 hover:rotate-45" />
+              <Sun className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-indigo-500 transition-transform -rotate-12 hover:rotate-0" />
+              <Moon className="w-4 h-4 text-indigo-500" />
             )}
           </button>
 
-          {/* Health indicator */}
           <div className="flex items-center gap-2 text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>API Online</span>
-            {systemStatus?.databaseMode && (
-              <span className="text-[10px] text-slate-400 uppercase">({systemStatus.databaseMode})</span>
-            )}
           </div>
 
           {user ? (
@@ -159,7 +190,7 @@ export default function Navbar({
         </div>
 
         {/* Mobile menu and theme toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex xl:hidden items-center gap-2">
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -179,15 +210,36 @@ export default function Navbar({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 px-4 pt-3 pb-5 space-y-2">
+        <div className="xl:hidden border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 px-4 pt-3 pb-5 space-y-2 shadow-xl">
           <button
-            onClick={() => { setCurrentTab('studio'); setMobileMenuOpen(false); }}
+            onClick={() => { setCurrentTab('home'); setMobileMenuOpen(false); }}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium ${
-              currentTab === 'studio' ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300' : 'text-slate-700 dark:text-slate-300'
+              currentTab === 'home' ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300' : 'text-slate-700 dark:text-slate-300'
             }`}
           >
             <Sparkles className="w-4 h-4 text-brand-500" />
-            Generator Studio
+            Home
+          </button>
+          <button
+            onClick={() => { setCurrentTab('dynamic-qr'); setMobileMenuOpen(false); }}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium ${
+              currentTab === 'dynamic-qr' ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300' : 'text-slate-700 dark:text-slate-300'
+            }`}
+          >
+            <Zap className="w-4 h-4 text-brand-500" />
+            Dynamic QR Studio
+          </button>
+          <button
+            onClick={() => { setCurrentTab('static-qr'); setMobileMenuOpen(false); }}
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium ${
+              currentTab === 'static-qr' ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300' : 'text-slate-700 dark:text-slate-300'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <QrCode className="w-4 h-4 text-cyan-500" />
+              <span>Static QR Generator</span>
+            </div>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-600 font-mono">NO LOGIN</span>
           </button>
           <button
             onClick={() => { setCurrentTab('dashboard'); setMobileMenuOpen(false); }}
@@ -208,13 +260,22 @@ export default function Navbar({
             Scan Analytics
           </button>
           <button
+            onClick={() => { setCurrentTab('blog'); setMobileMenuOpen(false); }}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium ${
+              currentTab === 'blog' ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300' : 'text-slate-700 dark:text-slate-300'
+            }`}
+          >
+            <BookOpen className="w-4 h-4 text-amber-500" />
+            Blog & Guides
+          </button>
+          <button
             onClick={() => { setCurrentTab('compare'); setMobileMenuOpen(false); }}
             className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium ${
               currentTab === 'compare' ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300' : 'text-slate-700 dark:text-slate-300'
             }`}
           >
             <span>Why QRLoop vs Paid</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-mono">100% FREE</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-600 font-mono">100% FREE</span>
           </button>
 
           <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex flex-col gap-2">

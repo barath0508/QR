@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Lock, Mail, User, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { api } from '../services/api';
 
-export default function AuthModal({ isOpen, onClose, initialMode = 'login', onAuthSuccess }) {
+export default function AuthModal({ isOpen, onClose, initialMode = 'login', onAuthSuccess, customPrompt }) {
   const [mode, setMode] = useState(initialMode);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -78,6 +78,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', onAu
               : 'Sign in to access your saved QR codes and live scan analytics.'}
           </p>
         </div>
+
+        {/* Context Prompt Notification */}
+        {customPrompt && (
+          <div className="mb-4 p-3 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-brand-500 flex-shrink-0" />
+            <span>{customPrompt}</span>
+          </div>
+        )}
 
         {/* Error Notification */}
         {error && (
