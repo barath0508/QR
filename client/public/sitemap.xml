@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage -->
   <url>
     <loc>https://qrloop4.vercel.app/</loc>
     <lastmod>2026-09-05</lastmod>
@@ -9,35 +12,66 @@
     <image:image>
       <image:loc>https://qrloop4.vercel.app/og-image.png</image:loc>
       <image:title>QRLoop - Free Dynamic QR Code Generator Platform</image:title>
-      <image:caption>Modern dynamic QR code generator with live redirects and scan analytics</image:caption>
+      <image:caption>Modern dynamic QR code generator with live redirects, custom branding, and real-time scan analytics</image:caption>
     </image:image>
   </url>
+
+  <!-- Dynamic QR Generator (core product page) -->
   <url>
     <loc>https://qrloop4.vercel.app/dynamic-qr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.95</priority>
+    <priority>0.97</priority>
     <image:image>
       <image:loc>https://qrloop4.vercel.app/og-image.png</image:loc>
-      <image:title>Dynamic QR Code Generator Pro with Live Scan Tracking</image:title>
+      <image:title>Dynamic QR Code Generator Pro - Edit URLs After Printing</image:title>
+      <image:caption>Create fully trackable dynamic QR codes with live scan analytics and instant URL redirect editing</image:caption>
     </image:image>
   </url>
+
+  <!-- Static QR Generator -->
   <url>
     <loc>https://qrloop4.vercel.app/static-qr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://qrloop4.vercel.app/og-image.png</image:loc>
+      <image:title>Free Static QR Code Generator - No Account Required</image:title>
+      <image:caption>Generate offline static QR codes for Wi-Fi, vCard, Text, Email, and Phone — no server, no login</image:caption>
+    </image:image>
   </url>
+
+  <!-- Dashboard -->
+  <url>
+    <loc>https://qrloop4.vercel.app/dashboard</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <!-- Compare page -->
   <url>
     <loc>https://qrloop4.vercel.app/compare</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
+
+  <!-- Blog -->
   <url>
     <loc>https://qrloop4.vercel.app/blog</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
   </url>
+
+  <!-- Analytics page -->
+  <url>
+    <loc>https://qrloop4.vercel.app/analytics</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
 </urlset>

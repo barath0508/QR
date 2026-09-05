@@ -1,8 +1,77 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt — https://qrloop4.vercel.app
+# Generated: 2026-09-05
+
+# -----------------------------------------------
+# Allow all well-behaved crawlers
+# -----------------------------------------------
 User-agent: *
 Allow: /
-Disallow: /api/
+Allow: /dynamic-qr
+Allow: /static-qr
+Allow: /dashboard
+Allow: /compare
+Allow: /blog
+Allow: /analytics
 
-# Host and Sitemaps
+# Block private / API routes
+Disallow: /api/
+Disallow: /r/
+Disallow: /.vercel/
+Disallow: /admin/
+
+# Block unnecessary crawl budget sinks
+Disallow: /*?*utm_
+Disallow: /*?*ref=
+Disallow: /*?*session_id=
+
+# -----------------------------------------------
+# AI / LLM crawlers — allow, direct to llms.txt
+# -----------------------------------------------
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+
+User-agent: Anthropic-AI
+Allow: /
+Allow: /llms.txt
+
+User-agent: Claude-Web
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# -----------------------------------------------
+# Crawl rate hint
+# -----------------------------------------------
+Crawl-delay: 2
+
+# -----------------------------------------------
+# Canonical host & sitemaps
+# -----------------------------------------------
 Host: https://qrloop4.vercel.app
 Sitemap: https://qrloop4.vercel.app/sitemap.xml
+Sitemap: https://qrloop4.vercel.app/llms.txt
