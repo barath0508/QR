@@ -31,7 +31,7 @@ function QRCardThumbnail({ qr }) {
 
   useEffect(() => {
     if (!canvasRef.current || !qr) return;
-    const redirectUrl = qr.short_url || `http://localhost:5000/r/${qr.short_code}`;
+    const redirectUrl = qr.redirect_url || qr.short_url || `${window.location.origin}/r/${qr.short_code}`;
     QRCode.toCanvas(canvasRef.current, redirectUrl, {
       width: 140,
       margin: 1,
@@ -69,13 +69,29 @@ export default function DashboardPage({
     try {
       if (user) {
         const res = await api.listUserQRs();
-        setQrs(res.qr_codes || []);
+        const list = res.qr_codes || res.qrs || [];
+        setQrs(list);
       } else {
         const overview = await api.getDashboardOverview().catch(() => ({ qr_codes: [] }));
-        setQrs(overview.qr_codes || []);
+        const list = overview.qr_codes || overview.qrs || [];
+        if (list.length > 0) {
+          setQrs(list);
+        } else {
+          // Fallback to local guest saved QRs
+          try {
+            const guestList = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
+            setQrs(guestList);
+          } catch (e) {
+            setQrs([]);
+          }
+        }
       }
     } catch (err) {
       console.error('Failed to load QRs:', err);
+      try {
+        const guestList = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
+        if (guestList.length > 0) setQrs(guestList);
+      } catch (e) {}
     } finally {
       setLoading(false);
     }
@@ -86,7 +102,7 @@ export default function DashboardPage({
   }, [user]);
 
   const handleCopyLink = (qr) => {
-    const fullUrl = qr.short_url || `http://localhost:5000/r/${qr.short_code}`;
+    const fullUrl = qr.redirect_url || qr.short_url || `${window.location.origin}/r/${qr.short_code}`;
     navigator.clipboard.writeText(fullUrl);
     setCopiedId(qr.id);
     setTimeout(() => setCopiedId(null), 2000);

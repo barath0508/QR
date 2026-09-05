@@ -47,7 +47,7 @@ export default function AnalyticsPage({
     async function loadList() {
       try {
         const res = await api.listUserQRs().catch(() => ({ qr_codes: [] }));
-        const list = res.qr_codes || [];
+        const list = res.qr_codes || res.qrs || [];
         setQrsList(list);
         if (!currentId && list.length > 0) {
           setCurrentId(list[0].id);

@@ -73,6 +73,7 @@ const qrController = {
         qr: {
           ...qr,
           redirect_url,
+          short_url: redirect_url,
         }
       });
     } catch (err) {
@@ -90,9 +91,10 @@ const qrController = {
       const enriched = qrs.map(qr => ({
         ...qr,
         redirect_url: `${baseUrl}/r/${qr.short_code}`,
+        short_url: `${baseUrl}/r/${qr.short_code}`,
       }));
 
-      res.json({ qrs: enriched });
+      res.json({ qrs: enriched, qr_codes: enriched });
     } catch (err) {
       console.error('Error listing user QR codes:', err);
       res.status(500).json({ error: err.message || 'Failed to retrieve QR codes' });
@@ -109,10 +111,12 @@ const qrController = {
       }
 
       const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+      const redirect_url = `${baseUrl}/r/${qr.short_code}`;
       res.json({
         qr: {
           ...qr,
-          redirect_url: `${baseUrl}/r/${qr.short_code}`,
+          redirect_url,
+          short_url: redirect_url,
         }
       });
     } catch (err) {
@@ -140,11 +144,13 @@ const qrController = {
       }
 
       const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+      const redirect_url = `${baseUrl}/r/${updated.short_code}`;
       res.json({
         message: 'QR code updated successfully',
         qr: {
           ...updated,
-          redirect_url: `${baseUrl}/r/${updated.short_code}`,
+          redirect_url,
+          short_url: redirect_url,
         }
       });
     } catch (err) {
@@ -183,11 +189,13 @@ const qrController = {
       });
 
       const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+      const redirect_url = `${baseUrl}/r/${duplicated.short_code}`;
       res.status(201).json({
         message: 'QR code duplicated successfully',
         qr: {
           ...duplicated,
-          redirect_url: `${baseUrl}/r/${duplicated.short_code}`,
+          redirect_url,
+          short_url: redirect_url,
         }
       });
     } catch (err) {

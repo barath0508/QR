@@ -116,7 +116,7 @@ export default function QRStudio({
   };
 
   const currentEncodedText = savedSuccessQR 
-    ? savedSuccessQR.short_url || `http://localhost:5000/r/${savedSuccessQR.short_code}`
+    ? (savedSuccessQR.redirect_url || savedSuccessQR.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`)
     : getFormattedPayload();
 
   const isFinderPattern = (r, c, size) => {
@@ -341,9 +341,11 @@ export default function QRStudio({
     // Prompt for login or registration if guest
     if (!user) {
       if (onRequireAuth) {
-        onRequireAuth('Create a free account or sign in to activate dynamic redirect tracking and save this QR code.');
+        onRequireAuth(isDynamic 
+          ? 'Create a free account or sign in to activate dynamic redirect tracking and save this QR code.'
+          : 'Create a free account or sign in to save this QR code to your dashboard.');
       } else {
-        setSaveError('Please sign in or create a free account to save dynamic QR codes.');
+        setSaveError('Please sign in or create a free account to save QR codes.');
       }
       return;
     }
@@ -353,10 +355,11 @@ export default function QRStudio({
 
     try {
       const payload = {
-        title: qrTitle || 'My Dynamic QR',
+        title: qrTitle || (isDynamic ? 'My Dynamic QR' : 'My Static QR'),
         qr_type: activeType,
         destination_url: activeType === 'url' ? url : getFormattedPayload(),
         custom_alias: customAlias.trim() || undefined,
+        is_dynamic: isDynamic,
         style_config: {
           fgColor,
           bgColor,
@@ -373,6 +376,13 @@ export default function QRStudio({
       setSavedSuccessQR(result.qr);
       if (onSavedQR) onSavedQR(result.qr);
 
+      // Also persist in local cache for immediate availability
+      try {
+        const existing = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
+        const updated = [result.qr, ...existing.filter(q => q.id !== result.qr.id)].slice(0, 50);
+        localStorage.setItem('qrloop_guest_qrs', JSON.stringify(updated));
+      } catch (e) {}
+
       confetti({
         particleCount: 80,
         spread: 70,
@@ -380,9 +390,15 @@ export default function QRStudio({
         colors: ['#10B981', '#06B6D4', '#6366F1', '#F59E0B'],
       });
     } catch (err) {
-      setSaveError(err.message || 'Failed to save dynamic QR code.');
+      setSaveError(err.message || 'Failed to save QR code.');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const autoSaveIfLoggedIn = () => {
+    if (user && !savedSuccessQR && !isSaving) {
+      handleSaveDynamicQR().catch(() => {});
     }
   };
 
@@ -918,33 +934,49 @@ export default function QRStudio({
 
             {/* Dynamic Status / Saved Details */}
             {savedSuccessQR ? (
-              <div className="w-full mt-4 p-3.5 rounded-xl bg-brand-500/10 border border-brand-500/30 text-xs text-brand-700 dark:text-brand-300 space-y-2">
+              <div className="w-full mt-4 p-3.5 rounded-xl bg-brand-500/10 border border-brand-500/30 text-xs text-brand-700 dark:text-brand-300 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="font-bold flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-brand-600 dark:text-brand-400" />
-                    Dynamic Link Live!
+                    <span>{savedSuccessQR.is_dynamic ? 'Dynamic Link Live & Saved!' : 'QR Code Saved to Account!'}</span>
                   </span>
-                  <a
-                    href={savedSuccessQR.redirect_url || `${window.location.origin}/r/${savedSuccessQR.short_code}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-1 hover:underline text-[11px] text-brand-700 dark:text-brand-200"
-                  >
-                    <span>Test Redirect</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                  {savedSuccessQR.is_dynamic && (
+                    <a
+                      href={savedSuccessQR.redirect_url || savedSuccessQR.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 hover:underline text-[11px] text-brand-700 dark:text-brand-200"
+                    >
+                      <span>Test Redirect</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
                 </div>
                 <p className="font-mono text-[11px] break-all bg-white dark:bg-dark-950/80 p-2 rounded border border-brand-500/20 text-slate-800 dark:text-slate-200">
-                  {savedSuccessQR.redirect_url || `${window.location.origin}/r/${savedSuccessQR.short_code}`}
+                  {savedSuccessQR.is_dynamic 
+                    ? (savedSuccessQR.redirect_url || savedSuccessQR.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`)
+                    : savedSuccessQR.destination_url}
                 </p>
-                <div className="flex items-center justify-between pt-1 text-[11px]">
-                  <span className="text-slate-500 dark:text-slate-400">Target: {savedSuccessQR.destination_url}</span>
-                  <button
-                    onClick={() => onNavigateToAnalytics && onNavigateToAnalytics(savedSuccessQR.id)}
-                    className="font-bold text-brand-600 dark:text-brand-400 hover:underline"
-                  >
-                    View Analytics →
-                  </button>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-1 text-[11px] gap-2">
+                  <span className="text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    Target: {savedSuccessQR.destination_url}
+                  </span>
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <button
+                      onClick={() => onNavigateToDashboard && onNavigateToDashboard()}
+                      className="font-bold text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 underline"
+                    >
+                      View in Dashboard →
+                    </button>
+                    {savedSuccessQR.is_dynamic && (
+                      <button
+                        onClick={() => onNavigateToAnalytics && onNavigateToAnalytics(savedSuccessQR.id)}
+                        className="font-bold text-brand-600 dark:text-brand-400 hover:underline"
+                      >
+                        Analytics →
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -953,8 +985,8 @@ export default function QRStudio({
               </p>
             )}
 
-            {/* Save Dynamic QR Button */}
-            {isDynamic && !savedSuccessQR && (
+            {/* Save Dynamic/Static QR Button */}
+            {!savedSuccessQR && (
               <div className="w-full mt-4">
                 {saveError && (
                   <div className="mb-2 p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-300 text-xs">
@@ -971,18 +1003,18 @@ export default function QRStudio({
                   ) : !user ? (
                     <>
                       <Zap className="w-4 h-4 fill-dark-950" />
-                      <span>Sign In to Deploy Dynamic QR</span>
+                      <span>{isDynamic ? 'Sign In to Deploy Dynamic QR' : 'Sign In to Save QR'}</span>
                     </>
                   ) : (
                     <>
                       <Zap className="w-4 h-4 fill-dark-950" />
-                      <span>Create & Deploy Dynamic QR</span>
+                      <span>{isDynamic ? 'Create & Deploy Dynamic QR' : 'Save QR to My Account'}</span>
                     </>
                   )}
                 </button>
                 {!user && (
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 text-center mt-2">
-                    Free account required to save dynamic links & track scans.
+                    Free account required to save to your dashboard & track scans.
                   </p>
                 )}
               </div>
@@ -997,7 +1029,10 @@ export default function QRStudio({
               {/* Action Buttons */}
               <div className="grid grid-cols-3 gap-2">
                 <button
-                  onClick={() => downloadCanvasAsPNG(canvasRef.current, `${qrTitle.replace(/\s+/g, '_')}_qr.png`, parseInt(downloadSize) / 512)}
+                  onClick={() => {
+                    autoSaveIfLoggedIn();
+                    downloadCanvasAsPNG(canvasRef.current, `${qrTitle.replace(/\s+/g, '_')}_qr.png`, parseInt(downloadSize) / 512);
+                  }}
                   className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5 text-brand-500" />
@@ -1005,7 +1040,10 @@ export default function QRStudio({
                 </button>
 
                 <button
-                  onClick={() => downloadSVG(currentEncodedText, { fgColor, bgColor, errorCorrection }, `${qrTitle.replace(/\s+/g, '_')}_qr.svg`)}
+                  onClick={() => {
+                    autoSaveIfLoggedIn();
+                    downloadSVG(currentEncodedText, { fgColor, bgColor, errorCorrection }, `${qrTitle.replace(/\s+/g, '_')}_qr.svg`);
+                  }}
                   className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5 text-cyan-500" />
@@ -1013,11 +1051,17 @@ export default function QRStudio({
                 </button>
 
                 <button
-                  onClick={() => downloadPrintPDF(canvasRef.current, {
-                    title: qrTitle,
-                    shortUrl: savedSuccessQR ? `http://localhost:5000/r/${savedSuccessQR.short_code}` : undefined,
-                    destinationUrl: url,
-                  }, `${qrTitle.replace(/\s+/g, '_')}_standee.pdf`)}
+                  onClick={() => {
+                    autoSaveIfLoggedIn();
+                    const shortUrl = savedSuccessQR 
+                      ? (savedSuccessQR.redirect_url || savedSuccessQR.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`)
+                      : undefined;
+                    downloadPrintPDF(canvasRef.current, {
+                      title: qrTitle,
+                      shortUrl,
+                      destinationUrl: url,
+                    }, `${qrTitle.replace(/\s+/g, '_')}_standee.pdf`);
+                  }}
                   className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5 text-purple-500" />
