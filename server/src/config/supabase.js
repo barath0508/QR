@@ -1,8 +1,22 @@
 const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
+
+// Check multiple potential .env paths for local development convenience
+const candidates = [
+  path.resolve(process.cwd(), '.env'),
+  path.resolve(__dirname, '../../.env'),
+  path.resolve(__dirname, '../../../.env'),
+];
+for (const envPath of candidates) {
+  if (fs.existsSync(envPath)) {
+    require('dotenv').config({ path: envPath });
+  }
+}
 
 const supabaseUrl = process.env.SUPABASE_URL?.trim();
 const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY)?.trim();
+
 
 let supabaseClient = null;
 let isConfigured = false;

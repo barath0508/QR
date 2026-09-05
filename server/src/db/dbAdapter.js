@@ -4,7 +4,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const dbAdapter = {
   getMode() {
-    return isSupabaseConfigured() ? 'supabase' : 'sqlite';
+    if (isSupabaseConfigured()) return 'supabase';
+    if (sqliteDb.isAvailable && sqliteDb.isAvailable()) return 'sqlite';
+    return 'unconfigured';
   },
 
   async getUserByEmail(email) {

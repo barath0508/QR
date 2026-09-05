@@ -29,40 +29,47 @@ app.use('/api/', generalLimiter);
 // 1. Core Dynamic Redirect Route (Top-level /r/:shortcode)
 app.use('/r', redirectRoutes);
 
-// 2. API Routes
+// 2. API Routes - mounted with both /api and direct prefix for Vercel serverless rewrite compatibility
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
 app.use('/api/qr', qrRoutes);
+app.use('/qr', qrRoutes);
+
 app.use('/api/analytics', analyticsRoutes);
+app.use('/analytics', analyticsRoutes);
 
 // 3. Health & Status
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString(),
-    databaseMode: dbAdapter.getMode(),
-  });
-});
-
-app.get('/api/status', (req, res) => {
+const handleStatus = (req, res) => {
   const mode = dbAdapter.getMode();
   res.json({
     service: 'QRLoop API',
+    status: 'ok',
     databaseMode: mode,
     isSupabase: mode === 'supabase',
-    baseUrl: process.env.BASE_URL || `http://localhost:${PORT}`,
+    supabaseConfigured: mode === 'supabase',
+    baseUrl: process.env.BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${PORT}`),
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
     version: '1.0.0',
   });
-});
+};
+
+app.get('/health', handleStatus);
+app.get('/api/health', handleStatus);
+app.get('/api/status', handleStatus);
+app.get('/status', handleStatus);
 
 // 4. Centralized Error Handler
 app.use((err, req, res, next) => {
   console.error('Unhandled server error:', err);
-  res.status(500).json({
-    error: 'Internal server error',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined,
+  const statusCode = err.status || 500;
+  res.status(statusCode).json({
+    error: err.name || 'Internal server error',
+    message: err.message || 'An unexpected error occurred',
   });
 });
+
 
 // Start Server (only when not running inside Vercel serverless environment)
 if (!process.env.VERCEL) {
