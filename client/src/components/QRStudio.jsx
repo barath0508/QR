@@ -327,7 +327,7 @@ export default function QRStudio({
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
       {/* Top Banner Notice */}
-      <div className="mb-8 rounded-2xl border border-brand-500/20 bg-gradient-to-r from-brand-50 via-slate-100 to-cyan-50 dark:from-brand-950/40 dark:via-dark-900 dark:to-cyan-950/30 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm dark:shadow-xl transition-colors">
+      <div className="mb-8 rounded-2xl border border-brand-500/20 bg-gradient-to-r from-brand-50 via-slate-50 to-cyan-50 dark:bg-none dark:bg-dark-900/80 dark:border-brand-500/15 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm dark:shadow-none transition-colors">
         <div className="flex items-center gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-600 dark:text-brand-400 flex-shrink-0">
             <Zap className="w-5 h-5" />
