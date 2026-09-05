@@ -15,6 +15,7 @@ router.get('/:id', optionalAuth, qrController.getQR);
 
 // Update destination or details (requires auth)
 router.patch('/:id', requireAuth, qrController.updateQR);
+router.put('/:id', requireAuth, qrController.updateQR);
 
 // Duplicate a QR (requires auth)
 router.post('/:id/duplicate', requireAuth, qrController.duplicateQR);
