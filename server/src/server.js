@@ -71,8 +71,8 @@ app.use((err, req, res, next) => {
 });
 
 
-// Start Server (only when not running inside Vercel serverless environment)
-if (!process.env.VERCEL) {
+// Start Server (only when run directly via CLI and not when required as a module/serverless)
+if (require.main === module && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`🚀 QRLoop Backend running on port ${PORT}`);
     console.log(`🔗 Dynamic Redirect engine live at: http://localhost:${PORT}/r/:shortcode`);
