@@ -74,7 +74,7 @@ const redirectController = {
               <span class="badge">Link Inactive or Paused</span>
               <h1>Dynamic QR Code Not Found</h1>
               <p>The dynamic QR code with link <strong>/r/${shortcode}</strong> has either been paused by its owner or does not exist.</p>
-              <a href="http://localhost:5173" class="btn">Create Your Own Dynamic QR Code</a>
+              <a href="/" class="btn">Create Your Own Dynamic QR Code</a>
             </div>
           </body>
           </html>
@@ -90,22 +90,24 @@ const redirectController = {
       const { device_type, os, browser } = parseUserAgent(userAgent);
       const { country, city, region } = resolveLocationFromReq(req);
 
-      // Asynchronously log the scan so the user redirect is not delayed
-      dbAdapter.logScan({
-        qr_id: qr.id,
-        short_code: qr.short_code,
-        ip_address: maskedIp,
-        user_agent: userAgent.substring(0, 500),
-        device_type,
-        os,
-        browser,
-        country,
-        city,
-        region,
-        referer: referer.substring(0, 300),
-      }).catch(err => {
-        console.error('Failed to log scan telemetry:', err);
-      });
+      // Await the scan logging so Vercel Serverless does not freeze before write completes
+      try {
+        await dbAdapter.logScan({
+          qr_id: qr.id,
+          short_code: qr.short_code,
+          ip_address: maskedIp,
+          user_agent: userAgent.substring(0, 500),
+          device_type,
+          os,
+          browser,
+          country,
+          city,
+          region,
+          referer: referer.substring(0, 300),
+        });
+      } catch (logErr) {
+        console.error('Failed to log scan telemetry:', logErr);
+      }
 
       // Prepare target destination URL
       let destination = qr.destination_url.trim();

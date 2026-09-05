@@ -271,7 +271,7 @@ const dbAdapter = {
     }
   },
 
-  async getQRAnalytics(qr_id) {
+  async getQRAnalytics(qr_id, period = 'all') {
     if (isSupabaseConfigured()) {
       const supabase = getSupabaseClient();
       const { data: logs, error } = await supabase
@@ -281,16 +281,29 @@ const dbAdapter = {
         .order('scanned_at', { ascending: false })
         .limit(1000);
       if (error) throw error;
-      return this._computeAnalyticsMetrics(logs || []);
+      return this._computeAnalyticsMetrics(logs || [], period);
     } else {
       const logs = sqliteDb.prepare('SELECT * FROM scan_logs WHERE qr_id = ? ORDER BY scanned_at DESC LIMIT 1000').all(qr_id);
-      return this._computeAnalyticsMetrics(logs);
+      return this._computeAnalyticsMetrics(logs, period);
     }
   },
 
-  _computeAnalyticsMetrics(logs) {
-    const totalScans = logs.length;
-    const uniqueIps = new Set(logs.map(l => l.ip_address).filter(Boolean)).size;
+  _computeAnalyticsMetrics(logs, period = 'all') {
+    let filteredLogs = logs;
+    const now = new Date();
+    if (period === '24h') {
+      const cutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      filteredLogs = logs.filter(l => new Date(l.scanned_at) >= cutoff);
+    } else if (period === '7d') {
+      const cutoff = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      filteredLogs = logs.filter(l => new Date(l.scanned_at) >= cutoff);
+    } else if (period === '30d') {
+      const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      filteredLogs = logs.filter(l => new Date(l.scanned_at) >= cutoff);
+    }
+
+    const totalScans = filteredLogs.length;
+    const uniqueIps = new Set(filteredLogs.map(l => l.ip_address).filter(Boolean)).size;
 
     // Device breakdown
     const devices = {};
@@ -300,7 +313,7 @@ const dbAdapter = {
     const cities = {};
     const scansByDate = {};
 
-    logs.forEach(log => {
+    filteredLogs.forEach(log => {
       // Device
       const dev = (log.device_type || 'desktop').toLowerCase();
       devices[dev] = (devices[dev] || 0) + 1;

@@ -4,6 +4,7 @@ const analyticsController = {
   async getQRAnalytics(req, res) {
     try {
       const { id } = req.params;
+      const { period = 'all' } = req.query;
       const qr = await dbAdapter.getQRById(id);
 
       if (!qr) {
@@ -15,14 +16,33 @@ const analyticsController = {
         return res.status(403).json({ error: 'Unauthorized to view this QR analytics' });
       }
 
-      const analytics = await dbAdapter.getQRAnalytics(qr.id);
+      const analytics = await dbAdapter.getQRAnalytics(qr.id, period);
       const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+      const redirect_url = `${baseUrl}/r/${qr.short_code}`;
+
+      const qrRecord = {
+        ...qr,
+        redirect_url,
+        short_url: redirect_url,
+      };
 
       res.json({
-        qr: {
-          ...qr,
-          redirect_url: `${baseUrl}/r/${qr.short_code}`,
+        qr: qrRecord,
+        qr_code: qrRecord,
+        summary: {
+          total_scans: analytics.totalScans,
+          unique_scanners: analytics.uniqueVisitors,
         },
+        time_series: analytics.scansOverTime || [],
+        devices: analytics.deviceBreakdown || [],
+        os: analytics.osBreakdown || [],
+        browsers: analytics.browserBreakdown || [],
+        locations: (analytics.cityBreakdown && analytics.cityBreakdown.length > 0) ? analytics.cityBreakdown : (analytics.countryBreakdown || []),
+        recent_scans: (analytics.recentScans || []).map(s => ({
+          ...s,
+          device: s.device || s.device_type || 'mobile',
+          location: s.location || (s.city && s.country && s.city !== 'Unknown City' ? `${s.city}, ${s.country}` : (s.country || 'Global')),
+        })),
         analytics,
       });
     } catch (err) {

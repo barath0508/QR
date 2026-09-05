@@ -106,13 +106,19 @@ export default function AnalyticsPage({
 
   const COLORS = ['#10B981', '#06B6D4', '#6366F1', '#F59E0B', '#EC4899', '#8B5CF6'];
 
-  const timeSeries = analyticsData?.time_series || [];
-  const devices = analyticsData?.devices || [];
-  const osData = analyticsData?.os || [];
-  const browsers = analyticsData?.browsers || [];
-  const locations = analyticsData?.locations || [];
-  const recentScans = analyticsData?.recent_scans || [];
-  const qrInfo = analyticsData?.qr_code || {};
+  const rawAnalytics = analyticsData?.analytics || {};
+  const timeSeries = analyticsData?.time_series || rawAnalytics.scansOverTime || [];
+  const devices = analyticsData?.devices || rawAnalytics.deviceBreakdown || [];
+  const osData = analyticsData?.os || rawAnalytics.osBreakdown || [];
+  const browsers = analyticsData?.browsers || rawAnalytics.browserBreakdown || [];
+  const locations = analyticsData?.locations || rawAnalytics.cityBreakdown || rawAnalytics.countryBreakdown || [];
+  const recentScans = (analyticsData?.recent_scans || rawAnalytics.recentScans || []).map((s) => ({
+    ...s,
+    device: s.device || s.device_type || 'desktop',
+    location: s.location || (s.city && s.country && s.city !== 'Unknown City' ? `${s.city}, ${s.country}` : (s.country || 'Global')),
+  }));
+  const qrInfo = analyticsData?.qr_code || analyticsData?.qr || {};
+  const totalScans = analyticsData?.summary?.total_scans ?? rawAnalytics.totalScans ?? qrInfo.total_scans ?? 0;
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -212,7 +218,7 @@ export default function AnalyticsPage({
               <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Scans</span>
               <div className="flex items-baseline gap-2 mt-1">
                 <span className="text-3xl font-display font-black text-emerald-600 dark:text-emerald-400">
-                  {analyticsData?.summary?.total_scans || 0}
+                  {totalScans}
                 </span>
                 <span className="text-xs text-slate-400">hits</span>
               </div>
