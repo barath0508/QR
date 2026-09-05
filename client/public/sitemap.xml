@@ -5,12 +5,12 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://qrloop.vercel.app/</loc>
+    <loc>https://qrloop4.vercel.app/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://qrloop.vercel.app/og-image.png</image:loc>
+      <image:loc>https://qrloop4.vercel.app/og-image.png</image:loc>
       <image:title>QRLoop - Free Dynamic QR Code Generator Platform</image:title>
       <image:caption>Modern dynamic QR code generator with live redirects, custom branding, and real-time scan analytics</image:caption>
     </image:image>
@@ -18,12 +18,12 @@
 
   <!-- Dynamic QR Generator (core product page) -->
   <url>
-    <loc>https://qrloop.vercel.app/dynamic-qr</loc>
+    <loc>https://qrloop4.vercel.app/dynamic-qr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.97</priority>
     <image:image>
-      <image:loc>https://qrloop.vercel.app/og-image.png</image:loc>
+      <image:loc>https://qrloop4.vercel.app/og-image.png</image:loc>
       <image:title>Dynamic QR Code Generator Pro - Edit URLs After Printing</image:title>
       <image:caption>Create fully trackable dynamic QR codes with live scan analytics and instant URL redirect editing</image:caption>
     </image:image>
@@ -31,12 +31,12 @@
 
   <!-- Static QR Generator -->
   <url>
-    <loc>https://qrloop.vercel.app/static-qr</loc>
+    <loc>https://qrloop4.vercel.app/static-qr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://qrloop.vercel.app/og-image.png</image:loc>
+      <image:loc>https://qrloop4.vercel.app/og-image.png</image:loc>
       <image:title>Free Static QR Code Generator - No Account Required</image:title>
       <image:caption>Generate offline static QR codes for Wi-Fi, vCard, Text, Email, and Phone — no server, no login</image:caption>
     </image:image>
@@ -44,7 +44,7 @@
 
   <!-- Dashboard -->
   <url>
-    <loc>https://qrloop.vercel.app/dashboard</loc>
+    <loc>https://qrloop4.vercel.app/dashboard</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.88</priority>
@@ -52,7 +52,7 @@
 
   <!-- Compare page -->
   <url>
-    <loc>https://qrloop.vercel.app/compare</loc>
+    <loc>https://qrloop4.vercel.app/compare</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -60,7 +60,7 @@
 
   <!-- Blog -->
   <url>
-    <loc>https://qrloop.vercel.app/blog</loc>
+    <loc>https://qrloop4.vercel.app/blog</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -68,7 +68,7 @@
 
   <!-- Analytics page -->
   <url>
-    <loc>https://qrloop.vercel.app/analytics</loc>
+    <loc>https://qrloop4.vercel.app/analytics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>

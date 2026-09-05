@@ -1,4 +1,4 @@
-# robots.txt — https://qrloop.vercel.app
+# robots.txt — https://qrloop4.vercel.app
 # Generated: 2026-09-05
 
 # -----------------------------------------------
@@ -72,6 +72,6 @@ Crawl-delay: 2
 # -----------------------------------------------
 # Canonical host & sitemaps
 # -----------------------------------------------
-Host: https://qrloop.vercel.app
-Sitemap: https://qrloop.vercel.app/sitemap.xml
-Sitemap: https://qrloop.vercel.app/llms.txt
+Host: https://qrloop4.vercel.app
+Sitemap: https://qrloop4.vercel.app/sitemap.xml
+Sitemap: https://qrloop4.vercel.app/llms.txt
