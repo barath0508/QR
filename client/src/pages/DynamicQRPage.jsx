@@ -8,7 +8,8 @@ export default function DynamicQRPage({
   onOpenAuth, 
   onNavigateToDashboard, 
   onNavigateToAnalytics,
-  onBackToHome 
+  onBackToHome,
+  initialQR,
 }) {
   return (
     <div className="space-y-8 pb-12">
@@ -72,6 +73,7 @@ export default function DynamicQRPage({
       <QRStudio
         user={user}
         forcedDynamic={true}
+        initialQR={initialQR}
         onRequireAuth={(promptMessage) => {
           onOpenAuth('register', promptMessage || 'Please sign in or create a free account to save your Dynamic QR code and track live scans.');
         }}

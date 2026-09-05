@@ -32,7 +32,8 @@ export default function QRStudio({
   onNavigateToDashboard, 
   onNavigateToAnalytics,
   forcedDynamic,
-  onRequireAuth 
+  onRequireAuth,
+  initialQR,
 }) {
   // Active QR Content Type
   const [activeType, setActiveType] = useState('url'); // 'url' | 'wifi' | 'vcard' | 'text' | 'email' | 'phone'
@@ -71,6 +72,7 @@ export default function QRStudio({
   
   // Logo overlay states
   const [logoImage, setLogoImage] = useState(null);
+  const [logoDataUrl, setLogoDataUrl] = useState(null);
   const [logoPreset, setLogoPreset] = useState(null); // 'globe' | 'wifi' | 'user' | 'sparkles'
   const [logoPadding, setLogoPadding] = useState(6);
   const [logoShape, setLogoShape] = useState('circle'); // 'circle' | 'square'
@@ -83,6 +85,39 @@ export default function QRStudio({
   const [isSaving, setIsSaving] = useState(false);
   const [savedSuccessQR, setSavedSuccessQR] = useState(null);
   const [saveError, setSaveError] = useState('');
+
+  // Pre-populate if initialQR is provided for editing design
+  useEffect(() => {
+    if (!initialQR) return;
+    if (initialQR.title) setQrTitle(initialQR.title);
+    setIsDynamic(initialQR.is_dynamic !== false);
+    if (initialQR.qr_type) setActiveType(initialQR.qr_type);
+    if (initialQR.destination_url) setUrl(initialQR.destination_url);
+    if (initialQR.style_config) {
+      let cfg = initialQR.style_config;
+      if (typeof cfg === 'string') {
+        try { cfg = JSON.parse(cfg); } catch (e) { cfg = {}; }
+      }
+      if (cfg.fgColor) setFgColor(cfg.fgColor);
+      if (cfg.bgColor) setBgColor(cfg.bgColor);
+      if (cfg.dotStyle) setDotStyle(cfg.dotStyle);
+      if (cfg.eyeStyle) setEyeStyle(cfg.eyeStyle);
+      if (cfg.eyeOuterColor) setEyeOuterColor(cfg.eyeOuterColor);
+      if (cfg.eyeInnerColor) setEyeInnerColor(cfg.eyeInnerColor);
+      if (cfg.useSeparateEyeColors !== undefined) setUseSeparateEyeColors(cfg.useSeparateEyeColors);
+      if (cfg.errorCorrection) setErrorCorrection(cfg.errorCorrection);
+      if (cfg.logoPreset) setLogoPreset(cfg.logoPreset);
+      if (cfg.logoShape) setLogoShape(cfg.logoShape);
+      if (cfg.logoPadding !== undefined) setLogoPadding(cfg.logoPadding);
+      if (cfg.logoDataUrl) {
+        setLogoDataUrl(cfg.logoDataUrl);
+        const img = new Image();
+        img.onload = () => setLogoImage(img);
+        img.src = cfg.logoDataUrl;
+      }
+    }
+    setSavedSuccessQR(initialQR);
+  }, [initialQR]);
 
   // Formatted QR Text calculation
   const getFormattedPayload = () => {
@@ -174,13 +209,15 @@ export default function QRStudio({
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (event) => {
+      const dataUrl = event.target.result;
+      setLogoDataUrl(dataUrl);
       const img = new Image();
       img.onload = () => {
         setLogoImage(img);
         setLogoPreset(null);
         setErrorCorrection('H');
       };
-      img.src = event.target.result;
+      img.src = dataUrl;
     };
     reader.readAsDataURL(file);
   };
@@ -212,32 +249,49 @@ export default function QRStudio({
     setSaveError('');
 
     try {
-      const payload = {
-        title: qrTitle || (isDynamic ? 'My Dynamic QR' : 'My Static QR'),
-        qr_type: activeType,
-        destination_url: activeType === 'url' ? url : getFormattedPayload(),
-        custom_alias: customAlias.trim() || undefined,
-        is_dynamic: isDynamic,
-        style_config: {
-          fgColor,
-          bgColor,
-          dotStyle,
-          eyeStyle,
-          eyeOuterColor,
-          eyeInnerColor,
-          errorCorrection,
-          logoPreset,
-        },
+      const styleConfigObj = {
+        fgColor,
+        bgColor,
+        dotStyle,
+        eyeStyle,
+        eyeOuterColor,
+        eyeInnerColor,
+        useSeparateEyeColors,
+        errorCorrection,
+        logoPreset,
+        logoShape,
+        logoPadding,
+        logoDataUrl: logoDataUrl || undefined,
       };
 
-      const result = await api.createQR(payload);
-      setSavedSuccessQR(result.qr);
-      if (onSavedQR) onSavedQR(result.qr);
+      let resultQR = null;
+      if (initialQR && initialQR.id) {
+        const updateRes = await api.updateQR(initialQR.id, {
+          title: qrTitle || (isDynamic ? 'My Dynamic QR' : 'My Static QR'),
+          destination_url: activeType === 'url' ? url : getFormattedPayload(),
+          style_config: styleConfigObj,
+        });
+        resultQR = updateRes.qr;
+      } else {
+        const payload = {
+          title: qrTitle || (isDynamic ? 'My Dynamic QR' : 'My Static QR'),
+          qr_type: activeType,
+          destination_url: activeType === 'url' ? url : getFormattedPayload(),
+          custom_alias: customAlias.trim() || undefined,
+          is_dynamic: isDynamic,
+          style_config: styleConfigObj,
+        };
+        const createRes = await api.createQR(payload);
+        resultQR = createRes.qr;
+      }
+
+      setSavedSuccessQR(resultQR);
+      if (onSavedQR) onSavedQR(resultQR);
 
       // Also persist in local cache for immediate availability
       try {
         const existing = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
-        const updated = [result.qr, ...existing.filter(q => q.id !== result.qr.id)].slice(0, 50);
+        const updated = [resultQR, ...existing.filter(q => q.id !== resultQR.id)].slice(0, 50);
         localStorage.setItem('qrloop_guest_qrs', JSON.stringify(updated));
       } catch (e) {}
 
@@ -712,6 +766,7 @@ export default function QRStudio({
                     onClick={() => {
                       setLogoImage(null);
                       setLogoPreset(null);
+                      setLogoDataUrl(null);
                     }}
                     className="text-[11px] text-red-500 hover:underline"
                   >
@@ -900,7 +955,17 @@ export default function QRStudio({
                 <button
                   onClick={() => {
                     autoSaveIfLoggedIn();
-                    downloadSVG(currentEncodedText, { fgColor, bgColor, errorCorrection }, `${qrTitle.replace(/\s+/g, '_')}_qr.svg`);
+                    downloadSVG(currentEncodedText, {
+                      fgColor,
+                      bgColor,
+                      dotStyle,
+                      eyeStyle,
+                      eyeOuterColor,
+                      eyeInnerColor,
+                      useSeparateEyeColors,
+                      errorCorrection,
+                      logoPreset,
+                    }, `${qrTitle.replace(/\s+/g, '_')}_qr.svg`);
                   }}
                   className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >

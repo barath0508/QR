@@ -24,6 +24,7 @@ export default function App() {
   });
 
   const [selectedQrId, setSelectedQrId] = useState(null);
+  const [editingQRForStudio, setEditingQRForStudio] = useState(null);
   const [user, setUser] = useState(authStorage.getUser());
   const [systemStatus, setSystemStatus] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -188,6 +189,7 @@ export default function App() {
         {currentTab === 'dynamic-qr' && (
           <DynamicQRPage
             user={user}
+            initialQR={editingQRForStudio}
             onOpenAuth={handleOpenAuth}
             onNavigateToDashboard={() => handleNavigate('dashboard')}
             onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
@@ -198,14 +200,20 @@ export default function App() {
         {currentTab === 'static-qr' && (
           <StaticQRPage
             onBackToHome={() => handleNavigate('home')}
-            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+            onNavigateToDynamic={() => {
+              setEditingQRForStudio(null);
+              handleNavigate('dynamic-qr');
+            }}
           />
         )}
 
         {currentTab === 'dashboard' && (
           <DashboardPage
             user={user}
-            onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+            onNavigateToStudio={(qr) => {
+              setEditingQRForStudio(qr || null);
+              handleNavigate('dynamic-qr');
+            }}
             onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
             onOpenAuth={handleOpenAuth}
           />

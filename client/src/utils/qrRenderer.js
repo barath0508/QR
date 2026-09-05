@@ -1,6 +1,30 @@
 import QRCode from 'qrcode';
 
 /**
+ * Robust cross-browser rounded rectangle fill
+ * Uses native roundRect when available, with arcTo fallback for older engines
+ */
+export function fillRoundedRect(ctx, x, y, w, h, radius) {
+  const r = Math.max(0, Math.min(radius, w / 2, h / 2));
+  if (r <= 0) {
+    ctx.fillRect(x, y, w, h);
+    return;
+  }
+  ctx.beginPath();
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(x, y, w, h, r);
+  } else {
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  ctx.fill();
+}
+
+/**
  * Checks if a matrix coordinate belongs to one of the three 7x7 corner eye finder patterns
  */
 export function isFinderPattern(r, c, size) {
@@ -40,14 +64,10 @@ export function drawCornerEye(ctx, x, y, cellSize, outerColor, innerColor, bgCol
     ctx.fill();
   } else if (style === 'rounded') {
     const rad = cellSize * 2;
-    ctx.beginPath();
-    ctx.roundRect(x, y, eyeSize, eyeSize, rad);
-    ctx.fill();
+    fillRoundedRect(ctx, x, y, eyeSize, eyeSize, rad);
 
     ctx.fillStyle = bgColor;
-    ctx.beginPath();
-    ctx.roundRect(x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize, rad * 0.7);
-    ctx.fill();
+    fillRoundedRect(ctx, x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize, rad * 0.7);
   } else {
     // Square
     ctx.fillRect(x, y, eyeSize, eyeSize);
@@ -66,13 +86,25 @@ export function drawCornerEye(ctx, x, y, cellSize, outerColor, innerColor, bgCol
     ctx.arc(x + centerOffset + centerRadius, y + centerOffset + centerRadius, centerRadius, 0, Math.PI * 2);
     ctx.fill();
   } else if (style === 'rounded') {
-    ctx.beginPath();
-    ctx.roundRect(x + centerOffset, y + centerOffset, centerSize, centerSize, cellSize * 0.8);
-    ctx.fill();
+    fillRoundedRect(ctx, x + centerOffset, y + centerOffset, centerSize, centerSize, cellSize * 0.8);
   } else {
     // Square
     ctx.fillRect(x + centerOffset, y + centerOffset, centerSize, centerSize);
   }
+}
+
+/**
+ * Loads an image from a data URL or path asynchronously
+ */
+export function loadImageAsync(src) {
+  return new Promise((resolve) => {
+    if (!src) return resolve(null);
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
 }
 
 /**
@@ -103,7 +135,14 @@ export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}
   const logoPreset = style.logoPreset || null;
   const logoShape = style.logoShape || 'circle';
   const logoPadding = style.logoPadding ?? 6;
-  const hasLogo = !!(logoImage || logoPreset);
+
+  // If no in-memory logo image is provided, attempt to load from style.logoDataUrl
+  let activeLogoImg = logoImage;
+  if (!activeLogoImg && style.logoDataUrl) {
+    activeLogoImg = await loadImageAsync(style.logoDataUrl);
+  }
+
+  const hasLogo = !!(activeLogoImg || logoPreset);
 
   try {
     const qr = QRCode.create(textToEncode || 'https://qrloop.io', {
@@ -146,14 +185,10 @@ export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}
             ctx.fill();
           } else if (dotStyle === 'rounded') {
             const radius = cellSize * 0.35;
-            ctx.beginPath();
-            ctx.roundRect(x + 0.5, y + 0.5, cellSize - 1, cellSize - 1, radius);
-            ctx.fill();
+            fillRoundedRect(ctx, x + 0.5, y + 0.5, cellSize - 1, cellSize - 1, radius);
           } else if (dotStyle === 'smooth') {
             const radius = cellSize * 0.45;
-            ctx.beginPath();
-            ctx.roundRect(x, y, cellSize, cellSize, radius);
-            ctx.fill();
+            fillRoundedRect(ctx, x, y, cellSize, cellSize, radius);
           } else {
             // Square
             ctx.fillRect(x, y, cellSize, cellSize);
@@ -182,14 +217,12 @@ export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}
         ctx.arc(logoCenter, logoCenter, (logoSizePx / 2) + logoPadding, 0, Math.PI * 2);
         ctx.fill();
       } else {
-        ctx.beginPath();
-        ctx.roundRect(logoX - logoPadding, logoY - logoPadding, logoSizePx + logoPadding * 2, logoSizePx + logoPadding * 2, 12);
-        ctx.fill();
+        fillRoundedRect(ctx, logoX - logoPadding, logoY - logoPadding, logoSizePx + logoPadding * 2, logoSizePx + logoPadding * 2, 12);
       }
       ctx.shadowBlur = 0;
 
-      if (logoImage) {
-        ctx.drawImage(logoImage, logoX, logoY, logoSizePx, logoSizePx);
+      if (activeLogoImg) {
+        ctx.drawImage(activeLogoImg, logoX, logoY, logoSizePx, logoSizePx);
       } else if (logoPreset) {
         ctx.fillStyle = fgColor;
         ctx.font = `bold ${logoSizePx * 0.6}px sans-serif`;
@@ -202,4 +235,105 @@ export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}
   } catch (err) {
     console.error('Error drawing styled QR code:', err);
   }
+}
+
+/**
+ * Generates high-fidelity styled SVG string supporting dot patterns, corner eye shapes, and colors
+ */
+export function generateStyledSVG(textToEncode, rawStyleConfig = {}) {
+  let style = rawStyleConfig || {};
+  if (typeof style === 'string') {
+    try { style = JSON.parse(style); } catch (e) { style = {}; }
+  }
+
+  const fgColor = style.fgColor || '#0F172A';
+  const bgColor = style.bgColor || '#FFFFFF';
+  const dotStyle = style.dotStyle || 'rounded';
+  const eyeStyle = style.eyeStyle || 'rounded';
+  const useSeparateEyeColors = style.useSeparateEyeColors !== false;
+  const effectiveOuterEye = useSeparateEyeColors && style.eyeOuterColor ? style.eyeOuterColor : fgColor;
+  const effectiveInnerEye = useSeparateEyeColors && style.eyeInnerColor ? style.eyeInnerColor : fgColor;
+  const errorCorrection = style.errorCorrection || 'H';
+  const logoPreset = style.logoPreset || null;
+  const hasLogo = !!logoPreset;
+
+  const qr = QRCode.create(textToEncode || 'https://qrloop.io', {
+    errorCorrectionLevel: errorCorrection,
+  });
+
+  const modules = qr.modules;
+  const size = modules.size;
+  const margin = 2;
+  const totalCells = size + margin * 2;
+  const cellSize = 10;
+  const svgDim = totalCells * cellSize;
+
+  let elements = [];
+
+  // Background
+  elements.push(`<rect width="${svgDim}" height="${svgDim}" fill="${bgColor}" />`);
+
+  // Draw modules
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (isFinderPattern(r, c, size)) continue;
+      if (isLogoZone(r, c, size, hasLogo)) continue;
+
+      if (modules.get(r, c)) {
+        const x = (c + margin) * cellSize;
+        const y = (r + margin) * cellSize;
+
+        if (dotStyle === 'dots') {
+          const cx = x + cellSize / 2;
+          const cy = y + cellSize / 2;
+          const radius = (cellSize * 0.85) / 2;
+          elements.push(`<circle cx="${cx}" cy="${cy}" r="${radius}" fill="${fgColor}" />`);
+        } else if (dotStyle === 'rounded') {
+          elements.push(`<rect x="${x + 0.5}" y="${y + 0.5}" width="${cellSize - 1}" height="${cellSize - 1}" rx="${cellSize * 0.35}" fill="${fgColor}" />`);
+        } else if (dotStyle === 'smooth') {
+          elements.push(`<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="${cellSize * 0.45}" fill="${fgColor}" />`);
+        } else {
+          elements.push(`<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="${fgColor}" />`);
+        }
+      }
+    }
+  }
+
+  // Draw 3 corner eyes
+  const drawEyeSVG = (originX, originY) => {
+    const eyeSize = 7 * cellSize;
+    if (eyeStyle === 'circle') {
+      const radius = eyeSize / 2;
+      elements.push(`<circle cx="${originX + radius}" cy="${originY + radius}" r="${radius}" fill="${effectiveOuterEye}" />`);
+      elements.push(`<circle cx="${originX + radius}" cy="${originY + radius}" r="${radius - cellSize}" fill="${bgColor}" />`);
+      const centerRadius = (3 * cellSize) / 2;
+      elements.push(`<circle cx="${originX + radius}" cy="${originY + radius}" r="${centerRadius}" fill="${effectiveInnerEye}" />`);
+    } else if (eyeStyle === 'rounded') {
+      const rad = cellSize * 2;
+      elements.push(`<rect x="${originX}" y="${originY}" width="${eyeSize}" height="${eyeSize}" rx="${rad}" fill="${effectiveOuterEye}" />`);
+      elements.push(`<rect x="${originX + cellSize}" y="${originY + cellSize}" width="${5 * cellSize}" height="${5 * cellSize}" rx="${rad * 0.7}" fill="${bgColor}" />`);
+      elements.push(`<rect x="${originX + 2 * cellSize}" y="${originY + 2 * cellSize}" width="${3 * cellSize}" height="${3 * cellSize}" rx="${cellSize * 0.8}" fill="${effectiveInnerEye}" />`);
+    } else {
+      elements.push(`<rect x="${originX}" y="${originY}" width="${eyeSize}" height="${eyeSize}" fill="${effectiveOuterEye}" />`);
+      elements.push(`<rect x="${originX + cellSize}" y="${originY + cellSize}" width="${5 * cellSize}" height="${5 * cellSize}" fill="${bgColor}" />`);
+      elements.push(`<rect x="${originX + 2 * cellSize}" y="${originY + 2 * cellSize}" width="${3 * cellSize}" height="${3 * cellSize}" fill="${effectiveInnerEye}" />`);
+    }
+  };
+
+  drawEyeSVG(margin * cellSize, margin * cellSize);
+  drawEyeSVG((size - 7 + margin) * cellSize, margin * cellSize);
+  drawEyeSVG(margin * cellSize, (size - 7 + margin) * cellSize);
+
+  // Logo Badge in center
+  if (logoPreset) {
+    const logoSize = svgDim * 0.22;
+    const center = svgDim / 2;
+    elements.push(`<circle cx="${center}" cy="${center}" r="${logoSize / 2 + 6}" fill="${bgColor}" stroke="${effectiveOuterEye}" stroke-width="1" />`);
+    const iconChar = logoPreset === 'globe' ? '🌐' : logoPreset === 'wifi' ? '📶' : logoPreset === 'user' ? '👤' : '✨';
+    elements.push(`<text x="${center}" y="${center + 5}" font-size="${logoSize * 0.55}" text-anchor="middle" dominant-baseline="central">${iconChar}</text>`);
+  }
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgDim} ${svgDim}" width="${svgDim}" height="${svgDim}">
+    ${elements.join('\n')}
+  </svg>`;
 }

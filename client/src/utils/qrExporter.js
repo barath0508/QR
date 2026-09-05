@@ -23,20 +23,14 @@ export function downloadCanvasAsPNG(sourceCanvas, filename = 'qr-code.png', mult
   document.body.removeChild(link);
 }
 
+import { generateStyledSVG } from './qrRenderer';
+
 /**
- * Generates and downloads an SVG file
+ * Generates and downloads a styled SVG vector file matching the user's custom design
  */
-export async function downloadSVG(text, options = {}, filename = 'qr-code.svg') {
+export async function downloadSVG(text, styleConfig = {}, filename = 'qr-code.svg') {
   try {
-    const svgString = await QRCode.toString(text || 'https://qrloop.io', {
-      type: 'svg',
-      margin: 2,
-      color: {
-        dark: options.fgColor || '#000000',
-        light: options.bgColor || '#ffffff',
-      },
-      errorCorrectionLevel: options.errorCorrection || 'H',
-    });
+    const svgString = generateStyledSVG(text || 'https://qrloop.io', styleConfig);
 
     const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);

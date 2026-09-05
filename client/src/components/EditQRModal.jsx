@@ -103,7 +103,7 @@ export default function EditQRModal({ qr, isOpen, onClose, onUpdated }) {
             <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
               <span>Short Redirect Link:</span>
               <a
-                href={`http://localhost:5000/r/${qr.short_code}`}
+                href={`${typeof window !== 'undefined' ? window.location.origin : ''}/r/${qr.short_code}`}
                 target="_blank"
                 rel="noreferrer"
                 className="text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1 font-mono"
