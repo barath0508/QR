@@ -27,7 +27,7 @@ const analyticsController = {
       });
     } catch (err) {
       console.error('Error fetching QR analytics:', err);
-      res.status(500).json({ error: 'Failed to retrieve analytics data' });
+      res.status(500).json({ error: err.message || 'Failed to retrieve analytics data' });
     }
   },
 
@@ -62,7 +62,7 @@ const analyticsController = {
       });
     } catch (err) {
       console.error('Error fetching dashboard overview:', err);
-      res.status(500).json({ error: 'Failed to retrieve overview statistics' });
+      res.status(500).json({ error: err.message || 'Failed to retrieve overview statistics' });
     }
   },
 
@@ -86,7 +86,7 @@ const analyticsController = {
       });
     } catch (err) {
       console.error('Error fetching public stats:', err);
-      res.status(500).json({ error: 'Failed to retrieve public statistics' });
+      res.status(500).json({ error: err.message || 'Failed to retrieve public statistics' });
     }
   }
 };

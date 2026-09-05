@@ -42,7 +42,10 @@ const authController = {
       });
     } catch (err) {
       console.error('Registration error:', err);
-      res.status(500).json({ error: 'Internal server error during registration' });
+      res.status(500).json({ 
+        error: err.message || 'Internal server error during registration',
+        details: err.details || undefined,
+      });
     }
   },
 
@@ -76,7 +79,7 @@ const authController = {
       });
     } catch (err) {
       console.error('Login error:', err);
-      res.status(500).json({ error: 'Internal server error during login' });
+      res.status(500).json({ error: err.message || 'Internal server error during login' });
     }
   },
 
@@ -89,7 +92,7 @@ const authController = {
       res.json({ user });
     } catch (err) {
       console.error('Get profile error:', err);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: err.message || 'Internal server error' });
     }
   },
 };

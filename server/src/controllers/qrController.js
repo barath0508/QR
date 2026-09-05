@@ -77,7 +77,7 @@ const qrController = {
       });
     } catch (err) {
       console.error('Error creating QR code:', err);
-      res.status(500).json({ error: 'Failed to create QR code' });
+      res.status(500).json({ error: err.message || 'Failed to create QR code' });
     }
   },
 
@@ -95,7 +95,7 @@ const qrController = {
       res.json({ qrs: enriched });
     } catch (err) {
       console.error('Error listing user QR codes:', err);
-      res.status(500).json({ error: 'Failed to retrieve QR codes' });
+      res.status(500).json({ error: err.message || 'Failed to retrieve QR codes' });
     }
   },
 
@@ -149,7 +149,7 @@ const qrController = {
       });
     } catch (err) {
       console.error('Error updating QR code:', err);
-      res.status(500).json({ error: 'Failed to update QR code' });
+      res.status(500).json({ error: err.message || 'Failed to update QR code' });
     }
   },
 
@@ -192,7 +192,7 @@ const qrController = {
       });
     } catch (err) {
       console.error('Error duplicating QR code:', err);
-      res.status(500).json({ error: 'Failed to duplicate QR code' });
+      res.status(500).json({ error: err.message || 'Failed to duplicate QR code' });
     }
   },
 
@@ -209,7 +209,7 @@ const qrController = {
       res.json({ message: 'QR code deleted successfully' });
     } catch (err) {
       console.error('Error deleting QR code:', err);
-      res.status(500).json({ error: 'Failed to delete QR code' });
+      res.status(500).json({ error: err.message || 'Failed to delete QR code' });
     }
   },
 
