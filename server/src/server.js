@@ -63,7 +63,7 @@ app.get('/status', handleStatus);
 // 4. Centralized Error Handler
 app.use((err, req, res, next) => {
   console.error('Unhandled server error:', err);
-  const statusCode = err.status || 500;
+  const statusCode = err.status || err.statusCode || 500;
   res.status(statusCode).json({
     error: err.name || 'Internal server error',
     message: err.message || 'An unexpected error occurred',
