@@ -13,13 +13,74 @@ import { api, authStorage } from './services/api';
 
 export default function App() {
   // Routes: 'home' | 'dynamic-qr' | 'static-qr' | 'dashboard' | 'analytics' | 'blog' | 'compare'
-  const [currentTab, setCurrentTab] = useState('home');
+  const [currentTab, setCurrentTab] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.replace(/^\//, '').toLowerCase();
+      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare'].includes(path)) {
+        return path;
+      }
+    }
+    return 'home';
+  });
+
   const [selectedQrId, setSelectedQrId] = useState(null);
   const [user, setUser] = useState(authStorage.getUser());
   const [systemStatus, setSystemStatus] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState('login');
   const [authCustomPrompt, setAuthCustomPrompt] = useState('');
+
+  // Page SEO configuration for dynamic title & meta updates
+  const pageSEO = {
+    'home': {
+      title: 'QRLoop - Free Dynamic QR Code Generator | Best QR Generator & Analytics (No Expiration)',
+      desc: 'The best free dynamic QR code generator pro platform. Create editable QR codes for websites with custom logos, colors, high-res QR to image exports (PNG, SVG, PDF), and real-time scan analytics with lifetime active links.',
+    },
+    'dynamic-qr': {
+      title: 'Dynamic QR Code Generator - Editable URLs & Real-Time Analytics | QRLoop',
+      desc: 'Create custom dynamic QR codes with instant redirect tracking. Update your destination website URL anytime without reprinting. 100% free with lifetime active links.',
+    },
+    'static-qr': {
+      title: 'Free Static QR Code Generator (Instant Download, Zero Login) | QRLoop',
+      desc: 'Generate permanent static QR codes for websites, Wi-Fi networks, and contact cards. 100% offline capable with instant PNG, SVG vector, and PDF downloads.',
+    },
+    'dashboard': {
+      title: 'My Dynamic QR Codes - Real-Time Management Dashboard | QRLoop',
+      desc: 'Manage your active dynamic QR codes, update destination URLs on the fly, export print standees, and inspect live scan telemetry.',
+    },
+    'analytics': {
+      title: 'QR Code Scan Analytics & Real-Time Telemetry | QRLoop',
+      desc: 'Track QR code performance with real-time scan volume, device breakdown, operating systems, browsers, and top geographic locations.',
+    },
+    'blog': {
+      title: 'QR Code Guides, Printing Rules & Industry Insights | QRLoop Knowledge Hub',
+      desc: 'Learn about QR print specifications, the 10:1 scanning rule, and how to avoid the 14-day commercial QR code paywall trap.',
+    },
+    'compare': {
+      title: 'Best Free QR Code Generator vs Paid Alternatives (Bitly, QRCode Monkey) | QRLoop',
+      desc: 'Compare QRLoop against commercial QR code platforms. See why you never need to pay $35/month for dynamic redirect links.',
+    },
+  };
+
+  useEffect(() => {
+    const seo = pageSEO[currentTab] || pageSEO['home'];
+    document.title = seo.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', seo.desc);
+  }, [currentTab]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.replace(/^\//, '').toLowerCase();
+      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare'].includes(path)) {
+        setCurrentTab(path);
+      } else {
+        setCurrentTab('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Theme state ('dark' | 'light')
   const [theme, setTheme] = useState(() => {
@@ -41,6 +102,7 @@ export default function App() {
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
+
 
   useEffect(() => {
     async function init() {
@@ -83,6 +145,12 @@ export default function App() {
   const handleNavigate = (tab, param = null) => {
     if (param) setSelectedQrId(param);
     setCurrentTab(tab);
+    if (typeof window !== 'undefined') {
+      const newPath = tab === 'home' ? '/' : `/${tab}`;
+      if (window.location.pathname !== newPath) {
+        window.history.pushState({ tab, param }, '', newPath);
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

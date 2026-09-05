@@ -319,6 +319,68 @@ export default function LandingPage({
         </div>
       </section>
 
+      {/* 6. Comprehensive SEO FAQ Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center space-y-3">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
+            Frequently Asked Questions
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
+            Everything You Need to Know About Dynamic & Static QR Codes
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+            Clear answers about QR customization, vector image exports, analytics, and lifetime active links.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
+              What is the best free dynamic QR code generator?
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              <strong>QRLoop</strong> is designed to be the best free dynamic QR code generator because unlike commercial alternatives, it never locks your codes after a 14-day trial. You get editable destination URLs, real-time scan analytics, custom logo embedding, and lossless vector exports completely free.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
+              How do dynamic QR codes work for a website?
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              A dynamic QR code encodes a short, high-speed redirect link (e.g. <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-600 dark:text-emerald-400 font-mono text-xs">/r/:shortcode</code>) rather than a long URL. When scanned, our global edge redirects the user to your destination website in under 50ms while logging scan telemetry (device, operating system, timestamp, and location). You can update the destination URL at any time from your dashboard without changing your printed QR codes.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
+              What QR customization options are available?
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              QRLoop gives you total design control: choose dot module shapes (dots, rounded squares, class blocks), corner eye designs (square, rounded, circle), custom color gradients, background transparency, and center brand logos or social icons with automatic quiet-zone masking.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
+              How do I export a QR code to high-resolution image formats?
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              You can download your customized QR code in multiple formats: <strong>PNG</strong> for digital use and social media, <strong>lossless vector SVG</strong> for scalable commercial billboards and packaging, and <strong>print-ready A4 PDF</strong> with centered cut-out guidelines for restaurant table standees and desk signage.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
+              Do QRLoop dynamic QR codes ever expire?
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              No! QRLoop dynamic QR codes have <strong>lifetime active redirects</strong>. There are zero scan limits, no monthly renewal fees, and no 14-day expiration traps. You can print them on physical marketing collateral with complete confidence.
+            </p>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
