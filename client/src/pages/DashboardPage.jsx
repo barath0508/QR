@@ -338,10 +338,10 @@ export default function DashboardPage({
       {/* Top Header & Overview */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight">
             Dynamic QR Management
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 hidden sm:block">
             Manage your dynamic redirect endpoints, monitor scan frequency, and update destinations.
           </p>
         </div>
@@ -376,38 +376,38 @@ export default function DashboardPage({
       )}
 
       {/* Metric Cards Banner */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total QR Codes</span>
-          <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-display font-bold text-slate-900 dark:text-white">{qrs.length}</span>
-            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-mono">100% active</span>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total QRs</span>
+          <div className="flex items-baseline gap-1.5 mt-1">
+            <span className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">{qrs.length}</span>
+            <span className="text-[10px] sm:text-xs text-emerald-600 dark:text-emerald-400 font-mono">active</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Scans Recorded</span>
-          <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-display font-bold text-emerald-600 dark:text-emerald-400">{totalScans}</span>
-            <span className="text-xs text-slate-400">lifetime</span>
+        <div className="p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Scans</span>
+          <div className="flex items-baseline gap-1.5 mt-1">
+            <span className="text-xl sm:text-2xl font-display font-bold text-emerald-600 dark:text-emerald-400">{totalScans}</span>
+            <span className="text-[10px] sm:text-xs text-slate-400">lifetime</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Links</span>
-          <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-display font-bold text-cyan-600 dark:text-cyan-400">{activeCount}</span>
-            <span className="text-xs text-slate-400">routes online</span>
+        <div className="p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Links</span>
+          <div className="flex items-baseline gap-1.5 mt-1">
+            <span className="text-xl sm:text-2xl font-display font-bold text-cyan-600 dark:text-cyan-400">{activeCount}</span>
+            <span className="text-[10px] sm:text-xs text-slate-400">online</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Top Performing</span>
+        <div className="p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-dark-900/60 backdrop-blur-md shadow-xs dark:shadow-none">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Top QR</span>
           <div className="truncate mt-1">
-            <span className="text-sm font-bold text-slate-900 dark:text-white block truncate">
+            <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white block truncate">
               {topQR ? topQR.title : 'None yet'}
             </span>
-            <span className="text-xs text-brand-600 dark:text-brand-400 font-mono">
+            <span className="text-[10px] sm:text-xs text-brand-600 dark:text-brand-400 font-mono">
               {topQR ? `${topQR.total_scans || 0} scans` : 'Awaiting scans'}
             </span>
           </div>
@@ -489,14 +489,15 @@ export default function DashboardPage({
           </button>
         </div>
       ) : viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredQrs.map((qr) => (
             <div
               key={qr.id}
-              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/80 p-5 backdrop-blur-md flex flex-col justify-between hover:border-brand-500/40 transition-all shadow-sm dark:shadow-lg group"
+              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/80 p-4 sm:p-5 backdrop-blur-md flex flex-col justify-between hover:border-brand-500/40 transition-all shadow-sm dark:shadow-lg group"
             >
               <div>
-                <div className="flex items-start justify-between gap-3 mb-3">
+                {/* Card Header */}
+                <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex-1 min-w-0">
                     <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-brand-500/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 inline-block mb-1">
                       {qr.qr_type}
@@ -505,39 +506,37 @@ export default function DashboardPage({
                       {qr.title || 'Untitled QR'}
                     </h3>
                   </div>
-
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-dark-950 border border-slate-200 dark:border-white/5 text-xs font-mono">
+                  <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 dark:bg-dark-950 border border-slate-200 dark:border-white/5 flex-shrink-0">
                     <Eye className="w-3 h-3 text-brand-500" />
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">{qr.total_scans || 0}</span>
+                    <span className="text-[11px] font-bold font-mono text-emerald-600 dark:text-emerald-400">{qr.total_scans || 0}</span>
                   </div>
                 </div>
 
                 {/* QR Preview & Destination Details */}
-                <div className="flex items-center gap-4 my-3">
+                <div className="flex items-start gap-3 my-3">
                   <QRCardThumbnail qr={qr} onEnlarge={() => setPreviewingQR(qr)} />
 
                   <div className="flex-1 min-w-0 space-y-2 text-xs">
                     <div>
-                      <span className="text-[10px] text-slate-400 uppercase font-semibold">Redirect Target:</span>
+                      <span className="text-[10px] text-slate-400 uppercase font-semibold">Target URL</span>
                       <a
                         href={qr.destination_url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-300 truncate block font-mono text-[11px]"
+                        className="text-slate-700 dark:text-slate-300 hover:text-brand-500 truncate block font-mono text-[11px] mt-0.5 leading-tight"
                         title={qr.destination_url}
                       >
                         {qr.destination_url}
                       </a>
                     </div>
-
                     <div>
-                      <span className="text-[10px] text-slate-400 uppercase font-semibold">Short Link:</span>
-                      <div className="flex items-center gap-1 text-[11px] font-mono text-cyan-600 dark:text-cyan-400">
+                      <span className="text-[10px] text-slate-400 uppercase font-semibold">Short Link</span>
+                      <div className="flex items-center gap-1 text-[11px] font-mono text-cyan-600 dark:text-cyan-400 mt-0.5">
                         <span className="truncate">/r/{qr.short_code}</span>
                         <button
                           onClick={() => handleCopyLink(qr)}
-                          title="Copy Link"
-                          className="p-1 hover:text-slate-900 dark:hover:text-white"
+                          title="Copy link"
+                          className="ml-auto p-1 rounded hover:bg-slate-100 dark:hover:bg-white/5 flex-shrink-0"
                         >
                           {copiedId === qr.id ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
                         </button>
@@ -548,148 +547,113 @@ export default function DashboardPage({
               </div>
 
               {/* Card Footer Actions */}
-              <div className="pt-3 border-t border-slate-100 dark:border-white/5 space-y-2">
-                {/* Row 1 – Primary Actions */}
-                <div className="grid grid-cols-5 gap-1.5">
-                  <button
-                    onClick={() => handleDownloadPNG(qr)}
-                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-emerald-50 dark:bg-dark-950 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-white/5 hover:border-emerald-400/40 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
-                    title="Download PNG"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-semibold leading-none">PNG</span>
-                  </button>
-
-                  <button
-                    onClick={() => setPreviewingQR(qr)}
-                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-cyan-50 dark:bg-dark-950 dark:hover:bg-cyan-500/10 border border-slate-200 dark:border-white/5 hover:border-cyan-400/40 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all"
-                    title="Preview & Export"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-semibold leading-none">View</span>
-                  </button>
-
-                  <button
-                    onClick={() => onNavigateToStudio && onNavigateToStudio(qr)}
-                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-purple-50 dark:bg-dark-950 dark:hover:bg-purple-500/10 border border-slate-200 dark:border-white/5 hover:border-purple-400/40 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all"
-                    title="Customize in Studio"
-                  >
-                    <Palette className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-semibold leading-none">Design</span>
-                  </button>
-
-                  <button
-                    onClick={() => setEditingQR(qr)}
-                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-blue-50 dark:bg-dark-950 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-white/5 hover:border-blue-400/40 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
-                    title="Change destination URL"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-semibold leading-none">Edit URL</span>
-                  </button>
-
-                  <button
-                    onClick={() => onNavigateToAnalytics(qr.id)}
-                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 dark:bg-dark-950 dark:hover:bg-brand-500/10 border border-slate-200 dark:border-white/5 hover:border-brand-400/40 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-all"
-                    title="View Scan Analytics"
-                  >
-                    <BarChart3 className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-semibold leading-none">Stats</span>
-                  </button>
+              <div className="pt-3 border-t border-slate-100 dark:border-white/5 space-y-2 mt-2">
+                {/* Row 1 – 5 Primary Action Tiles */}
+                <div className="grid grid-cols-5 gap-1">
+                  {[
+                    { label: 'PNG', icon: Download, color: 'emerald', action: () => handleDownloadPNG(qr), title: 'Download PNG' },
+                    { label: 'View', icon: Maximize2, color: 'cyan', action: () => setPreviewingQR(qr), title: 'Preview & Export' },
+                    { label: 'Design', icon: Palette, color: 'purple', action: () => onNavigateToStudio && onNavigateToStudio(qr), title: 'Customize in Studio' },
+                    { label: 'Edit', icon: Edit3, color: 'blue', action: () => setEditingQR(qr), title: 'Change destination URL' },
+                    { label: 'Stats', icon: BarChart3, color: 'brand', action: () => onNavigateToAnalytics(qr.id), title: 'View Scan Analytics' },
+                  ].map(({ label, icon: Icon, color, action, title }) => (
+                    <button
+                      key={label}
+                      onClick={action}
+                      title={title}
+                      className={`flex flex-col items-center justify-center gap-0.5 py-2.5 rounded-xl border text-[10px] font-semibold leading-none transition-all
+                        bg-slate-100 dark:bg-dark-950 border-slate-200 dark:border-white/5
+                        text-slate-600 dark:text-slate-400
+                        active:scale-95
+                        hover:bg-${color}-50 dark:hover:bg-${color}-500/10 hover:border-${color}-400/40 hover:text-${color}-600 dark:hover:text-${color}-400`}
+                    >
+                      <Icon className="w-4 h-4 mb-0.5" />
+                      {label}
+                    </button>
+                  ))}
                 </div>
 
                 {/* Row 2 – Secondary Actions */}
-                <div className="flex items-center justify-end gap-1 pt-1 border-t border-slate-100 dark:border-white/5">
+                <div className="flex items-center justify-end gap-0.5 pt-1.5 border-t border-slate-100 dark:border-white/5">
                   <button
                     onClick={() => handleDuplicate(qr.id)}
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
-                    title="Duplicate QR"
+                    className="flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 active:scale-95 transition-all"
                   >
-                    <CopyCheck className="w-3 h-3" />
+                    <CopyCheck className="w-3.5 h-3.5" />
                     <span>Duplicate</span>
                   </button>
-
                   <button
                     onClick={() => handleDelete(qr.id)}
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-500/10 transition-colors"
-                    title="Delete QR"
+                    className="flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-500/10 active:scale-95 transition-all"
                   >
-                    <Trash2 className="w-3 h-3" />
+                    <Trash2 className="w-3.5 h-3.5" />
                     <span>Delete</span>
                   </button>
                 </div>
               </div>
-
             </div>
           ))}
         </div>
       ) : (
-        /* List View */
+        /* List View — mobile-optimised */
         <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/80 overflow-hidden shadow-sm dark:shadow-none">
           <div className="divide-y divide-slate-200 dark:divide-white/5">
             {filteredQrs.map((qr) => (
-              <div key={qr.id} className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors">
-                <div className="flex items-center gap-3 min-w-0">
+              <div key={qr.id} className="p-3 sm:p-4 hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors">
+                {/* Top row: thumb + info + scan badge */}
+                <div className="flex items-center gap-3">
                   <QRCardThumbnail qr={qr} onEnlarge={() => setPreviewingQR(qr)} size="small" />
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-slate-900 dark:text-white truncate">{qr.title || 'Untitled QR'}</span>
-                      <span className="text-[9px] uppercase px-1.5 py-0.2 rounded bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/5">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs font-bold text-slate-900 dark:text-white truncate max-w-[140px] sm:max-w-none">{qr.title || 'Untitled QR'}</span>
+                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 flex-shrink-0">
                         {qr.qr_type}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate max-w-md">{qr.destination_url}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate mt-0.5">{qr.destination_url}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 font-mono">{qr.total_scans || 0} scans</span>
+                      <span className="text-[10px] text-slate-400 font-mono truncate">/r/{qr.short_code}</span>
+                      <button
+                        onClick={() => handleCopyLink(qr)}
+                        className="ml-auto p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 flex-shrink-0"
+                        title="Copy link"
+                      >
+                        {copiedId === qr.id ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 self-stretch sm:self-auto justify-between sm:justify-end">
-                  <div className="text-right">
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono block">{qr.total_scans || 0} scans</span>
-                    <span className="text-[10px] text-slate-400 font-mono">/r/{qr.short_code}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <button
-                      onClick={() => handleDownloadPNG(qr)}
-                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 dark:bg-dark-950 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-white/5 hover:border-emerald-400/40 text-slate-600 dark:text-slate-300 hover:text-emerald-600 text-xs font-medium transition-all"
-                      title="Download PNG"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>PNG</span>
-                    </button>
-                    <button
-                      onClick={() => onNavigateToStudio && onNavigateToStudio(qr)}
-                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-purple-50 dark:bg-dark-950 dark:hover:bg-purple-500/10 border border-slate-200 dark:border-white/5 hover:border-purple-400/40 text-slate-600 dark:text-slate-300 hover:text-purple-600 text-xs font-medium transition-all"
-                      title="Edit Design in Studio"
-                    >
-                      <Palette className="w-3.5 h-3.5" />
-                      <span>Design</span>
-                    </button>
-                    <button
-                      onClick={() => setEditingQR(qr)}
-                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 dark:bg-dark-950 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-white/5 hover:border-blue-400/40 text-slate-600 dark:text-slate-300 hover:text-blue-600 text-xs font-medium transition-all"
-                    >
-                      <Edit3 className="w-3.5 h-3.5" />
-                      <span>Edit URL</span>
-                    </button>
-                    <button
-                      onClick={() => onNavigateToAnalytics(qr.id)}
-                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs font-semibold transition-all"
-                    >
-                      <BarChart3 className="w-3.5 h-3.5" />
-                      <span>Stats</span>
-                    </button>
-                    <button
-                      onClick={() => handleDuplicate(qr.id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
-                      title="Duplicate QR"
-                    >
+                {/* Action buttons — horizontally scrollable on mobile */}
+                <div className="mt-3 flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-hide">
+                  <button onClick={() => handleDownloadPNG(qr)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 dark:bg-dark-950 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:text-emerald-600 text-[11px] font-medium whitespace-nowrap flex-shrink-0 active:scale-95 transition-all">
+                    <Download className="w-3.5 h-3.5" /><span>PNG</span>
+                  </button>
+                  <button onClick={() => setPreviewingQR(qr)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-cyan-50 dark:bg-dark-950 dark:hover:bg-cyan-500/10 border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:text-cyan-600 text-[11px] font-medium whitespace-nowrap flex-shrink-0 active:scale-95 transition-all">
+                    <Maximize2 className="w-3.5 h-3.5" /><span>View</span>
+                  </button>
+                  <button onClick={() => onNavigateToStudio && onNavigateToStudio(qr)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-purple-50 dark:bg-dark-950 dark:hover:bg-purple-500/10 border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:text-purple-600 text-[11px] font-medium whitespace-nowrap flex-shrink-0 active:scale-95 transition-all">
+                    <Palette className="w-3.5 h-3.5" /><span>Design</span>
+                  </button>
+                  <button onClick={() => setEditingQR(qr)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 dark:bg-dark-950 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:text-blue-600 text-[11px] font-medium whitespace-nowrap flex-shrink-0 active:scale-95 transition-all">
+                    <Edit3 className="w-3.5 h-3.5" /><span>Edit URL</span>
+                  </button>
+                  <button onClick={() => onNavigateToAnalytics(qr.id)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-[11px] font-semibold whitespace-nowrap flex-shrink-0 active:scale-95 transition-all">
+                    <BarChart3 className="w-3.5 h-3.5" /><span>Stats</span>
+                  </button>
+                  <div className="ml-auto flex items-center gap-1 flex-shrink-0">
+                    <button onClick={() => handleDuplicate(qr.id)}
+                      className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 active:scale-95 transition-all" title="Duplicate">
                       <CopyCheck className="w-3.5 h-3.5" />
                     </button>
-                    <button
-                      onClick={() => handleDelete(qr.id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors"
-                      title="Delete QR"
-                    >
+                    <button onClick={() => handleDelete(qr.id)}
+                      className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 active:scale-95 transition-all" title="Delete">
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
