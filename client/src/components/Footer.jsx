@@ -1,12 +1,9 @@
 import React from 'react';
 import { QrCode, Github, Heart, Shield, Zap, Sparkles } from 'lucide-react';
-import AdBanner from './AdBanner';
 
 export default function Footer({ onNavigate }) {
   return (
-    <footer className="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-600 dark:text-slate-400 mt-20 transition-colors">
-      <AdBanner type="leaderboard" className="pt-8" />
-
+    <footer className="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-600 dark:text-slate-400 mt-12 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           
