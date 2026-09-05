@@ -3,4 +3,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
+# Host and Sitemaps
+Host: https://qrloop4.vercel.app
 Sitemap: https://qrloop4.vercel.app/sitemap.xml

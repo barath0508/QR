@@ -1,0 +1,23 @@
+{
+  "name": "QRLoop - Free Dynamic QR Code Generator Pro",
+  "short_name": "QRLoop",
+  "description": "Enterprise-grade free dynamic QR code generator with zero expiration, custom logos, colors, and live scan analytics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060911",
+  "theme_color": "#10B981",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64 128x128 256x256 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"]
+}

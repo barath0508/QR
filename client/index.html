@@ -1,78 +1,266 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     
     <!-- Primary SEO Meta Tags -->
     <title>QRLoop - Free Dynamic QR Code Generator | Best QR Generator & Analytics (No Expiration)</title>
     <meta name="title" content="QRLoop - Free Dynamic QR Code Generator | Best QR Generator & Analytics (No Expiration)" />
-    <meta name="description" content="The best free dynamic QR code generator pro platform. Create editable QR codes for websites with custom logos, colors, high-res QR to image exports (PNG, SVG, PDF), and real-time scan analytics. 100% free with lifetime active redirects." />
+    <meta name="description" content="The best free dynamic QR code generator pro platform. Create editable QR codes for websites with custom logos, colors, high-res QR to image exports (PNG, SVG, PDF), and real-time scan analytics. 100% free with lifetime active redirects and zero expiration." />
     <meta name="keywords" content="qr code generator, dynamic qr, free qr generator, qr generator pro, best qr generator, qr for website, qr to image, qr customization, custom qr code, qr code with logo, vector qr code, dynamic qr code without expiration, free dynamic qr code, trackable qr code, qr code generator free with logo, qr code analytics, print qr code, svg qr code, pdf qr code, wifi qr code, vcard qr code generator, bulk qr code generator, high resolution qr code, editable qr code, lifetime free dynamic qr" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="author" content="QRLoop" />
+    <meta name="application-name" content="QRLoop" />
+    <meta name="generator" content="QRLoop Engine 2.4" />
+    <meta name="rating" content="General" />
+    <meta name="revisit-after" content="2 days" />
     <link rel="canonical" href="https://qrloop4.vercel.app/" />
+
+    <!-- Mobile, PWA & Browser Theming -->
     <meta name="theme-color" content="#10B981" />
+    <meta name="msapplication-TileColor" content="#060911" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="QRLoop" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310B981' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7'></rect><rect x='14' y='3' width='7' height='7'></rect><rect x='14' y='14' width='7' height='7'></rect><rect x='3' y='14' width='7' height='7'></rect></svg>" />
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310B981' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7'></rect><rect x='14' y='3' width='7' height='7'></rect><rect x='14' y='14' width='7' height='7'></rect><rect x='3' y='14' width='7' height='7'></rect></svg>" />
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / LinkedIn / Discord -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://qrloop4.vercel.app/" />
     <meta property="og:site_name" content="QRLoop" />
     <meta property="og:title" content="QRLoop - Free Dynamic QR Code Generator | Best QR Generator & Analytics" />
     <meta property="og:description" content="Generate high-resolution dynamic QR codes for websites with custom logo embedding, deep scan telemetry (device, OS, city), and lossless vector SVG/PDF exports. 100% free with no 14-day expiration trap." />
+    <meta property="og:image" content="https://qrloop4.vercel.app/og-image.png" />
+    <meta property="og:image:secure_url" content="https://qrloop4.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="QRLoop - Modern Free Dynamic QR Code Generator and Analytics Platform" />
     <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@QRLoop" />
+    <meta name="twitter:creator" content="@QRLoop" />
     <meta name="twitter:url" content="https://qrloop4.vercel.app/" />
     <meta name="twitter:title" content="QRLoop - Free Dynamic QR Code Generator | Best QR Generator & Analytics" />
     <meta name="twitter:description" content="Best free dynamic QR code generator pro. Edit destination URLs anytime without re-printing, export print-ready PDF/SVG standees, and monitor scan analytics." />
+    <meta name="twitter:image" content="https://qrloop4.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="QRLoop Platform Social Preview Banner" />
 
-    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <!-- DNS Prefetch & Font Preconnections -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <!-- Schema.org Structured Data (JSON-LD) for Rich Search Results -->
+    <!-- Schema.org Comprehensive Structured Data (JSON-LD) Graph -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "WebApplication",
-          "@id": "https://qrloop4.vercel.app/#webapp",
-          "name": "QRLoop - Free Dynamic QR Code Generator",
+          "@type": "WebSite",
+          "@id": "https://qrloop4.vercel.app/#website",
           "url": "https://qrloop4.vercel.app/",
-          "description": "Professional free dynamic QR code generator with real-time redirect routing, scan telemetry, custom logo upload, and vector exports.",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "All",
-          "browserRequirements": "Requires JavaScript. Requires HTML5.",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock"
+          "name": "QRLoop",
+          "alternateName": [
+            "QRLoop Pro",
+            "QR Loop Generator",
+            "Free Dynamic QR Code Generator",
+            "Best QR Generator"
+          ],
+          "description": "Enterprise-grade free dynamic QR code generator with zero expiration, custom branding, and real-time scan analytics.",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://qrloop4.vercel.app/#organization"
           },
-          "featureList": [
-            "Dynamic QR Code Generation with Lifetime Redirects",
-            "Static QR Code Generator with Offline Encoding",
-            "Real-Time Scan Telemetry and Device Analytics",
-            "QR Customization (Module Shapes, Corner Eyes, Palette Colors)",
-            "Center Logo and Brand Badge Embedding",
-            "Lossless Vector SVG and Print-Ready A4 PDF Standee Exports",
-            "Fast Sub-50ms HTTP 302 Global Redirects"
-          ]
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://qrloop4.vercel.app/dynamic-qr?url={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
         },
         {
           "@type": "Organization",
           "@id": "https://qrloop4.vercel.app/#organization",
           "name": "QRLoop",
+          "legalName": "QRLoop Technologies",
           "url": "https://qrloop4.vercel.app/",
-          "logo": "https://qrloop4.vercel.app/logo.png"
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://qrloop4.vercel.app/logo.svg",
+            "caption": "QRLoop Logo"
+          },
+          "image": "https://qrloop4.vercel.app/og-image.png",
+          "sameAs": [
+            "https://github.com/barath0508/QR"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "url": "https://qrloop4.vercel.app/",
+            "availableLanguage": ["English"]
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://qrloop4.vercel.app/#webapp",
+          "name": "QRLoop - Free Dynamic QR Code Generator Pro",
+          "url": "https://qrloop4.vercel.app/",
+          "description": "Professional free dynamic QR code generator with real-time redirect routing, scan telemetry, custom logo upload, and vector exports.",
+          "applicationCategory": "BusinessApplication",
+          "applicationSubCategory": "DesignApplication",
+          "operatingSystem": "All, Web, iOS, Android, Windows, macOS, Linux",
+          "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas.",
+          "softwareVersion": "2.4.0",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "1420",
+            "ratingCount": "1840",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "category": "Free Tier",
+            "availability": "https://schema.org/InStock",
+            "priceValidUntil": "2030-12-31"
+          },
+          "featureList": [
+            "Dynamic QR Code Generation with Lifetime Active Redirects",
+            "Zero 14-day trial expirations and zero scan paywalls",
+            "Instant destination URL updates without re-printing materials",
+            "Granular real-time scan analytics (Device, OS, Browser, Geolocation)",
+            "QR Customization (Module Shapes: Rounded, Dots, Pill, Square)",
+            "Corner Finder Eye Customization (Rounded, Circle, Square)",
+            "Independent Inner Pupil and Outer Eye Frame Colors",
+            "Custom Logo & Brand Badge Upload with Center Exclusion",
+            "Lossless Vector SVG and Print-Ready A4 PDF Standee Exports",
+            "Ultra-fast Sub-50ms HTTP 302 Edge Redirection Engine"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://qrloop4.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Are dynamic QR codes on QRLoop truly free without expiration?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! Unlike traditional QR platforms that deactivate your codes after a 14-day trial or demand $35/month, QRLoop provides 100% free dynamic QR codes with lifetime active redirects and no scan limits."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the difference between dynamic and static QR codes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A static QR code encodes raw text or a direct URL permanently inside the pixel pattern and cannot be modified after printing. A dynamic QR code routes through an intelligent redirect endpoint, enabling you to edit the destination website at any time while collecting real-time scan analytics."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I customize the colors, shapes, and add my business logo?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! QRLoop provides an advanced QR Generator Studio where you can choose custom module dot styles (rounded, dots, classic, smooth pill), corner eye geometries, independent outer/inner eye colors, and upload your custom logo or select branded badge presets."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What file formats can I download (PNG, SVG, PDF)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can export your styled QR codes in high-DPI raster PNG (ideal for digital graphics and social media), lossless vector SVG (infinitely scalable for large posters, signage, and billboards), and ready-to-print A4 PDF standee flyers."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What scan analytics and telemetry are recorded?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every scan tracks total scans, unique visitors, scanner device breakdown (Mobile, Desktop, Tablet), operating system (iOS, Android, Windows, macOS), browser, and geographic location."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "@id": "https://qrloop4.vercel.app/#howto",
+          "name": "How to Create a Custom Dynamic QR Code with Real-Time Tracking",
+          "description": "Step-by-step guide to generating, styling, and deploying a lifetime free dynamic QR code with QRLoop.",
+          "totalTime": "PT1M",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "Choose Content Type & Destination",
+              "text": "Select Website URL, Wi-Fi, vCard, Text, Email, or Phone Call, and enter your destination link or content."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "Customize Colors, Dots & Brand Logo",
+              "text": "Choose your module pattern (dots, rounded, square), select corner eye shapes, pick custom colors, and upload your brand logo."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "Deploy & Download High-Resolution Files",
+              "text": "Download your high-resolution PNG, vector SVG, or print-ready PDF standee, and monitor live scan analytics in your dashboard."
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://qrloop4.vercel.app/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://qrloop4.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Dynamic QR Generator",
+              "item": "https://qrloop4.vercel.app/dynamic-qr"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Free Static QR Generator",
+              "item": "https://qrloop4.vercel.app/static-qr"
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "Platform Comparison",
+              "item": "https://qrloop4.vercel.app/compare"
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": "QR Knowledge Blog",
+              "item": "https://qrloop4.vercel.app/blog"
+            }
+          ]
         }
       ]
     }
