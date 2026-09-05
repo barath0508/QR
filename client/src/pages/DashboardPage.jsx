@@ -548,68 +548,73 @@ export default function DashboardPage({
               </div>
 
               {/* Card Footer Actions */}
-              <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between gap-1.5">
-                <div className="flex items-center gap-1">
+              <div className="pt-3 border-t border-slate-100 dark:border-white/5 space-y-2">
+                {/* Row 1 – Primary Actions */}
+                <div className="grid grid-cols-5 gap-1.5">
                   <button
                     onClick={() => handleDownloadPNG(qr)}
-                    className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-300 border border-slate-200 dark:border-white/5 text-xs flex items-center gap-1.5 transition-colors"
+                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-emerald-50 dark:bg-dark-950 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-white/5 hover:border-emerald-400/40 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
                     title="Download PNG"
                   >
-                    <Download className="w-3.5 h-3.5 text-brand-500" />
-                    <span className="text-[11px] font-semibold hidden sm:inline">PNG</span>
+                    <Download className="w-3.5 h-3.5" />
+                    <span className="text-[10px] font-semibold leading-none">PNG</span>
                   </button>
 
                   <button
                     onClick={() => setPreviewingQR(qr)}
-                    className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-300 border border-slate-200 dark:border-white/5 text-xs flex items-center gap-1.5 transition-colors"
-                    title="Preview full size and SVG/PDF export"
+                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-cyan-50 dark:bg-dark-950 dark:hover:bg-cyan-500/10 border border-slate-200 dark:border-white/5 hover:border-cyan-400/40 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all"
+                    title="Preview & Export"
                   >
                     <Maximize2 className="w-3.5 h-3.5" />
+                    <span className="text-[10px] font-semibold leading-none">View</span>
                   </button>
 
                   <button
                     onClick={() => onNavigateToStudio && onNavigateToStudio(qr)}
-                    className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 border border-slate-200 dark:border-white/5 text-xs flex items-center gap-1.5 transition-colors"
-                    title="Customize colors and shapes in Studio"
+                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-purple-50 dark:bg-dark-950 dark:hover:bg-purple-500/10 border border-slate-200 dark:border-white/5 hover:border-purple-400/40 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all"
+                    title="Customize in Studio"
                   >
                     <Palette className="w-3.5 h-3.5" />
-                    <span className="text-[11px] font-medium hidden sm:inline">Design</span>
+                    <span className="text-[10px] font-semibold leading-none">Design</span>
                   </button>
 
                   <button
                     onClick={() => setEditingQR(qr)}
-                    className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-300 border border-slate-200 dark:border-white/5 text-xs flex items-center gap-1.5 transition-colors"
+                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-blue-50 dark:bg-dark-950 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-white/5 hover:border-blue-400/40 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
                     title="Change destination URL"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
-                    <span className="text-[11px] font-medium hidden sm:inline">Edit URL</span>
+                    <span className="text-[10px] font-semibold leading-none">Edit URL</span>
                   </button>
 
                   <button
                     onClick={() => onNavigateToAnalytics(qr.id)}
-                    className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-300 border border-slate-200 dark:border-white/5 text-xs flex items-center gap-1.5 transition-colors"
+                    className="flex flex-col items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 dark:bg-dark-950 dark:hover:bg-brand-500/10 border border-slate-200 dark:border-white/5 hover:border-brand-400/40 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-all"
                     title="View Scan Analytics"
                   >
                     <BarChart3 className="w-3.5 h-3.5" />
-                    <span className="text-[11px] font-medium hidden sm:inline">Stats</span>
+                    <span className="text-[10px] font-semibold leading-none">Stats</span>
                   </button>
                 </div>
 
-                <div className="flex items-center gap-1">
+                {/* Row 2 – Secondary Actions */}
+                <div className="flex items-center justify-end gap-1 pt-1 border-t border-slate-100 dark:border-white/5">
                   <button
                     onClick={() => handleDuplicate(qr.id)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
                     title="Duplicate QR"
                   >
-                    <CopyCheck className="w-3.5 h-3.5" />
+                    <CopyCheck className="w-3 h-3" />
+                    <span>Duplicate</span>
                   </button>
 
                   <button
                     onClick={() => handleDelete(qr.id)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10"
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-500/10 transition-colors"
                     title="Delete QR"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-3 h-3" />
+                    <span>Delete</span>
                   </button>
                 </div>
               </div>
@@ -642,33 +647,50 @@ export default function DashboardPage({
                     <span className="text-[10px] text-slate-400 font-mono">/r/{qr.short_code}</span>
                   </div>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
                     <button
                       onClick={() => handleDownloadPNG(qr)}
-                      className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-medium flex items-center gap-1"
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 dark:bg-dark-950 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-white/5 hover:border-emerald-400/40 text-slate-600 dark:text-slate-300 hover:text-emerald-600 text-xs font-medium transition-all"
                       title="Download PNG"
                     >
-                      <Download className="w-3.5 h-3.5 text-brand-500" />
+                      <Download className="w-3.5 h-3.5" />
                       <span>PNG</span>
                     </button>
                     <button
                       onClick={() => onNavigateToStudio && onNavigateToStudio(qr)}
-                      className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-medium"
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-purple-50 dark:bg-dark-950 dark:hover:bg-purple-500/10 border border-slate-200 dark:border-white/5 hover:border-purple-400/40 text-slate-600 dark:text-slate-300 hover:text-purple-600 text-xs font-medium transition-all"
                       title="Edit Design in Studio"
                     >
-                      Design
+                      <Palette className="w-3.5 h-3.5" />
+                      <span>Design</span>
                     </button>
                     <button
                       onClick={() => setEditingQR(qr)}
-                      className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-medium"
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 dark:bg-dark-950 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-white/5 hover:border-blue-400/40 text-slate-600 dark:text-slate-300 hover:text-blue-600 text-xs font-medium transition-all"
                     >
-                      Edit URL
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>Edit URL</span>
                     </button>
                     <button
                       onClick={() => onNavigateToAnalytics(qr.id)}
-                      className="px-2.5 py-1.5 rounded-lg bg-brand-500/15 text-brand-700 dark:text-brand-300 text-xs font-semibold"
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs font-semibold transition-all"
                     >
-                      Analytics
+                      <BarChart3 className="w-3.5 h-3.5" />
+                      <span>Stats</span>
+                    </button>
+                    <button
+                      onClick={() => handleDuplicate(qr.id)}
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                      title="Duplicate QR"
+                    >
+                      <CopyCheck className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(qr.id)}
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors"
+                      title="Delete QR"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
