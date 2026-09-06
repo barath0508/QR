@@ -240,9 +240,28 @@ export default function QRStudio({
     }
   };
 
-  const currentEncodedText = savedSuccessQR 
-    ? (savedSuccessQR.redirect_url || savedSuccessQR.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`)
-    : getFormattedPayload();
+  // For dynamic URL QRs, the physical QR always encodes the /r/ redirect URL (not the
+  // destination). We must preview this from the start so the QR matrix is identical
+  // before and after saving — preventing the "QR looks different after deploy" issue.
+  const effectiveIsDynamic = activeType === 'url' ? isDynamic : false;
+  const currentEncodedText = (() => {
+    if (savedSuccessQR) {
+      // Post-save: use the actual redirect URL returned by the server
+      return (
+        savedSuccessQR.redirect_url ||
+        savedSuccessQR.short_url ||
+        `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`
+      );
+    }
+    if (effectiveIsDynamic && activeType === 'url') {
+      // Pre-save dynamic preview: encode the redirect base so the QR pattern stays stable.
+      // We don't know the shortcode yet, so use a fixed-length placeholder that matches
+      // the pattern length of a real /r/<6-char> URL.
+      const origin = typeof window !== 'undefined' ? window.location.origin : 'https://qrloop.io';
+      return `${origin}/r/preview`;
+    }
+    return getFormattedPayload();
+  })();
 
   const renderCanvas = async () => {
     const canvas = canvasRef.current;
@@ -354,20 +373,22 @@ export default function QRStudio({
       };
 
       let resultQR = null;
+      // Non-URL types embed raw data directly — they cannot be "dynamically redirected"
+      const effectiveDynamic = activeType === 'url' ? isDynamic : false;
       if (initialQR && initialQR.id) {
         const updateRes = await api.updateQR(initialQR.id, {
-          title: qrTitle || (isDynamic ? 'My Dynamic QR' : 'My Static QR'),
+          title: qrTitle || (effectiveDynamic ? 'My Dynamic QR' : 'My Static QR'),
           destination_url: activeType === 'url' ? url : getFormattedPayload(),
           style_config: styleConfigObj,
         });
         resultQR = updateRes.qr;
       } else {
         const payload = {
-          title: qrTitle || (isDynamic ? 'My Dynamic QR' : 'My Static QR'),
+          title: qrTitle || (effectiveDynamic ? 'My Dynamic QR' : 'My Static QR'),
           qr_type: activeType,
           destination_url: activeType === 'url' ? url : getFormattedPayload(),
           custom_alias: customAlias.trim() || undefined,
-          is_dynamic: isDynamic,
+          is_dynamic: effectiveDynamic,
           style_config: styleConfigObj,
         };
         const createRes = await api.createQR(payload);
@@ -1007,7 +1028,7 @@ export default function QRStudio({
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-                  {savedSuccessQR ? 'Active Dynamic QR' : 'Live Preview'}
+                  {savedSuccessQR ? 'Active Dynamic QR' : effectiveIsDynamic ? 'Live Preview · Redirect QR' : 'Live Preview'}
                 </span>
               </div>
               <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-dark-950 px-2 py-0.5 rounded border border-slate-200 dark:border-white/5">

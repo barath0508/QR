@@ -111,8 +111,45 @@ const redirectController = {
 
       // Prepare target destination URL
       let destination = qr.destination_url.trim();
-      if (!destination.startsWith('http://') && !destination.startsWith('https://') && !destination.startsWith('mailto:') && !destination.startsWith('tel:')) {
-        destination = 'https://' + destination;
+
+      // vCard: serve the raw vCard payload as a downloadable .vcf file
+      if (destination.startsWith('BEGIN:VCARD') || qr.qr_type === 'vcard') {
+        res.setHeader('Content-Type', 'text/vcard; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="contact.vcf"`);
+        return res.send(destination);
+      }
+
+      // Other non-redirect types (wifi, plain text, etc.) — no valid redirect target
+      if (
+        !destination.startsWith('http://') &&
+        !destination.startsWith('https://') &&
+        !destination.startsWith('mailto:') &&
+        !destination.startsWith('tel:')
+      ) {
+        return res.status(422).send(`
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>No Redirect Available | QRLoop</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0B0F19; color: #F8FAFC; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+              .card { background: #1E293B; border: 1px solid #334155; border-radius: 16px; padding: 40px 32px; max-width: 460px; text-align: center; }
+              h1 { font-size: 22px; margin: 0 0 12px; }
+              p { color: #94A3B8; font-size: 15px; line-height: 1.6; margin: 0 0 24px; }
+              .btn { display: inline-block; background: #10B981; color: #0F172A; font-weight: 600; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>No Web Redirect</h1>
+              <p>This QR code contains embedded data (Wi-Fi, text, etc.) that cannot be opened as a web link. Scan it with your camera app instead.</p>
+              <a href="/" class="btn">Go to QRLoop</a>
+            </div>
+          </body>
+          </html>
+        `);
       }
 
       // Issue HTTP 302 redirect
