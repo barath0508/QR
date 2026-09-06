@@ -85,6 +85,17 @@ export default function Footer({ onNavigate }) {
             </ul>
           </div>
 
+          {/* Use Cases */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">QR Code Use Cases</h4>
+            <ul className="space-y-2 text-xs">
+              <li><button onClick={() => onNavigate('qr-code-for-restaurants')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">Restaurant Menu QR Codes</button></li>
+              <li><button onClick={() => onNavigate('qr-code-for-events')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">Event QR Codes</button></li>
+              <li><button onClick={() => onNavigate('qr-code-for-wifi')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">Wi-Fi QR Codes</button></li>
+              <li><button onClick={() => onNavigate('qr-code-for-business-cards')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">Business Card QR Codes</button></li>
+            </ul>
+          </div>
+
           {/* Features & Developer */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">Core Engine</h4>

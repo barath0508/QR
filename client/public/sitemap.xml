@@ -58,4 +58,29 @@
     <priority>0.80</priority>
   </url>
 
+  <url>
+    <loc>https://qrloop4.vercel.app/qr-code-for-restaurants</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/qr-code-for-events</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/qr-code-for-wifi</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/qr-code-for-business-cards</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
 </urlset>

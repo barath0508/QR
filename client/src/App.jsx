@@ -9,14 +9,16 @@ import DashboardPage from './pages/DashboardPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import BlogPage from './pages/BlogPage';
 import ComparePage from './pages/ComparePage';
+import UseCasePage from './pages/UseCasePage';
 import { api, authStorage } from './services/api';
 
 export default function App() {
-  // Routes: 'home' | 'dynamic-qr' | 'static-qr' | 'dashboard' | 'analytics' | 'blog' | 'compare'
+  const useCaseRoutes = ['qr-code-for-restaurants', 'qr-code-for-events', 'qr-code-for-wifi', 'qr-code-for-business-cards'];
+  // Routes: 'home' | 'dynamic-qr' | 'static-qr' | 'dashboard' | 'analytics' | 'blog' | 'compare' | use-case pages
   const [currentTab, setCurrentTab] = useState(() => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname.replace(/^\//, '').toLowerCase();
-      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare'].includes(path)) {
+      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare', ...useCaseRoutes].includes(path)) {
         return path;
       }
     }
@@ -68,6 +70,26 @@ export default function App() {
       desc: 'Compare QRLoop with paid QR code platforms for editable links, scan analytics, QR customization, exports, pricing and expiration policies.',
       indexable: true,
     },
+    'qr-code-for-restaurants': {
+      title: 'QR Code Generator for Restaurants and Menus | QRLoop',
+      desc: 'Create a branded restaurant menu QR code you can update after printing. Track scans and download print-ready QR codes with QRLoop.',
+      indexable: true,
+    },
+    'qr-code-for-events': {
+      title: 'QR Code Generator for Events and Campaigns | QRLoop',
+      desc: 'Create editable event QR codes for registration, schedules, tickets, maps, and feedback. Customize and export with QRLoop.',
+      indexable: true,
+    },
+    'qr-code-for-wifi': {
+      title: 'Free Wi-Fi QR Code Generator | QRLoop',
+      desc: 'Generate a free Wi-Fi QR code for cafes, offices, hotels, and homes. Download a clean static code with no login required.',
+      indexable: true,
+    },
+    'qr-code-for-business-cards': {
+      title: 'QR Code Generator for Digital Business Cards | QRLoop',
+      desc: 'Create a branded QR code for your digital business card, portfolio, profile, or vCard. Export a sharp code for professional printing.',
+      indexable: true,
+    },
   };
 
   useEffect(() => {
@@ -94,7 +116,7 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.replace(/^\//, '').toLowerCase();
-      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare'].includes(path)) {
+      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare', ...useCaseRoutes].includes(path)) {
         setCurrentTab(path);
       } else {
         setCurrentTab('home');
@@ -258,6 +280,15 @@ export default function App() {
         {currentTab === 'compare' && (
           <ComparePage
             onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+          />
+        )}
+
+        {useCaseRoutes.includes(currentTab) && (
+          <UseCasePage
+            slug={currentTab}
+            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+            onNavigateToStatic={() => handleNavigate('static-qr')}
+            onBackToHome={() => handleNavigate('home')}
           />
         )}
       </main>
