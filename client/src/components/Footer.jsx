@@ -31,27 +31,27 @@ export default function Footer({ onNavigate }) {
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">Supported Formats</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onNavigate('studio')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                <button onClick={() => onNavigate('dynamic-qr')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
                   Dynamic Website URLs
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('studio')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                <button onClick={() => onNavigate('static-qr')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
                   Instant Wi-Fi Access Points
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('studio')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                <button onClick={() => onNavigate('static-qr')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
                   Digital vCard Contact Cards
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('studio')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                <button onClick={() => onNavigate('static-qr')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
                   Plain Text & Cryptographic Keys
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('studio')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
+                <button onClick={() => onNavigate('static-qr')} className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors">
                   Pre-filled Email & SMS Prompts
                 </button>
               </li>

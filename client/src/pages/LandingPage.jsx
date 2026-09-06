@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Sparkles, 
   Zap, 
@@ -13,7 +13,9 @@ import {
   Check, 
   ExternalLink,
   Lock,
-  Layers
+  Layers,
+  Share2,
+  Copy
 } from 'lucide-react';
 
 export default function LandingPage({ 
@@ -23,6 +25,29 @@ export default function LandingPage({
   onNavigateToCompare, 
   onNavigateToDashboard 
 }) {
+  const [shareCopied, setShareCopied] = useState(false);
+
+  const shareUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/?utm_source=share&utm_medium=referral&utm_campaign=qrloop_growth`
+    : 'https://qrloop4.vercel.app/?utm_source=share&utm_medium=referral&utm_campaign=qrloop_growth';
+
+  const shareMessage = 'Create free editable QR codes with QRLoop - no expiration, no watermark, and built-in scan analytics.';
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'QRLoop - Free QR Code Generator', text: shareMessage, url: shareUrl });
+      } catch (error) {
+        if (error.name !== 'AbortError') throw error;
+      }
+      return;
+    }
+
+    await navigator.clipboard.writeText(shareUrl);
+    setShareCopied(true);
+    window.setTimeout(() => setShareCopied(false), 2200);
+  };
+
   return (
     <div className="space-y-24 pb-20 pt-8 sm:pt-14">
 
@@ -225,7 +250,35 @@ export default function LandingPage({
         </div>
       </section>
 
-      {/* 4. Blog & Educational Guides Teaser */}
+      {/* 4. Built-in sharing loop */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-white to-cyan-500/10 dark:from-emerald-950/30 dark:via-dark-900 dark:to-cyan-950/20 p-7 sm:p-10">
+          <div className="absolute -right-16 -top-20 h-48 w-48 rounded-full bg-emerald-400/15 blur-3xl" />
+          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="max-w-2xl space-y-2">
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <Share2 className="w-4 h-4" />
+                <span className="text-xs font-bold uppercase tracking-wider font-mono">Help a creator</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
+                Know someone who needs a QR code?
+              </h2>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Share a free, no-expiration QR generator with a business owner, designer, restaurant, or event organizer. One click copies a trackable referral link.
+              </p>
+            </div>
+            <button
+              onClick={handleShare}
+              className="flex-shrink-0 h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-semibold text-sm flex items-center gap-2 shadow-sm transition-all"
+            >
+              {shareCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              <span>{shareCopied ? 'Link copied' : 'Share QRLoop'}</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Blog & Educational Guides Teaser */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -291,7 +344,7 @@ export default function LandingPage({
         </div>
       </section>
 
-      {/* 5. Competitor Comparison Teaser */}
+      {/* 6. Competitor Comparison Teaser */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-8 sm:p-10 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-xl transition-colors">
           <div className="space-y-2 text-center md:text-left">
@@ -319,7 +372,7 @@ export default function LandingPage({
         </div>
       </section>
 
-      {/* 6. Comprehensive SEO FAQ Section */}
+      {/* 7. Comprehensive SEO FAQ Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
