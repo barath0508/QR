@@ -8,16 +8,16 @@ User-agent: *
 Allow: /
 Allow: /dynamic-qr
 Allow: /static-qr
-Allow: /dashboard
 Allow: /compare
 Allow: /blog
-Allow: /analytics
 
 # Block private / API routes
 Disallow: /api/
 Disallow: /r/
 Disallow: /.vercel/
 Disallow: /admin/
+Disallow: /dashboard
+Disallow: /analytics
 
 # Block unnecessary crawl budget sinks
 Disallow: /*?*utm_
@@ -74,4 +74,3 @@ Crawl-delay: 2
 # -----------------------------------------------
 Host: https://qrloop4.vercel.app
 Sitemap: https://qrloop4.vercel.app/sitemap.xml
-Sitemap: https://qrloop4.vercel.app/llms.txt

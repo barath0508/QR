@@ -6,7 +6,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://qrloop4.vercel.app/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -19,7 +19,7 @@
   <!-- Dynamic QR Generator (core product page) -->
   <url>
     <loc>https://qrloop4.vercel.app/dynamic-qr</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.97</priority>
     <image:image>
@@ -32,7 +32,7 @@
   <!-- Static QR Generator -->
   <url>
     <loc>https://qrloop4.vercel.app/static-qr</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
@@ -42,18 +42,10 @@
     </image:image>
   </url>
 
-  <!-- Dashboard -->
-  <url>
-    <loc>https://qrloop4.vercel.app/dashboard</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.88</priority>
-  </url>
-
   <!-- Compare page -->
   <url>
     <loc>https://qrloop4.vercel.app/compare</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -61,17 +53,9 @@
   <!-- Blog -->
   <url>
     <loc>https://qrloop4.vercel.app/blog</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
-  </url>
-
-  <!-- Analytics page -->
-  <url>
-    <loc>https://qrloop4.vercel.app/analytics</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
   </url>
 
 </urlset>

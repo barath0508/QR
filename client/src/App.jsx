@@ -34,32 +34,39 @@ export default function App() {
   // Page SEO configuration for dynamic title & meta updates
   const pageSEO = {
     'home': {
-      title: 'QRLoop - Free Dynamic QR Code Generator | Best QR Generator & Analytics (No Expiration)',
-      desc: 'The best free dynamic QR code generator pro platform. Create editable QR codes for websites with custom logos, colors, high-res QR to image exports (PNG, SVG, PDF), and real-time scan analytics with lifetime active links.',
+      title: 'Free Dynamic QR Code Generator with Analytics | QRLoop',
+      desc: 'Create free dynamic QR codes with editable URLs, custom branding, high-resolution PNG, SVG and PDF downloads, and QR scan analytics. No expiration or watermark.',
+      indexable: true,
     },
     'dynamic-qr': {
-      title: 'Dynamic QR Code Generator - Editable URLs & Real-Time Analytics | QRLoop',
-      desc: 'Create custom dynamic QR codes with instant redirect tracking. Update your destination website URL anytime without reprinting. 100% free with lifetime active links.',
+      title: 'Dynamic QR Code Generator: Edit URLs After Printing | QRLoop',
+      desc: 'Create a trackable dynamic QR code, change its destination URL anytime, and monitor scans by device and location. Free QR code generator with no expiration.',
+      indexable: true,
     },
     'static-qr': {
-      title: 'Free Static QR Code Generator (Instant Download, Zero Login) | QRLoop',
-      desc: 'Generate permanent static QR codes for websites, Wi-Fi networks, and contact cards. 100% offline capable with instant PNG, SVG vector, and PDF downloads.',
+      title: 'Free Static QR Code Generator for URLs, Wi-Fi & vCards | QRLoop',
+      desc: 'Generate a permanent static QR code for a website, Wi-Fi network, contact card, text, email or phone number. Download PNG, SVG or PDF without an account.',
+      indexable: true,
     },
     'dashboard': {
       title: 'My Dynamic QR Codes - Real-Time Management Dashboard | QRLoop',
       desc: 'Manage your active dynamic QR codes, update destination URLs on the fly, export print standees, and inspect live scan telemetry.',
+      indexable: false,
     },
     'analytics': {
       title: 'QR Code Scan Analytics & Real-Time Telemetry | QRLoop',
       desc: 'Track QR code performance with real-time scan volume, device breakdown, operating systems, browsers, and top geographic locations.',
+      indexable: false,
     },
     'blog': {
-      title: 'QR Code Guides, Printing Rules & Industry Insights | QRLoop Knowledge Hub',
-      desc: 'Learn about QR print specifications, the 10:1 scanning rule, and how to avoid the 14-day commercial QR code paywall trap.',
+      title: 'QR Code Guides: Printing, Analytics & Dynamic QR Tips | QRLoop',
+      desc: 'Learn how dynamic and static QR codes work, how to print scannable codes, and how to measure QR scans for marketing campaigns.',
+      indexable: true,
     },
     'compare': {
-      title: 'Best Free QR Code Generator vs Paid Alternatives (Bitly, QRCode Monkey) | QRLoop',
-      desc: 'Compare QRLoop against commercial QR code platforms. See why you never need to pay $35/month for dynamic redirect links.',
+      title: 'QR Code Generator Comparison: Free Dynamic QR Alternatives | QRLoop',
+      desc: 'Compare QRLoop with paid QR code platforms for editable links, scan analytics, QR customization, exports, pricing and expiration policies.',
+      indexable: true,
     },
   };
 
@@ -68,6 +75,20 @@ export default function App() {
     document.title = seo.title;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', seo.desc);
+    const metaRobots = document.querySelector('meta[name="robots"]');
+    if (metaRobots) {
+      metaRobots.setAttribute(
+        'content',
+        seo.indexable ? 'index, follow, max-snippet:-1, max-image-preview:large' : 'noindex, nofollow'
+      );
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute(
+        'href',
+        `https://qrloop4.vercel.app${currentTab === 'home' ? '/' : `/${currentTab}`}`
+      );
+    }
   }, [currentTab]);
 
   useEffect(() => {

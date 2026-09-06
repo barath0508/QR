@@ -36,15 +36,15 @@ export default function LandingPage({
 
         {/* Hero Title */}
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white tracking-[-0.03em] leading-[1.12]">
-          Dynamic QR Codes That <br className="hidden sm:inline" />
+          Free Dynamic QR Code Generator for <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500">
-            Never Expire.
+            Editable, Trackable Links.
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
-          High-resolution QR code generator with real-time redirect tracking, deep scan telemetry, and lossless vector exports. Change destination URLs anytime without re-printing physical materials.
+          Create custom QR codes for websites, menus, flyers, packaging, events and marketing campaigns. Edit destination URLs after printing, measure QR scans, and download print-ready PNG, SVG or PDF files.
         </p>
 
         {/* Call to Action Buttons */}
