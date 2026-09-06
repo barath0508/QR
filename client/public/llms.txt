@@ -30,6 +30,7 @@
 - Short URL redirect engine: sub-50ms HTTP 302 edge redirects via `/r/<code>`
 - No account required for static QR codes
 - Dashboard with multi-QR management, search, and type filtering
+- Ready-to-edit QR templates for restaurant menus, event campaigns, social profiles, Wi-Fi access, and digital business cards
 
 ## Pages
 
