@@ -22,6 +22,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { downloadCanvasAsPNG, downloadSVG, downloadPrintPDF, copyCanvasToClipboard } from '../utils/qrExporter';
+import { trackEvent } from '../utils/analytics';
 import { drawStyledQRCode } from '../utils/qrRenderer';
 import { api } from '../services/api';
 import AdBanner from './AdBanner';
@@ -1121,6 +1122,7 @@ export default function QRStudio({
                 <button
                   onClick={() => {
                     autoSaveIfLoggedIn();
+                    trackEvent('qr_export', { format: 'png', qr_type: isDynamic ? 'dynamic' : 'static' });
                     downloadCanvasAsPNG(canvasRef.current, `${qrTitle.replace(/\s+/g, '_')}_qr.png`, parseInt(downloadSize) / 512);
                   }}
                   className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
@@ -1132,6 +1134,7 @@ export default function QRStudio({
                 <button
                   onClick={() => {
                     autoSaveIfLoggedIn();
+                    trackEvent('qr_export', { format: 'svg', qr_type: isDynamic ? 'dynamic' : 'static' });
                     downloadSVG(currentEncodedText, {
                       fgColor,
                       bgColor,
@@ -1156,6 +1159,7 @@ export default function QRStudio({
                 <button
                   onClick={() => {
                     autoSaveIfLoggedIn();
+                    trackEvent('qr_export', { format: 'pdf', qr_type: isDynamic ? 'dynamic' : 'static' });
                     const shortUrl = savedSuccessQR 
                       ? (savedSuccessQR.redirect_url || savedSuccessQR.short_url || `${typeof window !== 'undefined' ? window.location.origin : ''}/r/${savedSuccessQR.short_code}`)
                       : undefined;

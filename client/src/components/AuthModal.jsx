@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Lock, Mail, User, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { api } from '../services/api';
+import { trackEvent } from '../utils/analytics';
 
 export default function AuthModal({ isOpen, onClose, initialMode = 'login', onAuthSuccess, customPrompt }) {
   const [mode, setMode] = useState(initialMode);
@@ -29,12 +30,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', onAu
         if (password.length < 6) throw new Error('Password must be at least 6 characters');
 
         const res = await api.register(name, email, password);
+        trackEvent('sign_up', { method: 'email' });
         onAuthSuccess(res.user);
         onClose();
       } else {
         if (!email.trim() || !password.trim()) throw new Error('Email and password are required');
 
         const res = await api.login(email, password);
+        trackEvent('login', { method: 'email' });
         onAuthSuccess(res.user);
         onClose();
       }
