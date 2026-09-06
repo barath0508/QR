@@ -26,6 +26,93 @@ import { drawStyledQRCode } from '../utils/qrRenderer';
 import { api } from '../services/api';
 import AdBanner from './AdBanner';
 
+const qrTemplatePresets = [
+  {
+    id: 'restaurant-menu',
+    label: 'Restaurant Menu',
+    description: 'Update menus without reprinting table cards.',
+    type: 'url',
+    isDynamic: true,
+    icon: Link,
+    title: 'Restaurant Menu',
+    url: 'https://example.com/menu',
+    fgColor: '#166534',
+    bgColor: '#F0FDF4',
+    eyeInnerColor: '#10B981',
+    dotStyle: 'rounded',
+    eyeStyle: 'rounded',
+  },
+  {
+    id: 'event-campaign',
+    label: 'Event Campaign',
+    description: 'Track scans from posters, flyers, and campaigns.',
+    type: 'url',
+    isDynamic: true,
+    icon: Sparkles,
+    title: 'Event Campaign',
+    url: 'https://example.com/event',
+    fgColor: '#4338CA',
+    bgColor: '#EEF2FF',
+    eyeInnerColor: '#6366F1',
+    dotStyle: 'dots',
+    eyeStyle: 'circle',
+  },
+  {
+    id: 'social-profile',
+    label: 'Social Profile',
+    description: 'Point a printed code to your latest profile or link.',
+    type: 'url',
+    isDynamic: true,
+    icon: Zap,
+    title: 'Social Profile',
+    url: 'https://example.com/social',
+    fgColor: '#0E7490',
+    bgColor: '#ECFEFF',
+    eyeInnerColor: '#06B6D4',
+    dotStyle: 'smooth',
+    eyeStyle: 'rounded',
+  },
+  {
+    id: 'wifi-access',
+    label: 'Wi-Fi Access',
+    description: 'Let guests join a network without typing a password.',
+    type: 'wifi',
+    isDynamic: false,
+    icon: Wifi,
+    title: 'Guest Wi-Fi',
+    wifiData: { ssid: 'Guest-WiFi', password: '', security: 'WPA', hidden: false },
+    fgColor: '#0F172A',
+    bgColor: '#FFFFFF',
+    eyeInnerColor: '#0891B2',
+    dotStyle: 'rounded',
+    eyeStyle: 'square',
+  },
+  {
+    id: 'business-card',
+    label: 'Business Card',
+    description: 'Share contact details in one camera scan.',
+    type: 'vcard',
+    isDynamic: false,
+    icon: UserSquare2,
+    title: 'Digital Business Card',
+    vcardData: {
+      firstName: 'Alex',
+      lastName: 'Morgan',
+      phone: '+1 555 019 2834',
+      email: 'alex@example.com',
+      company: 'Your Company',
+      title: 'Your Role',
+      website: 'https://example.com',
+      address: '',
+    },
+    fgColor: '#1E1B4B',
+    bgColor: '#EEF2FF',
+    eyeInnerColor: '#8B5CF6',
+    dotStyle: 'rounded',
+    eyeStyle: 'circle',
+  },
+];
+
 export default function QRStudio({ 
   user, 
   onSavedQR, 
@@ -85,6 +172,7 @@ export default function QRStudio({
   const [isSaving, setIsSaving] = useState(false);
   const [savedSuccessQR, setSavedSuccessQR] = useState(null);
   const [saveError, setSaveError] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   // Pre-populate if initialQR is provided for editing design
   useEffect(() => {
@@ -323,6 +411,41 @@ export default function QRStudio({
     { name: 'Crimson Rose', fg: '#E11D48', bg: '#FFF1F2' },
   ];
 
+  const visibleTemplates = qrTemplatePresets.filter((template) => (
+    forcedDynamic === undefined || template.isDynamic === forcedDynamic
+  ));
+
+  const applyTemplate = (template) => {
+    setSelectedTemplate(template.id);
+    setActiveType(template.type);
+    setIsDynamic(forcedDynamic !== undefined ? forcedDynamic : template.isDynamic);
+    setQrTitle(template.title);
+    setCustomAlias('');
+    setUrl(template.url || 'https://example.com');
+    setWifiData(template.wifiData || { ssid: 'Office-WiFi', password: '', security: 'WPA', hidden: false });
+    setVcardData(template.vcardData || {
+      firstName: 'Alex',
+      lastName: 'Morgan',
+      phone: '+1 555 019 2834',
+      email: 'alex@example.com',
+      company: 'Tech Studio',
+      title: 'Lead Designer',
+      website: 'https://alexmorgan.dev',
+      address: 'San Francisco, CA',
+    });
+    setFgColor(template.fgColor);
+    setBgColor(template.bgColor);
+    setEyeOuterColor(template.fgColor);
+    setEyeInnerColor(template.eyeInnerColor);
+    setDotStyle(template.dotStyle);
+    setEyeStyle(template.eyeStyle);
+    setLogoImage(null);
+    setLogoDataUrl(null);
+    setLogoPreset(null);
+    setSavedSuccessQR(null);
+    setSaveError('');
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
@@ -354,7 +477,10 @@ export default function QRStudio({
         {forcedDynamic === undefined && (
           <div className="flex items-center gap-2 self-stretch md:self-auto justify-end">
             <button
-              onClick={() => setIsDynamic(!isDynamic)}
+              onClick={() => {
+                setIsDynamic(!isDynamic);
+                setSelectedTemplate(null);
+              }}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
                 isDynamic
                   ? 'bg-brand-500/15 text-brand-700 dark:text-brand-300 border-brand-500/30'
@@ -371,6 +497,55 @@ export default function QRStudio({
         
         {/* Left Column: Data Type Selection & Customization Controls */}
         <div className="lg:col-span-7 space-y-6">
+          {/* Template shortcuts */}
+          <div className="rounded-2xl border border-brand-500/20 bg-gradient-to-br from-brand-50/70 via-white to-cyan-50/60 dark:from-brand-950/30 dark:via-dark-900/90 dark:to-cyan-950/20 p-4 sm:p-5 shadow-sm transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+                  Start faster
+                </p>
+                <h2 className="text-base font-display font-bold text-slate-900 dark:text-white mt-1">
+                  Choose a QR template
+                </h2>
+              </div>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                Customize every field after selecting
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {visibleTemplates.map((template) => {
+                const Icon = template.icon;
+                const isSelected = selectedTemplate === template.id;
+                return (
+                  <button
+                    key={template.id}
+                    type="button"
+                    onClick={() => applyTemplate(template)}
+                    className={`text-left p-3 rounded-xl border transition-all ${
+                      isSelected
+                        ? 'bg-brand-500/15 border-brand-500/50 shadow-sm'
+                        : 'bg-white/70 dark:bg-dark-950/50 border-slate-200/80 dark:border-white/10 hover:border-brand-500/40 hover:bg-white dark:hover:bg-dark-900'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        isSelected
+                          ? 'bg-brand-500 text-dark-950'
+                          : 'bg-slate-100 dark:bg-dark-800 text-brand-600 dark:text-brand-400'
+                      }`}>
+                        <Icon className="w-4 h-4" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-xs font-bold text-slate-900 dark:text-white">{template.label}</span>
+                        <span className="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">{template.description}</span>
+                      </span>
+                      {isSelected && <CheckCircle2 className="w-4 h-4 text-brand-500 ml-auto flex-shrink-0" />}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           
           {/* 1. Content Type Switcher Tabs */}
           <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/90 p-3 sm:p-4 backdrop-blur-xl shadow-sm dark:shadow-none transition-colors">
@@ -393,6 +568,7 @@ export default function QRStudio({
                     key={item.id}
                     onClick={() => {
                       setActiveType(item.id);
+                      setSelectedTemplate(null);
                       setSavedSuccessQR(null);
                     }}
                     className={`flex flex-col items-center justify-center p-2.5 rounded-xl border text-center transition-all ${
@@ -804,6 +980,7 @@ export default function QRStudio({
                     onClick={() => {
                       setLogoPreset(p.id);
                       setLogoImage(null);
+                      setLogoDataUrl(null);
                       setErrorCorrection('H');
                     }}
                     className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all ${
@@ -965,6 +1142,9 @@ export default function QRStudio({
                       useSeparateEyeColors,
                       errorCorrection,
                       logoPreset,
+                      logoShape,
+                      logoPadding,
+                      logoDataUrl: logoDataUrl || undefined,
                     }, `${qrTitle.replace(/\s+/g, '_')}_qr.svg`);
                   }}
                   className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"

@@ -204,25 +204,64 @@ export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}
 
     // Draw Logo / Preset Badge if configured
     if (hasLogo) {
-      const logoSizePx = canvasDim * 0.22;
+      const logoSizePx = canvasDim * 0.2;
       const logoCenter = canvasDim / 2;
       const logoX = logoCenter - logoSizePx / 2;
       const logoY = logoCenter - logoSizePx / 2;
+      const badgePadding = Math.max(logoPadding, canvasDim * 0.012);
+      const badgeSize = logoSizePx + badgePadding * 2;
+      const badgeX = logoCenter - badgeSize / 2;
+      const badgeY = logoCenter - badgeSize / 2;
+      const badgeRadius = logoShape === 'circle' ? badgeSize / 2 : Math.min(badgeSize * 0.2, 18);
 
+      ctx.save();
       ctx.fillStyle = bgColor;
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
-      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(15, 23, 42, 0.18)';
+      ctx.shadowBlur = canvasDim * 0.012;
       if (logoShape === 'circle') {
         ctx.beginPath();
-        ctx.arc(logoCenter, logoCenter, (logoSizePx / 2) + logoPadding, 0, Math.PI * 2);
+        ctx.arc(logoCenter, logoCenter, badgeSize / 2, 0, Math.PI * 2);
         ctx.fill();
       } else {
-        fillRoundedRect(ctx, logoX - logoPadding, logoY - logoPadding, logoSizePx + logoPadding * 2, logoSizePx + logoPadding * 2, 12);
+        fillRoundedRect(ctx, badgeX, badgeY, badgeSize, badgeSize, badgeRadius);
       }
       ctx.shadowBlur = 0;
+      ctx.strokeStyle = effectiveOuterEye;
+      ctx.lineWidth = Math.max(1, canvasDim * 0.002);
+      if (logoShape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(logoCenter, logoCenter, badgeSize / 2, 0, Math.PI * 2);
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(badgeX, badgeY, badgeSize, badgeSize, badgeRadius);
+        } else {
+          ctx.rect(badgeX, badgeY, badgeSize, badgeSize);
+        }
+        ctx.stroke();
+      }
 
       if (activeLogoImg) {
-        ctx.drawImage(activeLogoImg, logoX, logoY, logoSizePx, logoSizePx);
+        const imageRatio = activeLogoImg.width / activeLogoImg.height || 1;
+        const imageSize = logoSizePx * 0.88;
+        const imageWidth = imageRatio >= 1 ? imageSize : imageSize * imageRatio;
+        const imageHeight = imageRatio >= 1 ? imageSize / imageRatio : imageSize;
+        const imageX = logoCenter - imageWidth / 2;
+        const imageY = logoCenter - imageHeight / 2;
+
+        ctx.save();
+        ctx.beginPath();
+        if (logoShape === 'circle') {
+          ctx.arc(logoCenter, logoCenter, imageSize / 2, 0, Math.PI * 2);
+        } else if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(logoCenter - imageSize / 2, logoCenter - imageSize / 2, imageSize, imageSize, Math.min(imageSize * 0.2, 12));
+        } else {
+          ctx.rect(logoCenter - imageSize / 2, logoCenter - imageSize / 2, imageSize, imageSize);
+        }
+        ctx.clip();
+        ctx.drawImage(activeLogoImg, imageX, imageY, imageWidth, imageHeight);
+        ctx.restore();
       } else if (logoPreset) {
         ctx.fillStyle = fgColor;
         ctx.font = `bold ${logoSizePx * 0.6}px sans-serif`;
@@ -231,6 +270,7 @@ export async function drawStyledQRCode(canvas, textToEncode, rawStyleConfig = {}
         const iconChar = logoPreset === 'globe' ? '🌐' : logoPreset === 'wifi' ? '📶' : logoPreset === 'user' ? '👤' : '✨';
         ctx.fillText(iconChar, logoCenter, logoCenter + 2);
       }
+      ctx.restore();
     }
   } catch (err) {
     console.error('Error drawing styled QR code:', err);
@@ -255,7 +295,8 @@ export function generateStyledSVG(textToEncode, rawStyleConfig = {}) {
   const effectiveInnerEye = useSeparateEyeColors && style.eyeInnerColor ? style.eyeInnerColor : fgColor;
   const errorCorrection = style.errorCorrection || 'H';
   const logoPreset = style.logoPreset || null;
-  const hasLogo = !!logoPreset;
+  const logoDataUrl = style.logoDataUrl || null;
+  const hasLogo = !!(logoPreset || logoDataUrl);
 
   const qr = QRCode.create(textToEncode || 'https://qrloop.io', {
     errorCorrectionLevel: errorCorrection,
@@ -325,12 +366,27 @@ export function generateStyledSVG(textToEncode, rawStyleConfig = {}) {
   drawEyeSVG(margin * cellSize, (size - 7 + margin) * cellSize);
 
   // Logo Badge in center
-  if (logoPreset) {
-    const logoSize = svgDim * 0.22;
+  if (hasLogo) {
+    const logoSize = svgDim * 0.2;
     const center = svgDim / 2;
-    elements.push(`<circle cx="${center}" cy="${center}" r="${logoSize / 2 + 6}" fill="${bgColor}" stroke="${effectiveOuterEye}" stroke-width="1" />`);
-    const iconChar = logoPreset === 'globe' ? '🌐' : logoPreset === 'wifi' ? '📶' : logoPreset === 'user' ? '👤' : '✨';
-    elements.push(`<text x="${center}" y="${center + 5}" font-size="${logoSize * 0.55}" text-anchor="middle" dominant-baseline="central">${iconChar}</text>`);
+    const padding = Math.max(style.logoPadding ?? 6, svgDim * 0.012);
+    const badgeSize = logoSize + padding * 2;
+    const badgeRadius = Math.min(badgeSize * 0.2, 18);
+    const clipId = `qr-logo-clip-${Math.round(svgDim)}`;
+    const shape = style.logoShape === 'square'
+      ? `<rect x="${center - logoSize / 2}" y="${center - logoSize / 2}" width="${logoSize}" height="${logoSize}" rx="${badgeRadius}" />`
+      : `<circle cx="${center}" cy="${center}" r="${logoSize / 2}" />`;
+    const badge = style.logoShape === 'square'
+      ? `<rect x="${center - badgeSize / 2}" y="${center - badgeSize / 2}" width="${badgeSize}" height="${badgeSize}" rx="${badgeRadius}" fill="${bgColor}" stroke="${effectiveOuterEye}" stroke-width="1" />`
+      : `<circle cx="${center}" cy="${center}" r="${badgeSize / 2}" fill="${bgColor}" stroke="${effectiveOuterEye}" stroke-width="1" />`;
+    elements.push(`<defs><clipPath id="${clipId}">${shape}</clipPath></defs>`);
+    elements.push(badge);
+    if (logoDataUrl) {
+      elements.push(`<image href="${logoDataUrl}" x="${center - logoSize / 2}" y="${center - logoSize / 2}" width="${logoSize}" height="${logoSize}" preserveAspectRatio="xMidYMid meet" clip-path="url(#${clipId})" />`);
+    } else if (logoPreset) {
+      const iconChar = logoPreset === 'globe' ? '🌐' : logoPreset === 'wifi' ? '📶' : logoPreset === 'user' ? '👤' : '✨';
+      elements.push(`<text x="${center}" y="${center + 5}" font-size="${logoSize * 0.55}" text-anchor="middle" dominant-baseline="central">${iconChar}</text>`);
+    }
   }
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgDim} ${svgDim}" width="${svgDim}" height="${svgDim}">
