@@ -17,6 +17,7 @@ import AdBanner from '../components/AdBanner';
 
 export default function BlogPage({ onNavigateToDynamic, onNavigateToStatic }) {
   const [selectedArticleId, setSelectedArticleId] = useState(null);
+  const [shareCopied, setShareCopied] = useState(false);
 
   const articles = [
     {
@@ -129,6 +130,22 @@ Smartphone camera sensors are optimized to find **dark modules on a light backgr
 
   const activeArticle = articles.find((a) => a.id === selectedArticleId);
 
+  const handleArticleShare = async () => {
+    const shareUrl = `${window.location.origin}/blog?utm_source=share&utm_medium=referral&utm_campaign=qrloop_content`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: activeArticle.title, text: activeArticle.summary, url: shareUrl });
+      } catch (error) {
+        if (error.name !== 'AbortError') throw error;
+      }
+      return;
+    }
+
+    await navigator.clipboard.writeText(shareUrl);
+    setShareCopied(true);
+    window.setTimeout(() => setShareCopied(false), 2200);
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       
@@ -157,6 +174,13 @@ Smartphone camera sensors are optimized to find **dark modules on a light backgr
                 <Clock className="w-3.5 h-3.5" />
                 {activeArticle.readTime}
               </span>
+              <button
+                onClick={handleArticleShare}
+                className="ml-auto inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 hover:text-brand-500 font-semibold transition-colors"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>{shareCopied ? 'Link copied' : 'Share guide'}</span>
+              </button>
             </div>
           </div>
 
