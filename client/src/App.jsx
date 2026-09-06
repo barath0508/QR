@@ -11,6 +11,7 @@ import BlogPage from './pages/BlogPage';
 import ComparePage from './pages/ComparePage';
 import UseCasePage from './pages/UseCasePage';
 import { api, authStorage } from './services/api';
+import { trackEvent } from './utils/analytics';
 
 export default function App() {
   const useCaseRoutes = ['qr-code-for-restaurants', 'qr-code-for-events', 'qr-code-for-wifi', 'qr-code-for-business-cards'];
@@ -94,6 +95,7 @@ export default function App() {
 
   useEffect(() => {
     const seo = pageSEO[currentTab] || pageSEO['home'];
+    trackEvent('page_view', { page_path: `/${currentTab === 'home' ? '' : currentTab}` });
     document.title = seo.title;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', seo.desc);
