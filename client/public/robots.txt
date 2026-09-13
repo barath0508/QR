@@ -1,5 +1,16 @@
 # robots.txt — https://qrloop4.vercel.app
-# Generated: 2026-09-05
+# Generated: 2026-09-13
+
+# -----------------------------------------------
+# Google AdSense & Search Crawlers
+# -----------------------------------------------
+User-agent: Mediapartners-Google
+Allow: /
+Allow: /ads.txt
+
+User-agent: Googlebot
+Allow: /
+Allow: /ads.txt
 
 # -----------------------------------------------
 # Allow all well-behaved crawlers
@@ -10,8 +21,19 @@ Allow: /dynamic-qr
 Allow: /static-qr
 Allow: /compare
 Allow: /blog
+Allow: /about
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+Allow: /qr-code-for-restaurants
+Allow: /qr-code-for-events
+Allow: /qr-code-for-wifi
+Allow: /qr-code-for-business-cards
+Allow: /ads.txt
+Allow: /llms.txt
 
-# Block private / API routes
+# Block private / API / redirect routes
 Disallow: /api/
 Disallow: /r/
 Disallow: /.vercel/

@@ -13,7 +13,9 @@ import {
   Zap, 
   BookOpen, 
   CheckCircle2,
-  Scale
+  Scale,
+  Info,
+  Mail
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -34,6 +36,7 @@ export default function Navbar({
     { id: 'dashboard', label: 'My Codes', icon: LayoutDashboard },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
     { id: 'blog', label: 'Guides', icon: BookOpen },
+    { id: 'about', label: 'About', icon: Info },
     { id: 'compare', label: 'Why Free', icon: Scale },
   ];
 
@@ -177,6 +180,14 @@ export default function Navbar({
               </button>
             );
           })}
+
+          <button
+            onClick={() => { setCurrentTab('contact'); setMobileMenuOpen(false); }}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-900 transition-colors"
+          >
+            <Mail className="w-4 h-4 text-cyan-500" />
+            <span>Contact & Support</span>
+          </button>
 
           <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex flex-col gap-2">
             {user ? (

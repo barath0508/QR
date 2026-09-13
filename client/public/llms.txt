@@ -40,6 +40,11 @@
 - /dashboard — Authenticated user QR management dashboard
 - /compare — Side-by-side comparison vs QR Tiger, Bitly QR, Flowcode, etc.
 - /blog — QR code knowledge base and how-to guides
+- /about — Origin, mission, and sub-50ms edge redirect architecture
+- /contact — Support desk, feedback form, and security report channel
+- /privacy — Privacy policy, Google AdSense DART disclosures, and GDPR/CCPA rights
+- /terms — Terms of service and acceptable dynamic redirect use policy
+- /cookies — Cookie policy and user consent controls
 - /analytics — Per-QR scan analytics viewer (device, OS, geo breakdown)
 - /r/:code — Live redirect endpoint (not indexable, redirects to destination URL)
 

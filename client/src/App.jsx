@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AuthModal from './components/AuthModal';
+import CookieConsent from './components/CookieConsent';
 import LandingPage from './pages/LandingPage';
 import DynamicQRPage from './pages/DynamicQRPage';
 import StaticQRPage from './pages/StaticQRPage';
@@ -10,16 +11,42 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import BlogPage from './pages/BlogPage';
 import ComparePage from './pages/ComparePage';
 import UseCasePage from './pages/UseCasePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import CookiePolicyPage from './pages/CookiePolicyPage';
 import { api, authStorage } from './services/api';
 import { trackEvent } from './utils/analytics';
+import { applyPageSEO } from './utils/seo';
 
 export default function App() {
-  const useCaseRoutes = ['qr-code-for-restaurants', 'qr-code-for-events', 'qr-code-for-wifi', 'qr-code-for-business-cards'];
-  // Routes: 'home' | 'dynamic-qr' | 'static-qr' | 'dashboard' | 'analytics' | 'blog' | 'compare' | use-case pages
+  const useCaseRoutes = [
+    'qr-code-for-restaurants', 
+    'qr-code-for-events', 
+    'qr-code-for-wifi', 
+    'qr-code-for-business-cards'
+  ];
+
+  const contentRoutes = [
+    'dynamic-qr', 
+    'static-qr', 
+    'dashboard', 
+    'analytics', 
+    'blog', 
+    'compare',
+    'about',
+    'contact',
+    'privacy',
+    'terms',
+    'cookies',
+    ...useCaseRoutes
+  ];
+
   const [currentTab, setCurrentTab] = useState(() => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname.replace(/^\//, '').toLowerCase();
-      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare', ...useCaseRoutes].includes(path)) {
+      if (contentRoutes.includes(path)) {
         return path;
       }
     }
@@ -34,91 +61,17 @@ export default function App() {
   const [authModalMode, setAuthModalMode] = useState('login');
   const [authCustomPrompt, setAuthCustomPrompt] = useState('');
 
-  // Page SEO configuration for dynamic title & meta updates
-  const pageSEO = {
-    'home': {
-      title: 'Free Dynamic QR Code Generator with Analytics | QRLoop',
-      desc: 'Create free dynamic QR codes with editable URLs, custom branding, high-resolution PNG, SVG and PDF downloads, and QR scan analytics. No expiration or watermark.',
-      indexable: true,
-    },
-    'dynamic-qr': {
-      title: 'Dynamic QR Code Generator: Edit URLs After Printing | QRLoop',
-      desc: 'Create a trackable dynamic QR code, change its destination URL anytime, and monitor scans by device and location. Free QR code generator with no expiration.',
-      indexable: true,
-    },
-    'static-qr': {
-      title: 'Free Static QR Code Generator for URLs, Wi-Fi & vCards | QRLoop',
-      desc: 'Generate a permanent static QR code for a website, Wi-Fi network, contact card, text, email or phone number. Download PNG, SVG or PDF without an account.',
-      indexable: true,
-    },
-    'dashboard': {
-      title: 'My Dynamic QR Codes - Real-Time Management Dashboard | QRLoop',
-      desc: 'Manage your active dynamic QR codes, update destination URLs on the fly, export print standees, and inspect live scan telemetry.',
-      indexable: false,
-    },
-    'analytics': {
-      title: 'QR Code Scan Analytics & Real-Time Telemetry | QRLoop',
-      desc: 'Track QR code performance with real-time scan volume, device breakdown, operating systems, browsers, and top geographic locations.',
-      indexable: false,
-    },
-    'blog': {
-      title: 'QR Code Guides: Printing, Analytics & Dynamic QR Tips | QRLoop',
-      desc: 'Learn how dynamic and static QR codes work, how to print scannable codes, and how to measure QR scans for marketing campaigns.',
-      indexable: true,
-    },
-    'compare': {
-      title: 'QR Code Generator Comparison: Free Dynamic QR Alternatives | QRLoop',
-      desc: 'Compare QRLoop with paid QR code platforms for editable links, scan analytics, QR customization, exports, pricing and expiration policies.',
-      indexable: true,
-    },
-    'qr-code-for-restaurants': {
-      title: 'QR Code Generator for Restaurants and Menus | QRLoop',
-      desc: 'Create a branded restaurant menu QR code you can update after printing. Track scans and download print-ready QR codes with QRLoop.',
-      indexable: true,
-    },
-    'qr-code-for-events': {
-      title: 'QR Code Generator for Events and Campaigns | QRLoop',
-      desc: 'Create editable event QR codes for registration, schedules, tickets, maps, and feedback. Customize and export with QRLoop.',
-      indexable: true,
-    },
-    'qr-code-for-wifi': {
-      title: 'Free Wi-Fi QR Code Generator | QRLoop',
-      desc: 'Generate a free Wi-Fi QR code for cafes, offices, hotels, and homes. Download a clean static code with no login required.',
-      indexable: true,
-    },
-    'qr-code-for-business-cards': {
-      title: 'QR Code Generator for Digital Business Cards | QRLoop',
-      desc: 'Create a branded QR code for your digital business card, portfolio, profile, or vCard. Export a sharp code for professional printing.',
-      indexable: true,
-    },
-  };
-
+  // Comprehensive SEO update on route change
   useEffect(() => {
-    const seo = pageSEO[currentTab] || pageSEO['home'];
+    applyPageSEO(currentTab);
     trackEvent('page_view', { page_path: `/${currentTab === 'home' ? '' : currentTab}` });
-    document.title = seo.title;
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', seo.desc);
-    const metaRobots = document.querySelector('meta[name="robots"]');
-    if (metaRobots) {
-      metaRobots.setAttribute(
-        'content',
-        seo.indexable ? 'index, follow, max-snippet:-1, max-image-preview:large' : 'noindex, nofollow'
-      );
-    }
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) {
-      canonical.setAttribute(
-        'href',
-        `https://qrloop4.vercel.app${currentTab === 'home' ? '/' : `/${currentTab}`}`
-      );
-    }
   }, [currentTab]);
 
+  // Handle Browser Back / Forward History
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.replace(/^\//, '').toLowerCase();
-      if (['dynamic-qr', 'static-qr', 'dashboard', 'analytics', 'blog', 'compare', ...useCaseRoutes].includes(path)) {
+      if (contentRoutes.includes(path)) {
         setCurrentTab(path);
       } else {
         setCurrentTab('home');
@@ -148,7 +101,6 @@ export default function App() {
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
-
 
   useEffect(() => {
     async function init() {
@@ -285,6 +237,46 @@ export default function App() {
           />
         )}
 
+        {currentTab === 'about' && (
+          <AboutPage
+            onBackToHome={() => handleNavigate('home')}
+            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+            onNavigateToContact={() => handleNavigate('contact')}
+            onNavigateToBlog={() => handleNavigate('blog')}
+          />
+        )}
+
+        {currentTab === 'contact' && (
+          <ContactPage
+            onBackToHome={() => handleNavigate('home')}
+            onNavigateToBlog={() => handleNavigate('blog')}
+          />
+        )}
+
+        {currentTab === 'privacy' && (
+          <PrivacyPage
+            onBackToHome={() => handleNavigate('home')}
+            onNavigateToCookies={() => handleNavigate('cookies')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
+        )}
+
+        {currentTab === 'terms' && (
+          <TermsPage
+            onBackToHome={() => handleNavigate('home')}
+            onNavigateToPrivacy={() => handleNavigate('privacy')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
+        )}
+
+        {currentTab === 'cookies' && (
+          <CookiePolicyPage
+            onBackToHome={() => handleNavigate('home')}
+            onNavigateToPrivacy={() => handleNavigate('privacy')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
+        )}
+
         {useCaseRoutes.includes(currentTab) && (
           <UseCasePage
             slug={currentTab}
@@ -297,6 +289,9 @@ export default function App() {
 
       {/* Global Footer */}
       <Footer onNavigate={(tab) => handleNavigate(tab)} />
+
+      {/* Cookie Consent Banner (EU User Consent Policy Compliance) */}
+      <CookieConsent onNavigate={(tab) => handleNavigate(tab)} />
 
       {/* Auth Modal with contextual prompt support */}
       <AuthModal

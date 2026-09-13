@@ -125,6 +125,77 @@ Smartphone camera sensors are optimized to find **dark modules on a light backgr
 - **The Quiet Zone**: Keep a margin of at least 4 module widths of blank space around the QR code so the camera's computer vision algorithm can detect the boundary.
 - **Export in Vector SVG**: Always use SVG vector export for large-format commercial printing to prevent pixelation.
       `
+    },
+    {
+      id: 'quishing-security-guide',
+      category: 'Cybersecurity',
+      badgeColor: 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20',
+      title: 'QR Code Phishing (Quishing): How to Spot Malicious Codes and Secure Your Brand',
+      readTime: '6 min read',
+      date: 'Sept 2026',
+      summary: 'Cybercriminals are replacing physical QR codes with malicious redirects. Learn how quishing attacks operate and how businesses can protect consumers.',
+      content: `
+### What is "Quishing"?
+
+As QR codes became ubiquitous across parking meters, restaurants, and bill payments, cybercriminals adapted classic email phishing techniques into **QR code phishing**, colloquially known as **"Quishing"**.
+
+Unlike phishing emails (which enterprise mail filters can inspect for malicious links and spam signals), a physical QR code is an offline visual image. When printed on a sticker or flyer, security software cannot inspect the destination URL until a user points their smartphone camera at it.
+
+### Common Quishing Vectors
+
+1. **Physical Sticker Overlays ("Attestation Tampering")**:
+   Attackers print malicious QR stickers and physically paste them over legitimate QR codes on parking meters, public transit kiosks, or restaurant tables. When an unsuspecting user scans to pay for parking, they are routed to an identical-looking spoofed payment portal that steals credit card credentials.
+
+2. **Deceptive Multi-Factor Auth (MFA) Lures**:
+   Attackers send corporate emails requesting employees to "scan this QR code with your mobile device to verify your 2FA authentication." Because corporate laptops often block suspicious URLs while personal employee smartphones have less endpoint protection, attackers successfully bypass enterprise web gateways.
+
+3. **Short-URL Cloaking**:
+   Malicious actors encode redirects through open shorteners or compromised servers that dynamically switch destinations based on the scanner's User-Agent header (serving a benign page to desktop security crawlers, but serving credential harvest forms to iOS and Android devices).
+
+### How to Protect Your Brand and Consumers
+
+- **Use Branded Custom Domains & SSL**: Always use a recognizable domain name on your dynamic QR codes so consumers can verify the URL preview in their phone's camera app before tapping.
+- **Inspect Physical Assets Regularly**: Staff at restaurants and retail venues should regularly perform tactile checks on table standees and posters to ensure no third-party stickers have been superimposed.
+- **Choose Dynamic Redirection with Fast Revocation**: If a printed flyer is compromised, dynamic platforms like QRLoop allow you to instantly reroute the destination to an official alert page without having to recall thousands of printed brochures.
+- **Never Encode Raw Passwords in Wi-Fi Codes**: For public venue Wi-Fi, use guest networks isolated from corporate intranets.
+      `
+    },
+    {
+      id: 'gs1-digital-link-revolution',
+      category: 'Enterprise & Retail',
+      badgeColor: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20',
+      title: 'The GS1 Digital Link Revolution: Why 2D Barcodes Are Replacing 1D Barcodes Worldwide',
+      readTime: '5 min read',
+      date: 'Sept 2026',
+      summary: 'Global standards organization GS1 has set a mandate for retailers to transition from traditional 1D barcodes to 2D QR codes. Discover the business implications.',
+      content: `
+### Sunrise 2027: The End of the Traditional 1D Barcode
+
+For over 50 years, the linear 1D barcode (UPC/EAN) has been the cornerstone of retail checkout. But as consumer demand for ingredient transparency, supply chain provenance, and sustainability data exploded, the limitations of 1D barcodes became insurmountable:
+- 1D barcodes can only store a single static number (the Global Trade Item Number / GTIN).
+- They cannot link a consumer's smartphone to nutritional facts, allergen warnings, or recycling instructions.
+- They cannot encode expiration dates or batch/lot numbers for automated freshness scanning at the checkout register.
+
+In response, global standards body **GS1** launched the **"Sunrise 2027"** initiative: by 2027, point-of-sale (POS) barcode scanners worldwide must support 2D barcodes—specifically **GS1 Digital Link QR codes**.
+
+### How GS1 Digital Link Works
+
+A GS1 Digital Link QR code is a web URI with standard syntax containing product identification parameters:
+\`https://brand.com/01/01234567890128/10/BATCH12/21/SERIAL99\`
+
+When scanned:
+1. **At Checkout (POS Scanner)**: The cash register extracts the GTIN (01), lot number (10), and expiration date (17) to ring up the item and automatically prevent expired items from being sold.
+2. **By a Consumer (Smartphone Camera)**: The same QR code opens a responsive mobile web experience with recipe ideas, user manuals, carbon footprint disclosures, and warranty registration.
+
+### The Strategic Value of Dynamic QR Infrastructure
+
+Because product packaging has a shelf life of months or years, hardcoding static URLs onto packaging is a massive business risk. If the promotional website moves or the regulatory compliance requirements change, static packaging cannot be updated.
+
+Using **dynamic QR code infrastructure** ensures brands can:
+- Change marketing promotions season-by-season without changing packaging plates.
+- Update safety recall information instantly if a batch defect is identified.
+- Analyze scan engagement geographically to determine retail market penetration.
+      `
     }
   ];
 

@@ -6,7 +6,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://qrloop4.vercel.app/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -19,7 +19,7 @@
   <!-- Dynamic QR Generator (core product page) -->
   <url>
     <loc>https://qrloop4.vercel.app/dynamic-qr</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.97</priority>
     <image:image>
@@ -32,7 +32,7 @@
   <!-- Static QR Generator -->
   <url>
     <loc>https://qrloop4.vercel.app/static-qr</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
@@ -45,40 +45,81 @@
   <!-- Compare page -->
   <url>
     <loc>https://qrloop4.vercel.app/compare</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- Blog -->
+  <!-- Knowledge Hub / Blog -->
   <url>
     <loc>https://qrloop4.vercel.app/blog</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- About Us -->
+  <url>
+    <loc>https://qrloop4.vercel.app/about</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
+  <!-- Contact Us -->
+  <url>
+    <loc>https://qrloop4.vercel.app/contact</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://qrloop4.vercel.app/privacy</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://qrloop4.vercel.app/terms</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- Cookie Policy -->
+  <url>
+    <loc>https://qrloop4.vercel.app/cookies</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- Industry Solutions & Use Cases -->
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-restaurants</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-events</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-wifi</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-business-cards</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
