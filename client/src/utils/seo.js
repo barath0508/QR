@@ -50,6 +50,13 @@ export const pageSEOMap = {
     canonical: 'https://qrloop4.vercel.app/compare',
     schemaType: 'WebPage',
   },
+  community: {
+    title: 'Community Discussions & Creator Forum | QRLoop',
+    desc: 'Join the QRLoop creator community. Ask questions, troubleshoot scanning issues, showcase custom QR designs, and discuss dynamic redirect best practices.',
+    indexable: true,
+    canonical: 'https://qrloop4.vercel.app/community',
+    schemaType: 'DiscussionForumPosting',
+  },
   about: {
     title: 'About QRLoop - Our Mission for Free & Open Dynamic QR Codes',
     desc: 'Learn about QRLoop’s mission to eliminate 14-day expired dynamic QR paywalls, our sub-50ms edge redirect architecture, and commitment to open web standards.',

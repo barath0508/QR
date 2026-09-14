@@ -20,6 +20,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const CookiePolicyPage = lazy(() => import('./pages/CookiePolicyPage'));
+const CommunityPage = lazy(() => import('./pages/CommunityPage'));
 const AuthModal = lazy(() => import('./components/AuthModal'));
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
     'analytics', 
     'blog', 
     'compare',
+    'community',
     'about',
     'contact',
     'privacy',
@@ -245,6 +247,14 @@ export default function App() {
             <ComparePage
               onNavigateToStudio={() => handleNavigate('dynamic-qr')}
               onBackToHome={() => handleNavigate('home')}
+            />
+          )}
+
+          {currentTab === 'community' && (
+            <CommunityPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+              onNavigateToBlog={() => handleNavigate('blog')}
             />
           )}
 

@@ -15,7 +15,8 @@ import {
   CheckCircle2,
   Scale,
   Info,
-  Mail
+  Mail,
+  MessageSquare
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -36,6 +37,7 @@ export default function Navbar({
     { id: 'dashboard', href: '/dashboard', label: 'My Codes', icon: LayoutDashboard },
     { id: 'analytics', href: '/analytics', label: 'Analytics', icon: BarChart3 },
     { id: 'blog', href: '/blog', label: 'Guides', icon: BookOpen },
+    { id: 'community', href: '/community', label: 'Community', icon: MessageSquare },
     { id: 'about', href: '/about', label: 'About', icon: Info },
     { id: 'compare', href: '/compare', label: 'Why Free', icon: Scale },
   ];

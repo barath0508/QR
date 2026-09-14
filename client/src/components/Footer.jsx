@@ -189,6 +189,15 @@ export default function Footer({ onNavigate }) {
                   Knowledge Hub
                 </a>
               </li>
+              <li>
+                <a 
+                  href="/community" 
+                  onClick={handleLinkClick('community')} 
+                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left"
+                >
+                  Community Forum
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -264,6 +273,13 @@ export default function Footer({ onNavigate }) {
                 className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
               >
                 Cookie Settings
+              </a>
+              <a 
+                href="/community" 
+                onClick={handleLinkClick('community')} 
+                className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+              >
+                Community
               </a>
               <a 
                 href="/about" 
