@@ -143,7 +143,19 @@ export default function TermsPage({ onBackToHome, onNavigateToPrivacy, onNavigat
 
         <section className="space-y-3">
           <h2 className="text-xl font-display font-bold text-slate-900 dark:text-white">
-            7. Modifications to Terms
+            7. Trademark Disclosures & Attributions
+          </h2>
+          <p>
+            <strong>"QR Code"</strong> is a registered trademark of <strong>DENSO WAVE INCORPORATED</strong> in Japan and other countries. 
+            All other third-party product names, logos, brands, and registered trademarks (including Bitly, QRCode Monkey, and Uniqode) mentioned 
+            across our website are the property of their respective owners. Their mention is strictly for identification and comparative purposes 
+            under nominative fair use and does not constitute endorsement, sponsorship, or affiliation.
+          </p>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-xl font-display font-bold text-slate-900 dark:text-white">
+            8. Modifications to Terms
           </h2>
           <p>
             We reserve the right to modify these Terms at any time. When modifications occur, we will revise the "Last Revised" 
@@ -154,7 +166,7 @@ export default function TermsPage({ onBackToHome, onNavigateToPrivacy, onNavigat
 
         <section className="space-y-3">
           <h2 className="text-xl font-display font-bold text-slate-900 dark:text-white">
-            8. Questions & Contact Information
+            9. Questions & Contact Information
           </h2>
           <p>
             For legal inquiries, abuse reporting, or clarification of these terms, please contact our administrative team:

@@ -245,45 +245,50 @@ export default function Footer({ onNavigate }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-200 dark:border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-700 dark:text-slate-300">
-          <p>© {new Date().getFullYear()} QRLoop Technologies. Built for creators and businesses worldwide.</p>
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <a 
-              href="/privacy" 
-              onClick={handleLinkClick('privacy')} 
-              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
-            >
-              Privacy Policy
-            </a>
-            <a 
-              href="/terms" 
-              onClick={handleLinkClick('terms')} 
-              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
-            >
-              Terms of Service
-            </a>
-            <a 
-              href="/cookies" 
-              onClick={handleLinkClick('cookies')} 
-              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
-            >
-              Cookie Settings
-            </a>
-            <a 
-              href="/about" 
-              onClick={handleLinkClick('about')} 
-              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
-            >
-              About
-            </a>
-            <a 
-              href="/contact" 
-              onClick={handleLinkClick('contact')} 
-              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
-            >
-              Contact
-            </a>
+        <div className="border-t border-slate-200 dark:border-white/5 pt-8 space-y-3 text-xs text-slate-700 dark:text-slate-300">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© {new Date().getFullYear()} QRLoop Technologies. Built for creators and businesses worldwide.</p>
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+              <a 
+                href="/privacy" 
+                onClick={handleLinkClick('privacy')} 
+                className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+              >
+                Privacy Policy
+              </a>
+              <a 
+                href="/terms" 
+                onClick={handleLinkClick('terms')} 
+                className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+              >
+                Terms of Service
+              </a>
+              <a 
+                href="/cookies" 
+                onClick={handleLinkClick('cookies')} 
+                className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+              >
+                Cookie Settings
+              </a>
+              <a 
+                href="/about" 
+                onClick={handleLinkClick('about')} 
+                className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+              >
+                About
+              </a>
+              <a 
+                href="/contact" 
+                onClick={handleLinkClick('contact')} 
+                className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+              >
+                Contact
+              </a>
+            </div>
           </div>
+          <p className="text-[11px] text-slate-600 dark:text-slate-400 text-center sm:text-left">
+            QR Code is a registered trademark of DENSO WAVE INCORPORATED in Japan and other countries. All third-party trademarks belong to their respective owners.
+          </p>
         </div>
       </div>
     </footer>

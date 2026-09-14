@@ -149,6 +149,13 @@ export default function ComparePage({ onNavigateToStudio }) {
           </table>
         </div>
 
+        {/* Trademark Disclaimer */}
+        <div className="px-6 py-3 bg-slate-100/60 dark:bg-dark-900/60 border-t border-slate-200/60 dark:border-white/5 text-[11px] text-slate-600 dark:text-slate-400">
+          <p>
+            * Disclaimer: All trademarks, service marks, and company names (including QRCode Monkey, Bitly, and Beaconstac/Uniqode) are the property of their respective owners. Mention of them is for comparative identification purposes only under nominative fair use and does not imply endorsement, affiliation, or sponsorship. Competitor pricing and features reflect publicly advertised tiers as of 2026.
+          </p>
+        </div>
+
         {/* CTA in table footer */}
         <div className="p-6 bg-slate-50 dark:bg-dark-950/60 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
