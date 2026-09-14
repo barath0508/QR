@@ -520,10 +520,10 @@ export default function QRStudio({
         {/* Left Column: Data Type Selection & Customization Controls */}
         <div className="lg:col-span-7 space-y-6">
           {/* Template shortcuts */}
-          <div className="rounded-2xl border border-brand-500/20 bg-gradient-to-br from-brand-50/70 via-white to-cyan-50/60 dark:from-brand-950/30 dark:via-dark-900/90 dark:to-cyan-950/20 p-4 sm:p-5 shadow-sm transition-colors">
+          <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-dark-900/90 p-4 sm:p-5 shadow-xs dark:shadow-none transition-colors">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+                <p className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                   Start faster
                 </p>
                 <h2 className="text-base font-display font-bold text-slate-900 dark:text-white mt-1">
@@ -546,7 +546,7 @@ export default function QRStudio({
                     className={`text-left p-3 rounded-xl border transition-all ${
                       isSelected
                         ? 'bg-brand-500/15 border-brand-500/50 shadow-sm'
-                        : 'bg-white/70 dark:bg-dark-950/50 border-slate-200/80 dark:border-white/10 hover:border-brand-500/40 hover:bg-white dark:hover:bg-dark-900'
+                        : 'bg-white dark:bg-dark-950/60 border-slate-200/80 dark:border-white/10 hover:border-brand-500/40 hover:bg-slate-50 dark:hover:bg-dark-850'
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
