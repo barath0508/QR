@@ -48,6 +48,11 @@ export default function LandingPage({
     window.setTimeout(() => setShareCopied(false), 2200);
   };
 
+  const handleLinkClick = (action) => (e) => {
+    e.preventDefault();
+    action();
+  };
+
   return (
     <div className="space-y-24 pb-20 pt-8 sm:pt-14">
 
@@ -59,7 +64,7 @@ export default function LandingPage({
           <span>The Open Dynamic QR Platform • 100% Free Forever</span>
         </div>
 
-        {/* Hero Title */}
+        {/* Hero Title - Single H1 Tag */}
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white tracking-[-0.03em] leading-[1.12]">
           Free Dynamic QR Code Generator for <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500">
@@ -72,24 +77,26 @@ export default function LandingPage({
           Create custom QR codes for websites, menus, flyers, packaging, events and marketing campaigns. Edit destination URLs after printing, measure QR scans, and download print-ready PNG, SVG or PDF files.
         </p>
 
-        {/* Call to Action Buttons */}
+        {/* Call to Action Links */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
-          <button
-            onClick={onNavigateToDynamic}
+          <a
+            href="/dynamic-qr"
+            onClick={handleLinkClick(onNavigateToDynamic)}
             className="w-full sm:w-auto h-12 px-7 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:brightness-105 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5"
           >
             <Zap className="w-4 h-4 fill-white text-white" />
             <span>Create Dynamic QR Code</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
 
-          <button
-            onClick={onNavigateToStatic}
+          <a
+            href="/static-qr"
+            onClick={handleLinkClick(onNavigateToStatic)}
             className="w-full sm:w-auto h-12 px-6 rounded-xl bg-white dark:bg-dark-900 hover:bg-slate-50 dark:hover:bg-dark-850 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all"
           >
             <QrCode className="w-4 h-4 text-cyan-500" />
             <span>Quick Static Generator</span>
-          </button>
+          </a>
         </div>
 
         {/* Trust Badges */}
@@ -159,18 +166,19 @@ export default function LandingPage({
             </div>
 
             <div className="pt-7 mt-7 border-t border-slate-200/80 dark:border-white/10">
-              <button
-                onClick={onNavigateToDynamic}
-                className="w-full h-11 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
+              <a
+                href="/dynamic-qr"
+                onClick={handleLinkClick(onNavigateToDynamic)}
+                className="w-full h-11 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all"
               >
                 <span>Launch Dynamic Studio</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </a>
             </div>
           </div>
 
           {/* Static Card */}
-          <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 p-7 sm:p-9 backdrop-blur-xl shadow-sm dark:shadow-none flex flex-col justify-between">
+          <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 p-7 sm:p-9 backdrop-blur-xl shadow-xs dark:shadow-none flex flex-col justify-between">
             <div className="space-y-5">
               <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
                 <Wifi className="w-6 h-6" />
@@ -200,13 +208,14 @@ export default function LandingPage({
             </div>
 
             <div className="pt-7 mt-7 border-t border-slate-200/80 dark:border-white/10">
-              <button
-                onClick={onNavigateToStatic}
+              <a
+                href="/static-qr"
+                onClick={handleLinkClick(onNavigateToStatic)}
                 className="w-full h-11 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-750 text-slate-800 dark:text-slate-200 font-semibold text-sm flex items-center justify-center gap-2 border border-slate-200/80 dark:border-white/5 transition-all"
               >
                 <span>Launch Static Generator</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </a>
             </div>
           </div>
 
@@ -269,7 +278,7 @@ export default function LandingPage({
             </div>
             <button
               onClick={handleShare}
-              className="flex-shrink-0 h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-semibold text-sm flex items-center gap-2 shadow-sm transition-all"
+              className="flex-shrink-0 h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-semibold text-sm flex items-center gap-2 shadow-xs transition-all cursor-pointer"
             >
               {shareCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               <span>{shareCopied ? 'Link copied' : 'Share QRLoop'}</span>
@@ -293,19 +302,21 @@ export default function LandingPage({
             </h2>
           </div>
 
-          <button
-            onClick={onNavigateToBlog}
+          <a
+            href="/blog"
+            onClick={handleLinkClick(onNavigateToBlog)}
             className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 flex items-center gap-1.5 transition-colors"
           >
             <span>View All Articles</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div
-            onClick={onNavigateToBlog}
-            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group"
+          <a
+            href="/blog"
+            onClick={handleLinkClick(onNavigateToBlog)}
+            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group block"
           >
             <span className="text-[11px] uppercase font-bold text-red-600 dark:text-red-400 font-mono">Industry Warning</span>
             <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
@@ -314,11 +325,12 @@ export default function LandingPage({
             <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
               Learn how commercial generators bait users into printing brochures before locking links behind monthly subscriptions.
             </p>
-          </div>
+          </a>
 
-          <div
-            onClick={onNavigateToBlog}
-            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group"
+          <a
+            href="/blog"
+            onClick={handleLinkClick(onNavigateToBlog)}
+            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group block"
           >
             <span className="text-[11px] uppercase font-bold text-emerald-600 dark:text-emerald-400 font-mono">Best Practices</span>
             <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
@@ -327,11 +339,12 @@ export default function LandingPage({
             <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
               A comprehensive checklist to choose between static and dynamic codes for product packaging and marketing.
             </p>
-          </div>
+          </a>
 
-          <div
-            onClick={onNavigateToBlog}
-            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group"
+          <a
+            href="/blog"
+            onClick={handleLinkClick(onNavigateToBlog)}
+            className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group block"
           >
             <span className="text-[11px] uppercase font-bold text-cyan-600 dark:text-cyan-400 font-mono">Print & Design</span>
             <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
@@ -340,13 +353,13 @@ export default function LandingPage({
             <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
               Essential guidelines on resolution, quiet zone margins, and contrast ratios for crisp camera scanning.
             </p>
-          </div>
+          </a>
         </div>
       </section>
 
       {/* 6. Competitor Comparison Teaser */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-10 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-xl transition-colors">
+        <div className="p-8 sm:p-10 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs dark:shadow-xl transition-colors">
           <div className="space-y-2 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2">
               <ShieldCheck className="w-5 h-5 text-emerald-500" />
@@ -362,13 +375,14 @@ export default function LandingPage({
             </p>
           </div>
 
-          <button
-            onClick={onNavigateToCompare}
-            className="h-11 px-6 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-800 dark:hover:bg-white/20 text-white font-semibold text-sm flex items-center gap-2 border border-slate-900 dark:border-white/10 transition-all flex-shrink-0 shadow-sm"
+          <a
+            href="/compare"
+            onClick={handleLinkClick(onNavigateToCompare)}
+            className="h-11 px-6 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-800 dark:hover:bg-white/20 text-white font-semibold text-sm flex items-center gap-2 border border-slate-900 dark:border-white/10 transition-all flex-shrink-0 shadow-xs"
           >
             <span>Compare vs Paid Tools</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
         </div>
       </section>
 

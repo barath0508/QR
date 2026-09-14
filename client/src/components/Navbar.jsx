@@ -31,23 +31,31 @@ export default function Navbar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'dynamic-qr', label: 'Dynamic QR', icon: Zap },
-    { id: 'static-qr', label: 'Static QR', icon: QrCode },
-    { id: 'dashboard', label: 'My Codes', icon: LayoutDashboard },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'blog', label: 'Guides', icon: BookOpen },
-    { id: 'about', label: 'About', icon: Info },
-    { id: 'compare', label: 'Why Free', icon: Scale },
+    { id: 'dynamic-qr', href: '/dynamic-qr', label: 'Dynamic QR', icon: Zap },
+    { id: 'static-qr', href: '/static-qr', label: 'Static QR', icon: QrCode },
+    { id: 'dashboard', href: '/dashboard', label: 'My Codes', icon: LayoutDashboard },
+    { id: 'analytics', href: '/analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'blog', href: '/blog', label: 'Guides', icon: BookOpen },
+    { id: 'about', href: '/about', label: 'About', icon: Info },
+    { id: 'compare', href: '/compare', label: 'Why Free', icon: Scale },
   ];
+
+  const handleNavClick = (tabId) => (e) => {
+    e.preventDefault();
+    setCurrentTab(tabId);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-white/5 bg-white/90 dark:bg-dark-950/90 backdrop-blur-xl transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
         {/* Brand Logo -> Routes to Home */}
-        <div 
-          onClick={() => setCurrentTab('home')}
+        <a 
+          href="/"
+          onClick={handleNavClick('home')}
           className="flex items-center gap-2.5 cursor-pointer group select-none flex-shrink-0"
+          aria-label="QRLoop Homepage"
         >
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-cyanGlow-500 shadow-glow-emerald transition-transform group-hover:scale-105">
             <QrCode className="w-5 h-5 text-dark-950 stroke-[2.4]" />
@@ -63,26 +71,27 @@ export default function Navbar({
               FREE
             </span>
           </div>
-        </div>
+        </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-dark-900/70 p-1 rounded-xl border border-slate-200/80 dark:border-white/5">
+        <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-dark-900/70 p-1 rounded-xl border border-slate-200/80 dark:border-white/5">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.id;
             return (
-              <button
+              <a
                 key={item.id}
-                onClick={() => setCurrentTab(item.id)}
+                href={item.href}
+                onClick={handleNavClick(item.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all ${
                   isActive
-                    ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm border border-slate-200/80 dark:border-brand-500/30 font-semibold'
+                    ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-xs border border-slate-200/80 dark:border-brand-500/30 font-semibold'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5'
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-brand-500' : 'text-slate-400 dark:text-slate-500'}`} />
                 <span>{item.label}</span>
-              </button>
+              </a>
             );
           })}
         </nav>
@@ -92,7 +101,7 @@ export default function Navbar({
           <button
             onClick={toggleTheme}
             aria-label="Toggle dark/light mode"
-            className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-dark-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-dark-800 transition-all shadow-xs"
+            className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-dark-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-dark-800 transition-all shadow-xs cursor-pointer"
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
             {theme === 'dark' ? (
@@ -104,8 +113,9 @@ export default function Navbar({
 
           {user ? (
             <div className="flex items-center gap-2">
-              <div 
-                onClick={() => setCurrentTab('dashboard')}
+              <a 
+                href="/dashboard"
+                onClick={handleNavClick('dashboard')}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-dark-900 border border-slate-200 dark:border-white/10 hover:border-brand-500/40 cursor-pointer transition-colors"
               >
                 <div className="w-6 h-6 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-600 dark:text-brand-300 text-xs font-bold">
@@ -114,12 +124,13 @@ export default function Navbar({
                 <div className="text-left">
                   <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 leading-tight">{user.name || 'User'}</p>
                 </div>
-              </div>
+              </a>
 
               <button
                 onClick={onLogout}
                 title="Sign out"
-                className="p-2 rounded-xl bg-slate-100/80 dark:bg-dark-900 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/20 transition-all"
+                aria-label="Sign out"
+                className="p-2 rounded-xl bg-slate-100/80 dark:bg-dark-900 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/20 transition-all cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -128,13 +139,13 @@ export default function Navbar({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => onOpenAuth('login')}
-                className="px-3.5 py-1.5 rounded-xl text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                className="px-3.5 py-1.5 rounded-xl text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
               >
                 Sign In
               </button>
               <button
                 onClick={() => onOpenAuth('register')}
-                className="px-4 py-1.5 rounded-xl text-[13px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-dark-950 shadow-sm transition-all transform hover:-translate-y-0.5"
+                className="px-4 py-1.5 rounded-xl text-[13px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-dark-950 shadow-xs transition-all transform hover:-translate-y-0.5 cursor-pointer"
               >
                 Get Started
               </button>
@@ -147,14 +158,15 @@ export default function Navbar({
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 cursor-pointer"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
           </button>
           
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5"
+            aria-label="Toggle navigation menu"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -163,31 +175,33 @@ export default function Navbar({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 px-4 pt-3 pb-5 space-y-2 shadow-xl">
+        <nav aria-label="Mobile Navigation" className="lg:hidden border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 px-4 pt-3 pb-5 space-y-2 shadow-xl">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.id;
             return (
-              <button
+              <a
                 key={item.id}
-                onClick={() => { setCurrentTab(item.id); setMobileMenuOpen(false); }}
+                href={item.href}
+                onClick={handleNavClick(item.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   isActive ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300 font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-900'
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? 'text-brand-500' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
-              </button>
+              </a>
             );
           })}
 
-          <button
-            onClick={() => { setCurrentTab('contact'); setMobileMenuOpen(false); }}
+          <a
+            href="/contact"
+            onClick={handleNavClick('contact')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-900 transition-colors"
           >
             <Mail className="w-4 h-4 text-cyan-500" />
             <span>Contact & Support</span>
-          </button>
+          </a>
 
           <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex flex-col gap-2">
             {user ? (
@@ -195,7 +209,7 @@ export default function Navbar({
                 <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">Signed in as {user.name}</span>
                 <button
                   onClick={() => { onLogout(); setMobileMenuOpen(false); }}
-                  className="text-xs text-red-500 hover:underline font-semibold"
+                  className="text-xs text-red-500 hover:underline font-semibold cursor-pointer"
                 >
                   Log Out
                 </button>
@@ -204,20 +218,20 @@ export default function Navbar({
               <div className="grid grid-cols-2 gap-2 pt-1">
                 <button
                   onClick={() => { onOpenAuth('login'); setMobileMenuOpen(false); }}
-                  className="w-full py-2.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200"
+                  className="w-full py-2.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200 cursor-pointer"
                 >
                   Sign In
                 </button>
                 <button
                   onClick={() => { onOpenAuth('register'); setMobileMenuOpen(false); }}
-                  className="w-full py-2.5 rounded-xl text-xs font-bold bg-emerald-500 text-dark-950 shadow-sm"
+                  className="w-full py-2.5 rounded-xl text-xs font-bold bg-emerald-500 text-dark-950 shadow-xs cursor-pointer"
                 >
                   Get Started
                 </button>
               </div>
             )}
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );
