@@ -385,30 +385,42 @@ export default function LandingPage({
         </div>
       </section>
 
-      {/* 7. Deep-Dive Educational Guide & Feature Comparison Table (1200+ Words for AdSense & SEO Depth) */}
+      {/* 7. Deep-Dive Educational Guide & Feature Comparison Table */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 leading-relaxed">
         
         {/* Topic 1: What is Dynamic QR */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
-              In-Depth Guide
+              The Essentials
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            What is a Dynamic QR Code and How Does It Work?
+            What is a Dynamic QR Code, and How Does It Actually Work?
           </h2>
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-            A <strong>dynamic QR code</strong> is a modern two-dimensional barcode that routes scanners through an intermediate high-speed edge server before reaching the ultimate destination web address. Unlike a static QR code—where the complete destination URL is hardcoded into the black-and-white matrix dots forever—a dynamic QR code stores a compact, shortened redirect identifier (such as <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-800 dark:text-emerald-300 font-mono text-xs">/r/abc123</code>).
+            Think of a <strong>static QR code</strong> like engraving words into stone. The moment you generate it, every letter of your website URL is permanently burned into the pattern of black and white squares. If you change your website URL next month, launch a new seasonal menu, or spot a single typo after printing 2,000 brochures, that paper is useless.
           </p>
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-            This redirection architecture offers three transformative advantages for businesses, designers, and creators:
+            A <strong>dynamic QR code</strong> works like a permanent forwarding address on your mailbox. Instead of encoding a long, fragile 80-character URL, the code holds a clean, compact short link (such as <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-800 dark:text-emerald-300 font-mono text-xs">/r/my-store</code>).
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300">
-            <li><strong>Editable Destination URLs:</strong> If you print 5,000 restaurant menus, trade show flyers, or product packaging boxes and your website link changes, you do not need to re-print your marketing collateral. You simply update the target URL in your QRLoop dashboard, and all existing physical QR codes instantly redirect to the new page.</li>
-            <li><strong>Granular Scan Analytics & Telemetry:</strong> Because scans pass through our sub-50ms redirection engine, you gain real-time visibility into your audience. You can analyze scan volume by date, mobile vs. desktop devices, operating systems (iOS, Android, Windows, macOS), browser types, and approximate geographic cities—all while strictly respecting privacy and anonymizing user IP addresses.</li>
-            <li><strong>Cleaner, Higher-Density Scanning Matrix:</strong> Long URLs packed with UTM campaign parameters and tracking tokens result in dense, clustered QR pixel grids that older smartphone cameras struggle to read. A dynamic QR code keeps the encoded data string short and clean, allowing the QR code to be scanned from greater distances and in low-light environments.</li>
-          </ul>
+          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+            When a customer aims their camera at the code, our edge network intercepts the scan, checks where you want that visitor to go today, and routes them to your actual website in less than 50 milliseconds.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-xl bg-slate-100/70 dark:bg-dark-900/50 border border-slate-200/80 dark:border-white/5 space-y-1.5">
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Swap Links on the Fly</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400">Change your destination URL from your phone at 2:00 AM without touching the printed flyers on your tables.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-100/70 dark:bg-dark-900/50 border border-slate-200/80 dark:border-white/5 space-y-1.5">
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Clean, Easy-to-Scan Grid</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400">Because the short link is tiny, the matrix has fewer, larger squares that scan effortlessly from across the room.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-100/70 dark:bg-dark-900/50 border border-slate-200/80 dark:border-white/5 space-y-1.5">
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Understand Your Foot Traffic</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400">See what days and hours get the most scans, whether visitors use iPhone or Android, and what cities they are in.</p>
+            </div>
+          </div>
         </div>
 
         {/* Topic 2: Why Free Forever */}
@@ -417,129 +429,126 @@ export default function LandingPage({
             Why QRLoop is 100% Free: Ending the 14-Day Paywall Trap
           </h2>
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-            The QR code software market has long been troubled by predatory billing practices. Many commercial QR generators allow unsuspecting users to create "free" dynamic QR codes. Weeks later, after the business has spent hundreds or thousands of dollars printing brochures, banners, product packaging, and acrylic desk standees, the provider disables the redirect and demands an ongoing subscription of $35 to $60 per month to keep the links functioning.
+            Many commercial QR generators rely on a predatory business model: they offer "free" dynamic codes, let you download them without warning, and wait until you have spent real money printing physical acrylic standees, menus, or product boxes.
           </p>
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-            At <strong>QRLoop</strong>, we believe basic edge URL redirection is a foundational utility that should never be held hostage. HTTP 302 redirects require minimal computation. By engineering a lean, serverless cloud architecture and supporting our operations through non-intrusive, privacy-compliant Google AdSense advertising, QRLoop provides <strong>lifetime active dynamic QR redirects</strong> with zero scan paywalls and zero trial expirations.
+            Exactly two weeks later, your codes suddenly stop working. Instead of your website, your customers see an embarrassing ransom message demanding $35 to $60 every month to turn the links back on.
+          </p>
+          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+            We believe holding physical ink and paper hostage is wrong. In modern cloud computing, an HTTP redirect takes almost zero computational effort. By running a lean serverless architecture and letting small, non-intrusive Google AdSense banners support our server bills, QRLoop provides <strong>lifetime active dynamic redirects</strong> with zero monthly fees, zero scan limits, and zero trial countdowns.
           </p>
         </div>
 
         {/* Topic 3: Comparison Matrix Table */}
         <div className="space-y-4">
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Dynamic QR Codes vs. Static QR Codes: Key Differences
+            Dynamic vs. Static QR Codes: Which One Should You Pick?
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm border-collapse border border-slate-200 dark:border-white/10 my-4">
               <thead>
                 <tr className="bg-slate-100 dark:bg-dark-800 text-slate-900 dark:text-white">
-                  <th className="p-3 border border-slate-200 dark:border-white/10 font-bold">Feature</th>
+                  <th className="p-3 border border-slate-200 dark:border-white/10 font-bold">Practical Feature</th>
                   <th className="p-3 border border-slate-200 dark:border-white/10 font-bold text-emerald-800 dark:text-emerald-300">Dynamic QR (QRLoop)</th>
-                  <th className="p-3 border border-slate-200 dark:border-white/10 font-bold">Static QR</th>
-                  <th className="p-3 border border-slate-200 dark:border-white/10 font-bold">Traditional Paid Services</th>
+                  <th className="p-3 border border-slate-200 dark:border-white/10 font-bold">Static QR (QRLoop)</th>
+                  <th className="p-3 border border-slate-200 dark:border-white/10 font-bold">Commercial Paid Tools</th>
                 </tr>
               </thead>
               <tbody className="text-slate-700 dark:text-slate-300">
                 <tr>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Editable After Printing</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (Instant Update)</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">No (Permanent Matrix)</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10">Yes (Requires $35/mo)</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Can change target URL after printing?</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes, anytime in 1 click</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-slate-500">No (locked into physical ink)</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10">Yes (requires $35/month)</td>
                 </tr>
                 <tr>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Real-Time Scan Analytics</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (Included Free)</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">No Telemetry</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10">Paywalled behind tiers</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Real-time scan counter and analytics?</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes, included free</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-slate-500">No (direct offline scan)</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10">Locked behind Pro tiers</td>
                 </tr>
                 <tr>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Expiration & Paywall</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Never Expires (Lifetime)</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10">Never Expires</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">Deactivated after 14 days</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Will this code ever expire?</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Never (lifetime active)</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10">Never (permanent)</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-red-600 dark:text-red-400 font-bold">Shuts off after 14-day trial</td>
                 </tr>
                 <tr>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Monthly Subscription</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">$0 Forever Free</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Monthly cost</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">$0 Free Forever</td>
                   <td className="p-3 border border-slate-200 dark:border-white/10">$0 Free</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">$30 - $60 / month</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-red-600 dark:text-red-400 font-bold">$30 to $60 / month</td>
                 </tr>
                 <tr>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">Vector SVG & Print PDF</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (Lossless)</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 font-semibold">High-res Vector SVG export for print shops?</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (infinite resolution)</td>
                   <td className="p-3 border border-slate-200 dark:border-white/10">Yes</td>
-                  <td className="p-3 border border-slate-200 dark:border-white/10">Often locked to Pro tier</td>
+                  <td className="p-3 border border-slate-200 dark:border-white/10">Often restricted to paid users</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        {/* Topic 4: Step-by-Step Creation Guide */}
+        {/* Topic 4: Practical Guide */}
         <div className="space-y-4">
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Step-by-Step Guide: How to Create a Custom Dynamic QR Code
+            How to Create and Print a Reliable QR Code
           </h2>
           <ol className="list-decimal pl-6 space-y-3 text-sm sm:text-base text-slate-700 dark:text-slate-300">
             <li>
-              <strong>Choose Your QR Type:</strong> Select <a href="/dynamic-qr" onClick={handleLinkClick(onNavigateToDynamic)} className="text-emerald-800 dark:text-emerald-300 underline font-semibold">Dynamic QR</a> for trackable marketing campaigns and editable website links, or choose <a href="/static-qr" onClick={handleLinkClick(onNavigateToStatic)} className="text-emerald-800 dark:text-emerald-300 underline font-semibold">Static QR</a> for offline Wi-Fi credentials, plain text, and vCards.
+              <strong>Choose between Dynamic or Static:</strong> Pick <a href="/dynamic-qr" onClick={handleLinkClick(onNavigateToDynamic)} className="text-emerald-800 dark:text-emerald-300 underline font-semibold">Dynamic</a> if you're printing marketing materials, restaurant menus, or packaging where the link might evolve. Pick <a href="/static-qr" onClick={handleLinkClick(onNavigateToStatic)} className="text-emerald-800 dark:text-emerald-300 underline font-semibold">Static</a> for simple Wi-Fi credentials or vCards that never need to change.
             </li>
             <li>
-              <strong>Enter Your Destination Address:</strong> Provide the target website URL (e.g., your online menu, booking page, mobile app download, or social media hub).
+              <strong>Type your destination URL:</strong> Paste your target web page (e.g. your Instagram, online store, Google Maps location, or PDF menu).
             </li>
             <li>
-              <strong>Customize Visual Design & Branding:</strong> In the QRLoop Studio, select custom module dot shapes (smooth rounded dots, sleek pills, or classic squares), customize the corner eye frames and inner pupils, select gradient or brand colors, and upload your company logo with automatic quiet-zone protection.
+              <strong>Customize colors with high contrast:</strong> Choose a dark color for the dots and corner squares against a clean, light background. You can embed your company logo—QRLoop automatically clears away the central dots so your logo never interferes with the scanner's optical focus.
             </li>
             <li>
-              <strong>Download Print-Ready Assets:</strong> Export your styled QR code in lossless vector SVG format (for billboards and high-resolution commercial printing), high-DPI raster PNG (for web and social graphics), or print-ready A4 PDF with crop guidelines.
-            </li>
-            <li>
-              <strong>Monitor Performance & Edit Anytime:</strong> Access your <a href="/dashboard" onClick={handleLinkClick(onNavigateToDashboard)} className="text-emerald-800 dark:text-emerald-300 underline font-semibold">QR Management Portal</a> to view scan counts, scanner devices, and visitor regions, or update the target URL whenever needed.
+              <strong>Download as Vector SVG:</strong> If you are sending your design to a commercial printer or applying it to laser-cut wood or metal, always export as <strong>vector SVG</strong>. Unlike a PNG image, SVG is mathematical geometry that never gets pixelated or blurry at any size.
             </li>
           </ol>
         </div>
 
-        {/* Topic 5: Practical Use Cases */}
+        {/* Topic 5: Real-World Use Cases */}
         <div className="space-y-4">
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Industry Solutions & Practical Use Cases
+            Where People Use QRLoop Every Day
           </h2>
-          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">
-            Dynamic QR codes empower businesses across countless physical touchpoints:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            <div className="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">Restaurant Digital Menus</h3>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Update daily specials, seasonal prices, and item availability instantly without re-printing table tents or acrylic flyers.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+            <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-1.5">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">Cafes & Restaurant Menus</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Update daily specials and drink prices on your website without throwing away expensive printed acrylic stands or wooden table blocks.</p>
             </div>
-            <div className="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">Conferences & Event Badges</h3>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Seamlessly route attendees to dynamic event schedules, speaker bios, live polling, and networking check-ins.</p>
+            <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-1.5">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">Product Packaging & Labels</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Point consumers to instructional videos, recipe suggestions, or batch authenticity pages that you can update long after the product has shipped.</p>
             </div>
-            <div className="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">Instant Guest Wi-Fi Access</h3>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Enable hotel guests and café patrons to connect to secure WPA2/WPA3 Wi-Fi networks with one scan—no typing complex passwords.</p>
+            <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-1.5">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">Conference & Event Badges</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Route attendees to live schedule updates, speaker bios, and real-time room change alerts during multi-day conventions.</p>
             </div>
-            <div className="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">Digital Business Cards (vCard)</h3>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Direct clients to your digital portfolio, contact info, and calendar booking link with clean, high-DPI vector printing.</p>
+            <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-1.5">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">Instant Guest Wi-Fi</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Let visitors tap and connect to your guest Wi-Fi immediately without having to decipher a 20-character password on the back of a router.</p>
             </div>
           </div>
         </div>
 
-        {/* Topic 6: Printing Best Practices */}
+        {/* Topic 6: The Golden Printing Rules */}
         <div className="space-y-4">
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Printing Best Practices: The 10:1 Distance-to-Size Ratio
+            The Physics of Scanning: How to Avoid Costly Printing Blunders
           </h2>
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-            To ensure optimal camera readability on physical packaging, signage, and merchandise, follow professional printing standards:
+            Before ordering 5,000 prints, keep these four optical rules in mind so every smartphone camera can read your code instantly:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300">
-            <li><strong>The 10:1 Scanning Ratio:</strong> As a rule of thumb, the distance between the camera and the QR code should be approximately 10 times the width of the QR code. For example, a business card scanned from 10 inches away requires a minimum size of 1 inch (2.5 cm). A billboard scanned from 30 feet away requires a QR code at least 3 feet wide.</li>
-            <li><strong>High Contrast & Dark Modules:</strong> Always ensure strong color contrast between the QR code modules and the background. Dark foreground dots on a light background scan fastest across all smartphone operating systems. Avoid inverted white-on-yellow or low-contrast pastels.</li>
-            <li><strong>Preserve the Quiet Zone:</strong> Every QR code requires a margin of blank space (the quiet zone) around all four sides equivalent to at least 4 module widths. Avoid placing text, graphics, or borders too close to the finder eyes.</li>
-            <li><strong>Always Use Vector SVG for Large Format:</strong> When printing flyers, packaging, or exhibition displays, never stretch a low-resolution bitmap PNG. Download QRLoop's vector SVG file, which scales infinitely to any dimension with zero pixelation or blurriness.</li>
+          <ul className="list-disc pl-6 space-y-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+            <li><strong>The 10:1 Distance Ratio:</strong> A phone needs to be roughly 10 times the width of the QR code away to scan comfortably. For a business card held 10 inches away, a 1-inch (25mm) code is perfect. For a window banner scanned from 10 feet away, your code needs to be at least 1 foot (300mm) wide.</li>
+            <li><strong>Luminance Contrast (Not Just Color):</strong> Smartphone sensors convert the camera feed to black-and-white grayscale before running edge detection. If you use pastel pink dots on a light beige background, the phone sees them as almost identical shades of gray and cannot find the dots. Always keep a strong contrast between dark modules and light backgrounds.</li>
+            <li><strong>Leave the Quiet Zone Alone:</strong> The blank white border around a QR code isn't wasted space—it's how the camera's algorithm knows where your background graphics stop and the barcode begins. Always leave at least 4 module widths of blank margin around all four sides.</li>
+            <li><strong>Always Choose Vector SVG:</strong> When printing flyers or posters, never scale up a small PNG file. Download QRLoop's vector SVG file—it's pure mathematical vector curves that stay crisp whether printed on a tiny sticker or an enormous highway billboard.</li>
           </ul>
         </div>
 
