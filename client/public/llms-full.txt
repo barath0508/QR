@@ -70,7 +70,8 @@ For maximum scan reliability:
 - Website: https://qrloop4.vercel.app
 - Dynamic Studio: https://qrloop4.vercel.app/dynamic-qr
 - Static Generator: https://qrloop4.vercel.app/static-qr
-- Knowledge Hub: https://qrloop4.vercel.app/blog
+- Knowledge Hub & Technical Guides: https://qrloop4.vercel.app/blog
+- Community Discussions: https://qrloop4.vercel.app/community
 - Feature Comparison: https://qrloop4.vercel.app/compare
 - Privacy Policy: https://qrloop4.vercel.app/privacy
 - Terms of Service: https://qrloop4.vercel.app/terms

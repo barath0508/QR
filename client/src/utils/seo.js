@@ -1,6 +1,4 @@
-/**
- * Advanced Dynamic SEO & OpenGraph / Schema.org Manager for QRLoop
- */
+import { articles } from '../data/articles';
 
 export const pageSEOMap = {
   home: {
@@ -128,7 +126,26 @@ export const pageSEOMap = {
 export function applyPageSEO(tabName) {
   if (typeof document === 'undefined') return;
 
-  const config = pageSEOMap[tabName] || pageSEOMap.home;
+  let config = pageSEOMap[tabName] || pageSEOMap.home;
+
+  // Check if viewing a specific blog article
+  if (tabName === 'blog' && typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('article') || window.location.pathname.split('/')[2];
+    if (articleId) {
+      const art = articles.find((a) => a.id === articleId);
+      if (art) {
+        config = {
+          title: `${art.title} | QRLoop Guides`,
+          desc: art.summary,
+          indexable: true,
+          canonical: `https://qrloop4.vercel.app/blog?article=${art.id}`,
+          schemaType: 'Article',
+          article: art,
+        };
+      }
+    }
+  }
 
   // Title
   document.title = config.title;
@@ -215,6 +232,32 @@ function updateRouteSchema(tabName, config) {
         name: 'QRLoop Technologies',
         email: 'support@qrloop.io',
         url: 'https://qrloop4.vercel.app/',
+      },
+    };
+  } else if (config.schemaType === 'Article' && config.article) {
+    schemaData = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      '@id': `${config.canonical}#article`,
+      url: config.canonical,
+      headline: config.article.title,
+      description: config.article.summary,
+      datePublished: '2026-09-01T00:00:00Z',
+      dateModified: '2026-09-14T00:00:00Z',
+      author: {
+        '@type': 'Organization',
+        name: 'QRLoop Editorial & Engineering Team',
+        url: 'https://qrloop4.vercel.app/',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'QRLoop Technologies',
+        url: 'https://qrloop4.vercel.app/',
+        logo: 'https://qrloop4.vercel.app/og-image.png',
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': config.canonical,
       },
     };
   } else if (tabName === 'blog') {

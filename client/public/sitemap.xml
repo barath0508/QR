@@ -3,10 +3,10 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Homepage -->
+  <!-- Core Landing Page -->
   <url>
     <loc>https://qrloop4.vercel.app/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -19,7 +19,7 @@
   <!-- Dynamic QR Generator (core product page) -->
   <url>
     <loc>https://qrloop4.vercel.app/dynamic-qr</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.97</priority>
     <image:image>
@@ -32,7 +32,7 @@
   <!-- Static QR Generator -->
   <url>
     <loc>https://qrloop4.vercel.app/static-qr</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
@@ -42,26 +42,34 @@
     </image:image>
   </url>
 
-  <!-- Compare page -->
+  <!-- Compare Page -->
   <url>
     <loc>https://qrloop4.vercel.app/compare</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- Knowledge Hub / Blog -->
+  <!-- Community Discussions Hub -->
+  <url>
+    <loc>https://qrloop4.vercel.app/community</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <!-- Knowledge Hub / Blog Main Page -->
   <url>
     <loc>https://qrloop4.vercel.app/blog</loc>
-    <lastmod>2026-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.92</priority>
   </url>
 
   <!-- About Us -->
   <url>
     <loc>https://qrloop4.vercel.app/about</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
@@ -69,7 +77,7 @@
   <!-- Contact Us -->
   <url>
     <loc>https://qrloop4.vercel.app/contact</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
@@ -77,7 +85,7 @@
   <!-- Privacy Policy -->
   <url>
     <loc>https://qrloop4.vercel.app/privacy</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
@@ -85,7 +93,7 @@
   <!-- Terms of Service -->
   <url>
     <loc>https://qrloop4.vercel.app/terms</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
@@ -93,7 +101,7 @@
   <!-- Cookie Policy -->
   <url>
     <loc>https://qrloop4.vercel.app/cookies</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
@@ -101,27 +109,173 @@
   <!-- Industry Solutions & Use Cases -->
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-restaurants</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-events</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-wifi</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://qrloop4.vercel.app/qr-code-for-business-cards</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
+  </url>
+
+  <!-- 24 High-Quality Technical Articles & Industry Guides -->
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=paywall-trap</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=dynamic-vs-static</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=privacy-analytics</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=print-specifications</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=quishing-security-guide</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=gs1-digital-link-revolution</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=restaurant-menu-engineering</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=real-estate-qr-guide</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=event-ticketing-access</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=healthcare-patient-safety</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=packaging-unboxing-d2c</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=supply-chain-traceability</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=hotel-guest-experience</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=nonprofit-fundraising-campaigns</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=smart-city-public-transit</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=automotive-fleet-maintenance</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=digital-business-card-networking</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=retail-fashion-fitting-rooms</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=wifi-qr-security</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=billboard-highway-advertising</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=reducing-paper-waste-sustainability</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=accessible-qr-inclusive-design</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=education-interactive-classrooms</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://qrloop4.vercel.app/blog?article=ecommerce-attribution-modeling</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
   </url>
 
 </urlset>

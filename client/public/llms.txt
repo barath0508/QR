@@ -8,7 +8,8 @@ QRLoop empowers creators, businesses, and developers to generate trackable QR co
 
 - [Dynamic QR Code Studio](https://qrloop4.vercel.app/dynamic-qr): Interactive studio to create customizable dynamic QR codes with live redirects
 - [Static QR Code Generator](https://qrloop4.vercel.app/static-qr): Free offline QR code generator for Wi-Fi credentials, vCards, and plain text
-- [QR Code Knowledge Hub](https://qrloop4.vercel.app/blog): Technical guides on QR design, print specs, 10:1 scanning ratio, and comparison
+- [QR Code Knowledge Hub](https://qrloop4.vercel.app/blog): Technical library with 24 in-depth guides on QR design, GS1 Digital Link, print specs, 10:1 scanning ratio, quishing defense, and offline-to-online attribution
+- [Community Creator Discussions](https://qrloop4.vercel.app/community): Multi-user discussion forum for QR code design, troubleshooting, and dynamic redirect best practices
 - [Platform Comparison Matrix](https://qrloop4.vercel.app/compare): Feature and pricing comparison between QRLoop and paid commercial alternatives
 - [About QRLoop](https://qrloop4.vercel.app/about): Technical architecture, mission statement, and sub-50ms HTTP 302 edge routing
 - [Privacy Policy](https://qrloop4.vercel.app/privacy): Privacy policy, GDPR/CCPA data rights, and Google AdSense disclosures

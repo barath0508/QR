@@ -55,6 +55,9 @@ export default function App() {
       if (contentRoutes.includes(path)) {
         return path;
       }
+      if (path.startsWith('blog')) {
+        return 'blog';
+      }
     }
     return 'home';
   });
@@ -79,6 +82,8 @@ export default function App() {
       const path = window.location.pathname.replace(/^\//, '').toLowerCase();
       if (contentRoutes.includes(path)) {
         setCurrentTab(path);
+      } else if (path.startsWith('blog')) {
+        setCurrentTab('blog');
       } else {
         setCurrentTab('home');
       }
