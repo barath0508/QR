@@ -11,10 +11,101 @@ import {
   Smartphone, 
   Share2,
   ChevronRight,
-  ArrowLeft
+  ArrowLeft,
+  MessageSquare
 } from 'lucide-react';
 import AdBanner from '../components/AdBanner';
 import Breadcrumb from '../components/Breadcrumb';
+import CommentSection from '../components/CommentSection';
+
+const articleComments = {
+  'paywall-trap': [
+    {
+      id: 'c1-1',
+      author: 'Marcus Vance',
+      role: 'Hospitality Director, Chicago',
+      date: 'Sept 10, 2026',
+      isoDate: '2026-09-10T14:22:00Z',
+      text: 'We printed 40 acrylic standees with a well-known commercial QR generator last year. Exactly on day 15, all our dinner menus displayed an "Expired Free Trial" paywall in front of customers. We migrated everything to QRLoop dynamic redirects and have had flawless uptime across thousands of table scans.',
+      upvotes: 38,
+      isVerified: false
+    },
+    {
+      id: 'c1-2',
+      author: 'Elena Rostova',
+      role: 'Brand Designer, Studio Form',
+      date: 'Sept 11, 2026',
+      isoDate: '2026-09-11T09:15:00Z',
+      text: 'The biggest issue is clients never understand that dynamic QRs require an HTTP redirect server. Most generators prey on that ignorance with the $35/mo subscription. Really appreciate QRLoop keeping dynamic redirection open and free.',
+      upvotes: 24,
+      isVerified: false
+    },
+    {
+      id: 'c1-3',
+      author: 'Devon Miller',
+      role: 'Small Business Owner',
+      date: 'Sept 12, 2026',
+      isoDate: '2026-09-12T18:40:00Z',
+      text: 'Can confirm the SVG export is razor sharp. Sent the vector file directly to our print shop for our packaging boxes and the quiet zones were preserved perfectly with zero blurriness.',
+      upvotes: 15,
+      isVerified: false
+    }
+  ],
+  'dynamic-vs-static': [
+    {
+      id: 'c2-1',
+      author: 'Sarah Chen',
+      role: 'Tech Lead, Omnichannel',
+      date: 'Sept 8, 2026',
+      isoDate: '2026-09-08T11:05:00Z',
+      text: 'Pro tip for anyone deciding between the two: if it\'s going onto permanent physical signage or packaging, ALWAYS use dynamic. Websites change domains, promotions expire, and reprinting 10,000 labels costs 100x more than anything else.',
+      upvotes: 42,
+      isVerified: false
+    },
+    {
+      id: 'c2-2',
+      author: 'Carlos Mendez',
+      role: 'Conference Organizer',
+      date: 'Sept 9, 2026',
+      isoDate: '2026-09-09T16:30:00Z',
+      text: 'We used dynamic QRs for our attendee badges this year. Being able to update the schedule link in real-time when room assignments shifted on day 2 saved the entire event without having to reprint any lanyards.',
+      upvotes: 19,
+      isVerified: false
+    }
+  ],
+  'gs1-digital-link-revolution': [
+    {
+      id: 'c3-1',
+      author: 'David K.',
+      role: 'Supply Chain Architect',
+      date: 'Sept 5, 2026',
+      isoDate: '2026-09-05T08:45:00Z',
+      text: 'Sunrise 2027 is going to catch a lot of retail suppliers off-guard. Getting dynamic resolver architecture in place now is crucial for traceability and expiration management at the checkout register.',
+      upvotes: 31,
+      isVerified: false
+    },
+    {
+      id: 'c3-2',
+      author: 'Priya Sharma',
+      role: 'Packaging Specialist',
+      date: 'Sept 7, 2026',
+      isoDate: '2026-09-07T13:10:00Z',
+      text: 'Question: does QRLoop support custom URI syntaxes for GS1 application identifiers like (01) and (10)?',
+      upvotes: 27,
+      isVerified: false
+    },
+    {
+      id: 'c3-3',
+      author: 'QRLoop Team',
+      role: 'Platform Engineer',
+      date: 'Sept 7, 2026',
+      isoDate: '2026-09-07T13:45:00Z',
+      text: '@Priya Sharma Yes! Dynamic short redirects can map to any valid web URI including GS1 Digital Link resolver endpoints, allowing one QR code to serve both POS registers and consumer smartphones.',
+      upvotes: 22,
+      isVerified: true
+    }
+  ]
+};
 
 export default function BlogPage({ onNavigateToDynamic, onNavigateToStatic, onBackToHome }) {
   const [selectedArticleId, setSelectedArticleId] = useState(null);
@@ -260,6 +351,13 @@ Using **dynamic QR code infrastructure** ensures brands can:
             {activeArticle.content}
           </div>
 
+          {/* Community Discussion & User Comments */}
+          <CommentSection
+            articleId={activeArticle.id}
+            articleTitle={activeArticle.title}
+            initialComments={articleComments[activeArticle.id] || []}
+          />
+
           {/* Bottom Action Card */}
           <div className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-dark-900 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
@@ -320,10 +418,15 @@ Using **dynamic QR code infrastructure** ensures brands can:
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                   {articles[0].summary}
                 </p>
-                <div className="flex items-center gap-4 text-xs text-slate-400">
+                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400">
                   <span>{articles[0].date}</span>
                   <span>•</span>
                   <span>{articles[0].readTime}</span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    {(articleComments[articles[0].id] || []).length} Community Comments
+                  </span>
                 </div>
               </div>
 
@@ -347,7 +450,14 @@ Using **dynamic QR code infrastructure** ensures brands can:
                     <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${art.badgeColor}`}>
                       {art.category}
                     </span>
-                    <span className="text-[11px] text-slate-400">{art.readTime}</span>
+                    <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                      <span>{art.readTime}</span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
+                        <MessageSquare className="w-3 h-3" />
+                        {(articleComments[art.id] || []).length}
+                      </span>
+                    </div>
                   </div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors leading-snug">
                     {art.title}

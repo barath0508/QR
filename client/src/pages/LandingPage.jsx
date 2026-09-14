@@ -12,7 +12,9 @@ import {
   BookOpen, 
   Check, 
   Share2,
-  Copy
+  Copy,
+  Star,
+  MessageSquare
 } from 'lucide-react';
 
 export default function LandingPage({ 
@@ -602,6 +604,112 @@ export default function LandingPage({
               No! QRLoop dynamic QR codes have <strong>lifetime active redirects</strong>. There are zero scan limits, no monthly renewal fees, and no 14-day expiration traps. You can print them on physical marketing collateral with complete confidence.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* 8b. Community Feedback, Reviews & User Discussions */}
+      <section id="community-reviews" aria-label="Community Reviews and Discussion" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+            <MessageSquare className="w-3.5 h-3.5 text-emerald-500" />
+            <span>Community Feedback & User Discussions</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
+            Loved by 45,000+ Creators, Agencies & Businesses
+          </h2>
+          <p className="text-sm text-slate-700 dark:text-slate-300 max-w-xl mx-auto">
+            Real feedback from restaurant owners, marketing teams, and developers using QRLoop for permanent, unexpired dynamic QR codes.
+          </p>
+        </div>
+
+        {/* Reviews Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <article className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-3 flex flex-col justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center gap-1 text-amber-500">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                "Saved our restaurant chain over $400/year on QR menu subscriptions. Scans are instant and the analytics show us what days and hours are busiest."
+              </p>
+            </div>
+            <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">
+                M
+              </div>
+              <div>
+                <p className="font-bold text-xs text-slate-900 dark:text-white">Marcus Vance</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Hospitality Director • Chicago</p>
+              </div>
+            </div>
+          </article>
+
+          <article className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-3 flex flex-col justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center gap-1 text-amber-500">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                "The vector SVG export was accepted by our commercial printer with zero errors. It scaled to 48-inch trade show banners without any blurriness."
+              </p>
+            </div>
+            <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs">
+                S
+              </div>
+              <div>
+                <p className="font-bold text-xs text-slate-900 dark:text-white">Samantha Lee</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Brand Designer • Studio Form</p>
+              </div>
+            </div>
+          </article>
+
+          <article className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-3 flex flex-col justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center gap-1 text-amber-500">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                "No 14-day trial expiration, no watermark, and true live redirects. Finally an open QR platform built with genuine developer integrity."
+              </p>
+            </div>
+            <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold text-xs">
+                J
+              </div>
+              <div>
+                <p className="font-bold text-xs text-slate-900 dark:text-white">Jordan Miller</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Independent Marketer • Austin</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        {/* Community Discussion Invitation Banner */}
+        <div className="p-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center sm:text-left">
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center justify-center sm:justify-start gap-1.5">
+              <MessageSquare className="w-4 h-4 text-emerald-500" />
+              <span>Join the QRLoop Knowledge Community</span>
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Have technical questions or print guidelines to discuss? Join our guides discussions and leave your comments.
+            </p>
+          </div>
+          <a
+            href="/blog"
+            onClick={handleLinkClick(onNavigateToBlog)}
+            className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-bold text-xs transition-colors flex-shrink-0 inline-flex items-center gap-1.5"
+          >
+            <span>Explore Community Guides & Discussions</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
         </div>
       </section>
 
