@@ -300,7 +300,7 @@ Using **dynamic QR code infrastructure** ensures brands can:
           {/* Featured Article Card */}
           <div 
             onClick={() => setSelectedArticleId(articles[0].id)}
-            className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/80 p-6 sm:p-8 backdrop-blur-md hover:border-brand-500/40 transition-all shadow-sm dark:shadow-xl cursor-pointer group"
+            className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/80 p-6 sm:p-8 backdrop-blur-md hover:border-brand-500/40 transition-colors duration-150 shadow-sm dark:shadow-xl cursor-pointer group"
           >
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="space-y-3 max-w-2xl">
@@ -320,7 +320,7 @@ Using **dynamic QR code infrastructure** ensures brands can:
                 </div>
               </div>
 
-              <button className="flex-shrink-0 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-dark-800 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1.5 group-hover:bg-brand-500 group-hover:text-dark-950 transition-all">
+              <button className="flex-shrink-0 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-dark-800 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1.5 group-hover:bg-brand-500 group-hover:text-dark-950 transition-colors duration-150">
                 <span>Read Full Guide</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -333,7 +333,7 @@ Using **dynamic QR code infrastructure** ensures brands can:
               <div
                 key={art.id}
                 onClick={() => setSelectedArticleId(art.id)}
-                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 p-5 backdrop-blur-md hover:border-brand-500/40 transition-all shadow-xs dark:shadow-none cursor-pointer flex flex-col justify-between group"
+                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-900/60 p-5 backdrop-blur-md hover:border-brand-500/40 transition-colors duration-150 shadow-xs dark:shadow-none cursor-pointer flex flex-col justify-between group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">

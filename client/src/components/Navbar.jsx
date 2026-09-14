@@ -59,9 +59,7 @@ export default function Navbar({
         >
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-cyanGlow-500 shadow-glow-emerald transition-transform group-hover:scale-105">
             <QrCode className="w-5 h-5 text-dark-950 stroke-[2.4]" />
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white dark:border-dark-950 flex items-center justify-center">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 will-change-transform [transform:translateZ(0)]"></span>
-            </div>
+            <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-white dark:border-dark-950" />
           </div>
           <div className="flex items-center gap-2">
             <span className="font-display font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
@@ -83,13 +81,13 @@ export default function Navbar({
                 key={item.id}
                 href={item.href}
                 onClick={handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition-colors duration-150 ${
                   isActive
                     ? 'bg-white dark:bg-brand-500/20 text-brand-700 dark:text-brand-300 shadow-xs border border-slate-200/80 dark:border-brand-500/30'
                     : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-brand-500' : 'text-slate-400 dark:text-slate-500'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-brand-500' : 'text-slate-600 dark:text-slate-400'}`} />
                 <span>{item.label}</span>
               </a>
             );
@@ -101,7 +99,7 @@ export default function Navbar({
           <button
             onClick={toggleTheme}
             aria-label="Toggle dark/light mode"
-            className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-dark-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-dark-800 transition-all shadow-xs cursor-pointer"
+            className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-dark-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-dark-800 transition-colors duration-150 shadow-xs cursor-pointer"
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
             {theme === 'dark' ? (
@@ -130,7 +128,7 @@ export default function Navbar({
                 onClick={onLogout}
                 title="Sign out"
                 aria-label="Sign out"
-                className="p-2 rounded-xl bg-slate-100/80 dark:bg-dark-900 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/20 transition-all cursor-pointer"
+                className="p-2 rounded-xl bg-slate-100/80 dark:bg-dark-900 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-300 hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/20 transition-colors duration-150 cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -145,7 +143,7 @@ export default function Navbar({
               </button>
               <button
                 onClick={() => onOpenAuth('register')}
-                className="px-4 py-1.5 rounded-xl text-[13px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-dark-950 shadow-xs transition-all transform hover:-translate-y-0.5 cursor-pointer"
+                className="px-4 py-1.5 rounded-xl text-[13px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-dark-950 shadow-xs transition-transform duration-150 will-change-transform hover:-translate-y-0.5 cursor-pointer"
               >
                 Get Started
               </button>
@@ -158,7 +156,7 @@ export default function Navbar({
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 cursor-pointer"
+            className="p-2 rounded-xl text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 cursor-pointer"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
           </button>
@@ -166,7 +164,7 @@ export default function Navbar({
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 cursor-pointer"
+            className="p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-white/5 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -188,7 +186,7 @@ export default function Navbar({
                   isActive ? 'bg-brand-500/15 text-brand-600 dark:text-brand-300 font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-900'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-brand-500' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-brand-500' : 'text-slate-600 dark:text-slate-400'}`} />
                 <span>{item.label}</span>
               </a>
             );

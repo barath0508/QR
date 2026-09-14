@@ -1,0 +1,79 @@
+# QRLoop - Full Documentation & Architecture Specification
+
+> QRLoop is a 100% free dynamic and static QR code generation and real-time analytics platform designed for businesses, creators, and developers. Lifetime active redirects with zero subscriptions, paywalls, or 14-day expiration traps.
+
+---
+
+## 1. Executive Summary
+
+Traditional commercial QR platforms entice users with "free" dynamic QR codes, only to deactivate redirects after 14 days and demand $35 to $60 per month to keep physical printed materials functioning. QRLoop was engineered to permanently eliminate this practice by offering lifetime active redirects powered by high-speed edge serverless redirects, supported by privacy-compliant Google AdSense advertisements.
+
+---
+
+## 2. Platform Capabilities
+
+### Dynamic QR Codes
+- **Lifetime Edge Redirection**: Encodes short redirect identifiers (`/r/:shortcode`) that route to destination URLs with sub-50ms HTTP 302 responses.
+- **Editable Destination URLs**: Modify the target URL at any time via the management dashboard without reprinting brochures, menus, or packaging.
+- **Granular Scan Telemetry**: Real-time logging of scans, unique visitors, device categories (mobile, tablet, desktop), operating systems (iOS, Android, Windows, macOS), browser user-agents, and geographic cities.
+- **IP Anonymization & Privacy**: Fully compliant with GDPR and CCPA. IP addresses are anonymized before storage.
+
+### Static QR Codes
+- **100% Offline & Permanent**: Encodes raw text, Wi-Fi network credentials (WPA/WPA2/WPA3), vCard contact cards, or raw URLs directly into the 2D matrix.
+- **No Cloud Dependencies**: Works perpetually without servers or network routing.
+- **Instant Client-Side Generation**: Zero login or authentication required.
+
+### Design Studio & Customization
+- **Module Dot Shapes**: Smooth rounded dots, classic square modules, and modern pill dots.
+- **Corner Eye Geometries**: Square, rounded rectangular, and circular eye frames with independent inner pupil color assignment.
+- **Color Gradients & Solid Tones**: Single color or multi-stop linear gradients.
+- **Brand Logo & Icon Badges**: Custom user logo upload or preset brand emblems with automatic quiet-zone masking to maintain high camera read rates.
+
+### Export Engine
+- **Vector SVG**: Scalable, lossless vector files formatted for large-format commercial printing, billboards, and signage.
+- **High-DPI PNG**: Crisp raster graphics for websites, social media, and digital presentations.
+- **Print-Ready A4 PDF**: Automated layout with centered cut-out guidelines for tabletop acrylic standees and desk signage.
+
+---
+
+## 3. Printing Standards: The 10:1 Scanning Ratio Rule
+
+For maximum scan reliability:
+1. **Scanning Distance Ratio**: Optimal scanning distance is approximately 10 times the width of the printed QR code.
+   - Business card (scanned at 10 inches) -> Minimum 1.0 inch (2.5 cm) width.
+   - Table menu standee (scanned at 20 inches) -> Minimum 2.0 inches (5.0 cm) width.
+   - Poster / Window decal (scanned at 5 feet) -> Minimum 6.0 inches (15.0 cm) width.
+2. **Quiet Zone**: Maintain a clear margin of blank space around all four sides of the QR code equal to at least 4 module widths.
+3. **Contrast Ratio**: Ensure dark foreground modules against a light, uniform background. Avoid inverted white-on-light colors.
+
+---
+
+## 4. API Endpoints
+
+- `GET /api/ping`: Service health check and latency diagnostics.
+  - Response: `{ "status": "ok", "timestamp": "...", "uptime": ... }`
+- `GET /r/:shortcode`: Global edge redirect endpoint. Logs telemetry asynchronously and issues an immediate HTTP 302 Found redirect to the target destination.
+
+---
+
+## 5. Security and Compliance
+
+- **Content Security Policy (CSP)**: Strict default-src with HTTPS origin enforcement.
+- **HTTP Strict Transport Security (HSTS)**: 2-year preloaded configuration (`max-age=63072000; includeSubDomains; preload`).
+- **Cross-Origin Isolation**: `Cross-Origin-Opener-Policy: same-origin-allow-popups` enabled.
+- **Data Protection**: TLS 1.3 encryption in transit, salted password hashing, and cookie consent management adhering to EU GDPR directives.
+
+---
+
+## 6. Official Resources
+
+- Website: https://qrloop4.vercel.app
+- Dynamic Studio: https://qrloop4.vercel.app/dynamic-qr
+- Static Generator: https://qrloop4.vercel.app/static-qr
+- Knowledge Hub: https://qrloop4.vercel.app/blog
+- Feature Comparison: https://qrloop4.vercel.app/compare
+- Privacy Policy: https://qrloop4.vercel.app/privacy
+- Terms of Service: https://qrloop4.vercel.app/terms
+- Cookie Policy: https://qrloop4.vercel.app/cookies
+- Open Source Repository: https://github.com/barath0508/QR
+- Support Email: support@qrloop.io

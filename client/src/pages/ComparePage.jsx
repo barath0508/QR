@@ -157,7 +157,7 @@ export default function ComparePage({ onNavigateToStudio }) {
           </div>
           <button
             onClick={onNavigateToStudio}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 hover:brightness-110 text-dark-950 font-bold text-xs flex items-center gap-2 shadow-glow-emerald transition-all"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 hover:brightness-110 text-dark-950 font-bold text-xs flex items-center gap-2 shadow-glow-emerald transition-transform duration-150 will-change-transform cursor-pointer"
           >
             <span>Create Your Free Dynamic QR</span>
             <ArrowRight className="w-4 h-4" />

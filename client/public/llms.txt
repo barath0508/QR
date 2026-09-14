@@ -4,7 +4,7 @@
 
 QRLoop empowers creators, businesses, and developers to generate trackable QR codes, edit destination URLs after printing, analyze visitor telemetry (device category, operating system, browser, city), and export print-ready assets without paywalls or trial expirations.
 
-## Documentation
+## Docs
 
 - [Dynamic QR Code Studio](https://qrloop4.vercel.app/dynamic-qr): Interactive studio to create customizable dynamic QR codes with live redirects
 - [Static QR Code Generator](https://qrloop4.vercel.app/static-qr): Free offline QR code generator for Wi-Fi credentials, vCards, and plain text
@@ -21,6 +21,7 @@ QRLoop empowers creators, businesses, and developers to generate trackable QR co
 
 ## Optional
 
+- [Full Documentation](https://qrloop4.vercel.app/llms-full.txt): Complete documentation and technical guide in a single file
 - [XML Sitemap](https://qrloop4.vercel.app/sitemap.xml): Full XML sitemap index of all public routes
 - [Source Code Repository](https://github.com/barath0508/QR): Official open-source GitHub repository
 - [API Health Ping](https://qrloop4.vercel.app/api/ping): Edge health status and latency endpoint

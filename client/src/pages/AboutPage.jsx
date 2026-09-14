@@ -153,13 +153,13 @@ export default function AboutPage({ onBackToHome, onNavigateToDynamic, onNavigat
         <div className="flex items-center gap-3">
           <button
             onClick={onNavigateToContact}
-            className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-800 hover:bg-slate-50 dark:hover:bg-dark-750 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-all"
+            className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-dark-800 hover:bg-slate-50 dark:hover:bg-dark-750 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors duration-150 cursor-pointer"
           >
             Contact Team
           </button>
           <button
             onClick={onNavigateToDynamic}
-            className="px-5 py-2.5 rounded-xl bg-emerald-500 text-dark-950 font-bold text-xs shadow-glow-emerald hover:brightness-105 transition-all flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-xl bg-emerald-500 text-dark-950 font-bold text-xs shadow-glow-emerald hover:brightness-105 transition-transform duration-150 will-change-transform flex items-center gap-1.5 cursor-pointer"
           >
             <span>Create Free QR</span>
             <ArrowRight className="w-3.5 h-3.5" />

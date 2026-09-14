@@ -8,7 +8,7 @@ export default function Footer({ onNavigate }) {
   };
 
   return (
-    <footer className="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-600 dark:text-slate-400 mt-16 transition-colors">
+    <footer className="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-700 dark:text-slate-300 mt-16 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           
@@ -27,10 +27,10 @@ export default function Footer({ onNavigate }) {
                 QR<span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-cyanGlow-500">Loop</span>
               </span>
             </a>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
               The modern open dynamic QR platform with sub-50ms redirects, privacy-first telemetry, and vector print downloads.
             </p>
-            <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
               <Shield className="w-3.5 h-3.5 text-brand-500" />
               <span>Lifetime active redirects. No paywall.</span>
             </div>
@@ -40,7 +40,7 @@ export default function Footer({ onNavigate }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="QRLoop Source Code on GitHub"
-                className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 <Github className="w-3.5 h-3.5" />
                 <span>Open Source on GitHub</span>
@@ -245,41 +245,41 @@ export default function Footer({ onNavigate }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-200 dark:border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+        <div className="border-t border-slate-200 dark:border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-700 dark:text-slate-300">
           <p>© {new Date().getFullYear()} QRLoop Technologies. Built for creators and businesses worldwide.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             <a 
               href="/privacy" 
               onClick={handleLinkClick('privacy')} 
-              className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors underline-offset-2 hover:underline"
+              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
               Privacy Policy
             </a>
             <a 
               href="/terms" 
               onClick={handleLinkClick('terms')} 
-              className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors underline-offset-2 hover:underline"
+              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
               Terms of Service
             </a>
             <a 
               href="/cookies" 
               onClick={handleLinkClick('cookies')} 
-              className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors underline-offset-2 hover:underline"
+              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
               Cookie Settings
             </a>
             <a 
               href="/about" 
               onClick={handleLinkClick('about')} 
-              className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors underline-offset-2 hover:underline"
+              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
               About
             </a>
             <a 
               href="/contact" 
               onClick={handleLinkClick('contact')} 
-              className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors underline-offset-2 hover:underline"
+              className="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
               Contact
             </a>

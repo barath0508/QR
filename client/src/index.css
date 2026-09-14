@@ -38,7 +38,7 @@
 }
 
 .glass-card {
-  @apply bg-white dark:bg-dark-850/60 backdrop-blur-md border border-slate-200/80 dark:border-white/5 transition-all;
+  @apply bg-white dark:bg-dark-850/60 backdrop-blur-md border border-slate-200/80 dark:border-white/5 transition-colors duration-150;
 }
 
 .glass-card:hover {

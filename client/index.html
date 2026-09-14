@@ -32,6 +32,10 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/favicon.svg" />
 
+  <!-- AI Agent Context Discovery (LLMs.txt) -->
+  <link rel="alternate" type="text/markdown" href="https://qrloop4.vercel.app/llms.txt" title="LLM Context Specification" />
+  <link rel="alternate" type="text/plain" href="https://qrloop4.vercel.app/llms-full.txt" title="Full LLM Documentation" />
+
   <!-- Open Graph / Facebook / LinkedIn / Discord -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://qrloop4.vercel.app/" />
@@ -109,7 +113,7 @@
           "url": "https://qrloop4.vercel.app/",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://qrloop4.vercel.app/logo.svg",
+            "url": "https://qrloop4.vercel.app/favicon.svg",
             "caption": "QRLoop Logo"
           },
           "image": "https://qrloop4.vercel.app/og-image.png",
@@ -240,7 +244,8 @@
         }
       ]
     }
-    </script>
+  </script>
+
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function (c, l, a, r, i, t, y) {
@@ -267,314 +272,548 @@
 <body
   class="bg-slate-50 text-slate-900 dark:bg-[#060911] dark:text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-500/20 selection:text-brand-400">
 
-  <!-- Root mount container containing pre-rendered semantic HTML for instant crawlability and performance -->
+  <!-- Root mount container: Pre-rendered semantic HTML exactly mirroring LandingPage.jsx for 0.000 CLS and deep crawlability -->
   <div id="root">
-    <header role="banner" class="w-full border-b border-slate-200/80 dark:border-white/5 bg-white/95 dark:bg-[#060911]/95 py-4 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        <a href="/" class="flex items-center gap-2.5 text-decoration-none font-bold text-xl text-slate-900 dark:text-white" aria-label="QRLoop Homepage">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-600 text-white font-black text-sm">QR</span>
-          <span>QRLoop <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 font-mono font-bold">FREE</span></span>
+    
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-white/5 bg-white/90 dark:bg-dark-950/90 backdrop-blur-xl transition-colors duration-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <a href="/" class="flex items-center gap-2.5 select-none flex-shrink-0" aria-label="QRLoop Homepage">
+          <div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-cyan-500 shadow-sm">
+            <span class="font-black text-xs text-slate-950">QR</span>
+            <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-white dark:border-slate-950"></div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
+              QR<span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Loop</span>
+            </span>
+            <span class="hidden sm:inline-block text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/25 font-mono">
+              FREE
+            </span>
+          </div>
         </a>
-        <nav aria-label="Primary Navigation" class="hidden md:flex items-center gap-5 text-sm font-semibold text-slate-700 dark:text-slate-300">
-          <a href="/dynamic-qr" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Dynamic QR Studio</a>
-          <a href="/static-qr" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Static Generator</a>
-          <a href="/blog" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Guides & Tutorials</a>
-          <a href="/compare" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Why Free vs Paid</a>
-          <a href="/about" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">About Us</a>
-          <a href="/contact" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">Contact</a>
+
+        <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-dark-900/70 p-1 rounded-xl border border-slate-200/80 dark:border-white/5">
+          <a href="/dynamic-qr" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">Dynamic QR</a>
+          <a href="/static-qr" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">Static QR</a>
+          <a href="/dashboard" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">My Codes</a>
+          <a href="/analytics" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">Analytics</a>
+          <a href="/blog" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">Guides</a>
+          <a href="/about" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">About</a>
+          <a href="/compare" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5 transition-colors duration-150">Why Free</a>
         </nav>
-        <div class="flex items-center gap-3">
-          <a href="/dynamic-qr" class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-all">Create QR Code</a>
+
+        <div class="hidden lg:flex items-center gap-3 flex-shrink-0">
+          <a href="/dynamic-qr" class="px-4 py-1.5 rounded-xl text-[13px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-xs transition-transform duration-150 will-change-transform hover:-translate-y-0.5">
+            Get Started
+          </a>
         </div>
       </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-      <!-- Hero Section with exactly ONE H1 tag -->
-      <section class="text-center space-y-6 max-w-4xl mx-auto">
-        <div class="inline-block px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
-          The Open Dynamic QR Platform • 100% Free Forever • Zero 14-Day Expiration Traps
-        </div>
-        
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-          Free Dynamic QR Code Generator with Real-Time Analytics
-        </h1>
+    <!-- Main Landing Page Content (Identical Layout to LandingPage.jsx) -->
+    <main>
+      <div class="space-y-24 pb-20 pt-8 sm:pt-14">
 
-        <p class="text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-          Create custom dynamic QR codes with editable destination URLs, built-in scan analytics telemetry, and instant vector SVG or 300 DPI PDF downloads. Perfect for restaurant menus, product packaging, event badges, business cards, and marketing campaigns without subscription paywalls.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <a href="/dynamic-qr" class="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-md transition-all">
-            Launch Dynamic QR Studio
-          </a>
-          <a href="/static-qr" class="px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-semibold text-sm border border-slate-200 dark:border-white/10 transition-all">
-            Free Static QR Generator
-          </a>
-        </div>
-
-        <figure class="pt-6">
-          <img src="/hero-preview.svg" alt="QRLoop Dynamic QR Code Studio Interface and Analytics Dashboard Preview" width="1200" height="630" class="w-full max-w-3xl mx-auto rounded-2xl border border-slate-200 dark:border-white/10 shadow-xl" loading="eager" fetchpriority="high" />
-          <figcaption class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">QRLoop Dynamic QR Studio with real-time scan analytics and vector export engine.</figcaption>
-        </figure>
-      </section>
-
-      <!-- Educational Article Content: 1200+ Words for AdSense Depth -->
-      <article class="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 space-y-12 leading-relaxed">
-        
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            What is a Dynamic QR Code and How Does It Work?
-          </h2>
-          <p>
-            A <strong>dynamic QR code</strong> is a modern two-dimensional barcode that routes scanners through an intermediate high-speed edge server before reaching the ultimate destination web address. Unlike a static QR code—where the complete destination URL is hardcoded into the black-and-white matrix dots forever—a dynamic QR code stores a compact, shortened redirect identifier (such as <code>https://qrloop4.vercel.app/r/abc123</code>).
-          </p>
-          <p>
-            This redirection architecture offers three transformative advantages for businesses, designers, and creators:
-          </p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong>Editable Destination URLs:</strong> If you print 5,000 restaurant menus, trade show flyers, or product packaging boxes and your website link changes, you do not need to re-print your marketing collateral. You simply update the target URL in your QRLoop dashboard, and all existing physical QR codes instantly redirect to the new page.</li>
-            <li><strong>Granular Scan Analytics & Telemetry:</strong> Because scans pass through our sub-50ms redirection engine, you gain real-time visibility into your audience. You can analyze scan volume by date, mobile vs. desktop devices, operating systems (iOS, Android, Windows, macOS), browser types, and approximate geographic cities—all while strictly respecting privacy and anonymizing user IP addresses.</li>
-            <li><strong>Cleaner, Higher-Density Scanning Matrix:</strong> Long URLs packed with UTM campaign parameters and tracking tokens result in dense, clustered QR pixel grids that older smartphone cameras struggle to read. A dynamic QR code keeps the encoded data string short and clean, allowing the QR code to be scanned from greater distances and in low-light environments.</li>
-          </ul>
-        </section>
-
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Why QRLoop is 100% Free: Ending the 14-Day Paywall Trap
-          </h2>
-          <p>
-            The QR code software market has long been troubled by predatory billing practices. Many commercial QR generators allow unsuspecting users to create "free" dynamic QR codes. Weeks later, after the business has spent hundreds or thousands of dollars printing brochures, banners, product packaging, and acrylic desk standees, the provider disables the redirect and demands an ongoing subscription of $35 to $60 per month to keep the links functioning.
-          </p>
-          <p>
-            At <strong>QRLoop</strong>, we believe basic edge URL redirection is a foundational utility that should never be held hostage. HTTP 302 redirects require minimal computation. By engineering a lean, serverless cloud architecture and supporting our operations through non-intrusive, privacy-compliant Google AdSense advertising, QRLoop provides <strong>lifetime active dynamic QR redirects</strong> with zero scan paywalls and zero trial expirations.
-          </p>
-        </section>
-
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Dynamic QR Codes vs. Static QR Codes: Key Differences
-          </h2>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm border-collapse border border-slate-200 dark:border-white/10 my-4">
-              <thead>
-                <tr class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white">
-                  <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Feature</th>
-                  <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Dynamic QR (QRLoop)</th>
-                  <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Static QR</th>
-                  <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Traditional Paid Services</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Editable After Printing</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-400 font-bold">Yes (Instant Update)</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-red-600 dark:text-red-400 font-bold">No (Permanent Matrix)</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10">Yes (Requires $35/mo)</td>
-                </tr>
-                <tr>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Real-Time Scan Analytics</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-400 font-bold">Yes (Included Free)</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-red-600 dark:text-red-400 font-bold">No Telemetry</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10">Paywalled behind tiers</td>
-                </tr>
-                <tr>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Expiration & Paywall</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-400 font-bold">Never Expires (Lifetime)</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10">Never Expires</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-red-600 dark:text-red-400 font-bold">Deactivated after 14 days</td>
-                </tr>
-                <tr>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Monthly Subscription</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-400 font-bold">$0 Forever Free</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10">$0 Free</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-red-600 dark:text-red-400 font-bold">$30 - $60 / month</td>
-                </tr>
-                <tr>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Vector SVG & Print PDF</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-400 font-bold">Yes (Lossless)</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10">Yes</td>
-                  <td class="p-3 border border-slate-200 dark:border-white/10">Often locked to Pro tier</td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- 1. Hero Section with EXACTLY ONE H1 Tag -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-bold shadow-xs">
+            <span>The Open Dynamic QR Platform • 100% Free Forever</span>
           </div>
-        </section>
 
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Step-by-Step Guide: How to Create a Custom Dynamic QR Code
-          </h2>
-          <ol class="list-decimal pl-6 space-y-3">
-            <li>
-              <strong>Choose Your QR Type:</strong> Select <a href="/dynamic-qr" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">Dynamic QR</a> for trackable marketing campaigns and editable website links, or choose <a href="/static-qr" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">Static QR</a> for offline Wi-Fi credentials, plain text, and vCards.
-            </li>
-            <li>
-              <strong>Enter Your Destination Address:</strong> Provide the target website URL (e.g., your online menu, booking page, mobile app download, or social media hub).
-            </li>
-            <li>
-              <strong>Customize Visual Design & Branding:</strong> In the QRLoop Studio, select custom module dot shapes (smooth rounded dots, sleek pills, or classic squares), customize the corner eye frames and inner pupils, select gradient or brand colors, and upload your company logo with automatic quiet-zone protection.
-            </li>
-            <li>
-              <strong>Download Print-Ready Assets:</strong> Export your styled QR code in lossless vector SVG format (for billboards and high-resolution commercial printing), high-DPI raster PNG (for web and social graphics), or print-ready A4 PDF with crop guidelines.
-            </li>
-            <li>
-              <strong>Monitor Performance & Edit Anytime:</strong> Access your <a href="/dashboard" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">QR Management Portal</a> to view scan counts, scanner devices, and visitor regions, or update the target URL whenever needed.
-            </li>
-          </ol>
-        </section>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white tracking-[-0.03em] leading-[1.12]">
+            Free Dynamic QR Code Generator with <br class="hidden sm:inline" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500">
+              Real-Time Analytics.
+            </span>
+          </h1>
 
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Industry Solutions & Practical Use Cases
-          </h2>
-          <p>Dynamic QR codes empower businesses across countless physical touchpoints:</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose">
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white"><a href="/qr-code-for-restaurants" class="hover:text-emerald-700 dark:hover:text-emerald-400 underline">Restaurant Digital Menus</a></h3>
-              <p class="text-xs text-slate-700 dark:text-slate-300 mt-1">Update daily specials, seasonal prices, and item availability instantly without re-printing table tents or acrylic flyers.</p>
+          <p class="text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            Create custom QR codes for websites, menus, flyers, packaging, events and marketing campaigns. Edit destination URLs after printing, measure QR scans, and download print-ready PNG, SVG or PDF files.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
+            <a href="/dynamic-qr" class="w-full sm:w-auto h-12 px-7 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:brightness-105 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 transition-transform duration-150 will-change-transform hover:-translate-y-0.5">
+              <span>Create Dynamic QR Code →</span>
+            </a>
+            <a href="/static-qr" class="w-full sm:w-auto h-12 px-6 rounded-xl bg-white dark:bg-dark-900 hover:bg-slate-50 dark:hover:bg-dark-850 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors duration-150">
+              <span>Quick Static Generator</span>
+            </a>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-y-2.5 gap-x-8 pt-4 text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <div class="flex items-center gap-2">
+              <span>✓ Sub-50ms Fast 302 Redirects</span>
             </div>
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white"><a href="/qr-code-for-events" class="hover:text-emerald-700 dark:hover:text-emerald-400 underline">Conferences & Event Badges</a></h3>
-              <p class="text-xs text-slate-700 dark:text-slate-300 mt-1">Seamlessly route attendees to dynamic event schedules, speaker bios, live polling, and networking check-ins.</p>
+            <div class="flex items-center gap-2">
+              <span>✓ Vector SVG & Print-Ready PDF</span>
             </div>
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white"><a href="/qr-code-for-wifi" class="hover:text-emerald-700 dark:hover:text-emerald-400 underline">Instant Guest Wi-Fi Access</a></h3>
-              <p class="text-xs text-slate-700 dark:text-slate-300 mt-1">Enable hotel guests and café patrons to connect to secure WPA2/WPA3 Wi-Fi networks with one scan—no typing complex passwords.</p>
-            </div>
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white"><a href="/qr-code-for-business-cards" class="hover:text-emerald-700 dark:hover:text-emerald-400 underline">Digital Business Cards (vCard)</a></h3>
-              <p class="text-xs text-slate-700 dark:text-slate-300 mt-1">Direct clients to your digital portfolio, contact info, and calendar booking link with clean, high-DPI vector printing.</p>
+            <div class="flex items-center gap-2">
+              <span>✓ No 14-Day Expiration Trap</span>
             </div>
           </div>
         </section>
 
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Printing Best Practices: The 10:1 Distance-to-Size Ratio
-          </h2>
-          <p>
-            To ensure optimal camera readability on physical packaging, signage, and merchandise, follow professional printing standards:
-          </p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong>The 10:1 Scanning Ratio:</strong> As a rule of thumb, the distance between the camera and the QR code should be approximately 10 times the width of the QR code. For example, a business card scanned from 10 inches away requires a minimum size of 1 inch (2.5 cm). A billboard scanned from 30 feet away requires a QR code at least 3 feet wide.</li>
-            <li><strong>High Contrast & Dark Modules:</strong> Always ensure strong color contrast between the QR code modules and the background. Dark foreground dots on a light background scan fastest across all smartphone operating systems. Avoid inverted white-on-yellow or low-contrast pastels.</li>
-            <li><strong>Preserve the Quiet Zone:</strong> Every QR code requires a margin of blank space (the quiet zone) around all four sides equivalent to at least 4 module widths. Avoid placing text, graphics, or borders too close to the finder eyes.</li>
-            <li><strong>Always Use Vector SVG for Large Format:</strong> When printing flyers, packaging, or exhibition displays, never stretch a low-resolution bitmap PNG. Download QRLoop's vector SVG file, which scales infinitely to any dimension with zero pixelation or blurriness.</li>
-          </ul>
-        </section>
+        <!-- 2. Dynamic vs Static Visual Comparison Matrix (2 Cards) -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
+              Choose the Right QR Code for Your Needs
+            </h2>
+            <p class="text-sm text-slate-700 dark:text-slate-300 mt-2.5 leading-relaxed">
+              Whether you need permanent offline encoding or trackable redirect links, QRLoop has you covered.
+            </p>
+          </div>
 
-        <section class="space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-            Frequently Asked Questions
-          </h2>
-          <div class="space-y-4 not-prose">
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white">Are QRLoop dynamic QR codes truly free with no expiration?</h3>
-              <p class="text-sm text-slate-700 dark:text-slate-300 mt-1">Yes! QRLoop dynamic QR codes have lifetime active redirects. Unlike competitors that deactivate codes after a 14-day trial or require $35/month, your codes continue functioning permanently with zero scan paywalls.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            <div class="rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-white to-teal-50/20 dark:from-emerald-950/20 dark:via-dark-900 dark:to-dark-950 p-7 sm:p-9 backdrop-blur-xl shadow-md dark:shadow-xl flex flex-col justify-between relative overflow-hidden">
+              <div class="space-y-5">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Dynamic QR Codes</h3>
+                <p class="text-sm text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+                  The destination URL can be changed anytime from your dashboard without re-printing.
+                </p>
+                <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                  <li><strong>Change destination anytime:</strong> Fix typos or swap marketing campaigns without changing printed material.</li>
+                  <li><strong>Live scan telemetry:</strong> Track total scans, device types, operating systems, and top geographic locations.</li>
+                  <li><strong>Clean scannable matrix:</strong> Uses short redirect URLs to keep QR dots large and instantly camera-readable.</li>
+                </ul>
+              </div>
+              <div class="pt-7 mt-7 border-t border-slate-200/80 dark:border-white/10">
+                <a href="/dynamic-qr" class="w-full h-11 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors duration-150">
+                  Launch Dynamic Studio →
+                </a>
+              </div>
             </div>
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white">Can I change the destination URL after printing?</h3>
-              <p class="text-sm text-slate-700 dark:text-slate-300 mt-1">Yes! Simply log into your QRLoop dashboard, click "Edit", and enter your new destination URL. The update takes effect immediately on all printed copies worldwide without requiring any re-printing.</p>
-            </div>
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white">What scan telemetry and analytics are tracked?</h3>
-              <p class="text-sm text-slate-700 dark:text-slate-300 mt-1">We track total scans, unique visitors, device categories (mobile, tablet, desktop), operating systems (iOS, Android, Windows, macOS), browser types, and approximate geographic cities. All IP addresses are anonymized to comply with GDPR and CCPA.</p>
-            </div>
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40">
-              <h3 class="font-bold text-base text-slate-900 dark:text-white">What file formats are supported for export?</h3>
-              <p class="text-sm text-slate-700 dark:text-slate-300 mt-1">You can export your styled QR codes in high-resolution PNG, lossless vector SVG (perfect for professional commercial print), and ready-to-print A4 PDF standee flyers.</p>
+
+            <div class="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 p-7 sm:p-9 backdrop-blur-xl shadow-xs dark:shadow-none flex flex-col justify-between">
+              <div class="space-y-5">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Static QR Codes</h3>
+                <p class="text-sm text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+                  Data is permanently burned directly into the black and white pixel pattern.
+                </p>
+                <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                  <li><strong>100% offline & permanent:</strong> Works forever with no servers or internet routing required.</li>
+                  <li><strong>Zero login required:</strong> Generate and download instant PNG, SVG, or print-ready PDF in seconds.</li>
+                  <li><strong>Ideal for Wi-Fi & vCards:</strong> Embed fixed passwords, contact cards, or direct text payloads.</li>
+                </ul>
+              </div>
+              <div class="pt-7 mt-7 border-t border-slate-200/80 dark:border-white/10">
+                <a href="/static-qr" class="w-full h-11 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-750 text-slate-800 dark:text-slate-200 font-semibold text-sm flex items-center justify-center gap-2 border border-slate-200/80 dark:border-white/5 transition-colors duration-150">
+                  Launch Static Generator →
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
-      </article>
+        <!-- 3. Three Core Pillars (3 Cards) -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 shadow-xs dark:shadow-none">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Sub-50ms Fast Redirects</h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                Asynchronous scan logging redirects visitors immediately with HTTP 302 without delay or intermediate splash screens.
+              </p>
+            </div>
+            <div class="p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 shadow-xs dark:shadow-none">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Print-Ready PDF & SVG</h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                Export lossless vector SVG for commercial printing or auto-generate centered A4 printable table standees with one click.
+              </p>
+            </div>
+            <div class="p-7 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 backdrop-blur-md space-y-3 shadow-xs dark:shadow-none">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Real-Time Scan Telemetry</h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                Monitor scan spikes, device breakdown, operating systems, and top geographic locations without setting up heavy analytics scripts.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      <!-- Transparency, E-A-T and Author Info Section -->
-      <section class="border-t border-slate-200 dark:border-white/10 pt-8 space-y-4">
-        <h2 class="text-xl font-bold text-slate-900 dark:text-white">About QRLoop & Our Commitment to Privacy</h2>
-        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-          QRLoop is developed and maintained by QRLoop Technologies. We are committed to complete transparency regarding data handling, advertising networks, and cookie practices. Our dynamic redirect infrastructure uses TLS 1.3 encryption and automated IP anonymization. Read our comprehensive <a href="/privacy" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">Privacy Policy</a> and <a href="/terms" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">Terms of Service</a> for complete details on data rights, GDPR/CCPA compliance, and third-party advertising cookies.
-        </p>
-        <div class="flex flex-wrap gap-4 text-xs text-slate-600 dark:text-slate-400 font-medium">
-          <span>Support Contact: <a href="mailto:support@qrloop.io" class="underline text-emerald-800 dark:text-emerald-400 font-semibold">support@qrloop.io</a></span>
-          <span>•</span>
-          <span>Privacy Desk: <a href="mailto:privacy@qrloop.io" class="underline text-emerald-800 dark:text-emerald-400 font-semibold">privacy@qrloop.io</a></span>
-          <span>•</span>
-          <span>Open Source: <a href="https://github.com/barath0508/QR" target="_blank" rel="noopener noreferrer" class="underline text-emerald-800 dark:text-emerald-400 font-semibold">GitHub Repository</a></span>
-        </div>
-      </section>
+        <!-- 4. Built-in Sharing Loop -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="relative overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-white to-cyan-500/10 dark:from-emerald-950/30 dark:via-dark-900 dark:to-cyan-950/20 p-7 sm:p-10">
+            <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div class="max-w-2xl space-y-2">
+                <h2 class="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
+                  Know someone who needs a QR code?
+                </h2>
+                <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                  Share a free, no-expiration QR generator with a business owner, designer, restaurant, or event organizer.
+                </p>
+              </div>
+              <a href="/dynamic-qr" class="flex-shrink-0 h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-sm flex items-center gap-2 shadow-xs transition-colors duration-150">
+                <span>Share QRLoop</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Blog & Educational Guides Teaser (3 Cards) -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+                Latest Guides & Tutorials
+              </h2>
+            </div>
+            <a href="/blog" class="text-sm font-bold text-emerald-800 dark:text-emerald-300 hover:text-emerald-600 transition-colors duration-150">
+              View All Articles →
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a href="/blog" class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2.5 block">
+              <span class="text-[11px] uppercase font-bold text-red-700 dark:text-red-400 font-mono">Industry Warning</span>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">The 14-Day QR Paywall Trap: How Paid Services Hold Your Links Hostage</h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed">Learn how commercial generators bait users into printing brochures before locking links behind monthly subscriptions.</p>
+            </a>
+            <a href="/blog" class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2.5 block">
+              <span class="text-[11px] uppercase font-bold text-emerald-800 dark:text-emerald-300 font-mono">Best Practices</span>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">Dynamic vs Static QR Codes: The Complete Business Guide</h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed">A comprehensive checklist to choose between static and dynamic codes for product packaging and marketing.</p>
+            </a>
+            <a href="/blog" class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2.5 block">
+              <span class="text-[11px] uppercase font-bold text-cyan-800 dark:text-cyan-300 font-mono">Print & Design</span>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">Professional QR Print Specifications: The 10:1 Scanning Rule</h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed">Essential guidelines on resolution, quiet zone margins, and contrast ratios for crisp camera scanning.</p>
+            </a>
+          </div>
+        </section>
+
+        <!-- 6. Competitor Comparison Teaser -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="p-8 sm:p-10 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs dark:shadow-xl">
+            <div class="space-y-2 text-center md:text-left">
+              <h3 class="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
+                Why pay $35/month for dynamic QR codes?
+              </h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 max-w-xl leading-relaxed">
+                See how QRLoop compares against QRCode Monkey, Bitly, and Uniqode. Lifetime redirects with zero scan limits.
+              </p>
+            </div>
+            <a href="/compare" class="h-11 px-6 rounded-xl bg-slate-900 dark:bg-white/10 text-white font-semibold text-sm flex items-center gap-2 border border-slate-900 dark:border-white/10 transition-colors duration-150 flex-shrink-0 shadow-xs">
+              <span>Compare vs Paid Tools →</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- 7. Deep-Dive Educational Guide & Feature Comparison Table (1200+ Words for AdSense & SEO Depth) -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 leading-relaxed">
+          
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
+                In-Depth Guide
+              </span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              What is a Dynamic QR Code and How Does It Work?
+            </h2>
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              A <strong>dynamic QR code</strong> is a modern two-dimensional barcode that routes scanners through an intermediate high-speed edge server before reaching the ultimate destination web address. Unlike a static QR code—where the complete destination URL is hardcoded into the black-and-white matrix dots forever—a dynamic QR code stores a compact, shortened redirect identifier (such as <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-800 dark:text-emerald-300 font-mono text-xs">/r/abc123</code>).
+            </p>
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              This redirection architecture offers three transformative advantages for businesses, designers, and creators:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+              <li><strong>Editable Destination URLs:</strong> If you print 5,000 restaurant menus, trade show flyers, or product packaging boxes and your website link changes, you do not need to re-print your marketing collateral. You simply update the target URL in your QRLoop dashboard, and all existing physical QR codes instantly redirect to the new page.</li>
+              <li><strong>Granular Scan Analytics & Telemetry:</strong> Because scans pass through our sub-50ms redirection engine, you gain real-time visibility into your audience. You can analyze scan volume by date, mobile vs. desktop devices, operating systems (iOS, Android, Windows, macOS), browser types, and approximate geographic cities—all while strictly respecting privacy and anonymizing user IP addresses.</li>
+              <li><strong>Cleaner, Higher-Density Scanning Matrix:</strong> Long URLs packed with UTM campaign parameters and tracking tokens result in dense, clustered QR pixel grids that older smartphone cameras struggle to read. A dynamic QR code keeps the encoded data string short and clean, allowing the QR code to be scanned from greater distances and in low-light environments.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              Why QRLoop is 100% Free: Ending the 14-Day Paywall Trap
+            </h2>
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              The QR code software market has long been troubled by predatory billing practices. Many commercial QR generators allow unsuspecting users to create "free" dynamic QR codes. Weeks later, after the business has spent hundreds or thousands of dollars printing brochures, banners, product packaging, and acrylic desk standees, the provider disables the redirect and demands an ongoing subscription of $35 to $60 per month to keep the links functioning.
+            </p>
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              At <strong>QRLoop</strong>, we believe basic edge URL redirection is a foundational utility that should never be held hostage. HTTP 302 redirects require minimal computation. By engineering a lean, serverless cloud architecture and supporting our operations through non-intrusive, privacy-compliant Google AdSense advertising, QRLoop provides <strong>lifetime active dynamic QR redirects</strong> with zero scan paywalls and zero trial expirations.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              Dynamic QR Codes vs. Static QR Codes: Key Differences
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs sm:text-sm border-collapse border border-slate-200 dark:border-white/10 my-4">
+                <thead>
+                  <tr class="bg-slate-100 dark:bg-dark-800 text-slate-900 dark:text-white">
+                    <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Feature</th>
+                    <th class="p-3 border border-slate-200 dark:border-white/10 font-bold text-emerald-800 dark:text-emerald-300">Dynamic QR (QRLoop)</th>
+                    <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Static QR</th>
+                    <th class="p-3 border border-slate-200 dark:border-white/10 font-bold">Traditional Paid Services</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-700 dark:text-slate-300">
+                  <tr>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Editable After Printing</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (Instant Update)</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">No (Permanent Matrix)</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10">Yes (Requires $35/mo)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Real-Time Scan Analytics</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (Included Free)</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">No Telemetry</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10">Paywalled behind tiers</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Expiration & Paywall</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Never Expires (Lifetime)</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10">Never Expires</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">Deactivated after 14 days</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Monthly Subscription</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">$0 Forever Free</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10">$0 Free</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-red-700 dark:text-red-400 font-bold">$30 - $60 / month</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 font-semibold">Vector SVG & Print PDF</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10 text-emerald-800 dark:text-emerald-300 font-bold">Yes (Lossless)</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10">Yes</td>
+                    <td class="p-3 border border-slate-200 dark:border-white/10">Often locked to Pro tier</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              Step-by-Step Guide: How to Create a Custom Dynamic QR Code
+            </h2>
+            <ol class="list-decimal pl-6 space-y-3 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+              <li>
+                <strong>Choose Your QR Type:</strong> Select <a href="/dynamic-qr" class="text-emerald-800 dark:text-emerald-300 underline font-semibold">Dynamic QR</a> for trackable marketing campaigns and editable website links, or choose <a href="/static-qr" class="text-emerald-800 dark:text-emerald-300 underline font-semibold">Static QR</a> for offline Wi-Fi credentials, plain text, and vCards.
+              </li>
+              <li>
+                <strong>Enter Your Destination Address:</strong> Provide the target website URL (e.g., your online menu, booking page, mobile app download, or social media hub).
+              </li>
+              <li>
+                <strong>Customize Visual Design & Branding:</strong> In the QRLoop Studio, select custom module dot shapes (smooth rounded dots, sleek pills, or classic squares), customize the corner eye frames and inner pupils, select gradient or brand colors, and upload your company logo with automatic quiet-zone protection.
+              </li>
+              <li>
+                <strong>Download Print-Ready Assets:</strong> Export your styled QR code in lossless vector SVG format (for billboards and high-resolution commercial printing), high-DPI raster PNG (for web and social graphics), or print-ready A4 PDF with crop guidelines.
+              </li>
+              <li>
+                <strong>Monitor Performance & Edit Anytime:</strong> Access your <a href="/dashboard" class="text-emerald-800 dark:text-emerald-300 underline font-semibold">QR Management Portal</a> to view scan counts, scanner devices, and visitor regions, or update the target URL whenever needed.
+              </li>
+            </ol>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              Industry Solutions & Practical Use Cases
+            </h2>
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+              Dynamic QR codes empower businesses across countless physical touchpoints:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Restaurant Digital Menus</h3>
+                <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Update daily specials, seasonal prices, and item availability instantly without re-printing table tents or acrylic flyers.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Conferences & Event Badges</h3>
+                <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Seamlessly route attendees to dynamic event schedules, speaker bios, live polling, and networking check-ins.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Instant Guest Wi-Fi Access</h3>
+                <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Enable hotel guests and café patrons to connect to secure WPA2/WPA3 Wi-Fi networks with one scan—no typing complex passwords.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs">
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Digital Business Cards (vCard)</h3>
+                <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">Direct clients to your digital portfolio, contact info, and calendar booking link with clean, high-DPI vector printing.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              Printing Best Practices: The 10:1 Distance-to-Size Ratio
+            </h2>
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              To ensure optimal camera readability on physical packaging, signage, and merchandise, follow professional printing standards:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+              <li><strong>The 10:1 Scanning Ratio:</strong> As a rule of thumb, the distance between the camera and the QR code should be approximately 10 times the width of the QR code. For example, a business card scanned from 10 inches away requires a minimum size of 1 inch (2.5 cm). A billboard scanned from 30 feet away requires a QR code at least 3 feet wide.</li>
+              <li><strong>High Contrast & Dark Modules:</strong> Always ensure strong color contrast between the QR code modules and the background. Dark foreground dots on a light background scan fastest across all smartphone operating systems. Avoid inverted white-on-yellow or low-contrast pastels.</li>
+              <li><strong>Preserve the Quiet Zone:</strong> Every QR code requires a margin of blank space (the quiet zone) around all four sides equivalent to at least 4 module widths. Avoid placing text, graphics, or borders too close to the finder eyes.</li>
+              <li><strong>Always Use Vector SVG for Large Format:</strong> When printing flyers, packaging, or exhibition displays, never stretch a low-resolution bitmap PNG. Download QRLoop's vector SVG file, which scales infinitely to any dimension with zero pixelation or blurriness.</li>
+            </ul>
+          </div>
+
+        </section>
+
+        <!-- 8. Comprehensive SEO FAQ Section -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div class="text-center space-y-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
+              Frequently Asked Questions
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
+              Everything You Need to Know About Dynamic & Static QR Codes
+            </h2>
+            <p class="text-sm text-slate-700 dark:text-slate-300 max-w-xl mx-auto">
+              Clear answers about QR customization, vector image exports, analytics, and lifetime active links.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">
+                What is the best free dynamic QR code generator?
+              </h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                <strong>QRLoop</strong> is designed to be the best free dynamic QR code generator because unlike commercial alternatives, it never locks your codes after a 14-day trial. You get editable destination URLs, real-time scan analytics, custom logo embedding, and lossless vector exports completely free.
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">
+                How do dynamic QR codes work for a website?
+              </h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                A dynamic QR code encodes a short, high-speed redirect link (e.g. <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-800 dark:text-emerald-300 font-mono text-xs">/r/:shortcode</code>) rather than a long URL. When scanned, our global edge redirects the user to your destination website in under 50ms while logging scan telemetry (device, operating system, timestamp, and location). You can update the destination URL at any time from your dashboard without changing your printed QR codes.
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">
+                What QR customization options are available?
+              </h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                QRLoop gives you total design control: choose dot module shapes (dots, rounded squares, class blocks), corner eye designs (square, rounded, circle), custom color gradients, background transparency, and center brand logos or social icons with automatic quiet-zone masking.
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">
+                How do I export a QR code to high-resolution image formats?
+              </h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                You can download your customized QR code in multiple formats: <strong>PNG</strong> for digital use and social media, <strong>lossless vector SVG</strong> for scalable commercial billboards and packaging, and <strong>print-ready A4 PDF</strong> with centered cut-out guidelines for restaurant table standees and desk signage.
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 shadow-xs space-y-2">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">
+                Do QRLoop dynamic QR codes ever expire?
+              </h3>
+              <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                No! QRLoop dynamic QR codes have <strong>lifetime active redirects</strong>. There are zero scan limits, no monthly renewal fees, and no 14-day expiration traps. You can print them on physical marketing collateral with complete confidence.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. Transparency, E-A-T and Author Info Section -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200 dark:border-white/10 pt-8 space-y-4">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">About QRLoop & Our Commitment to Privacy</h2>
+          <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            QRLoop is developed and maintained by QRLoop Technologies. We are committed to complete transparency regarding data handling, advertising networks, and cookie practices. Our dynamic redirect infrastructure uses TLS 1.3 encryption and automated IP anonymization. Read our comprehensive <a href="/privacy" class="text-emerald-800 dark:text-emerald-300 underline font-semibold">Privacy Policy</a> and <a href="/terms" class="text-emerald-800 dark:text-emerald-300 underline font-semibold">Terms of Service</a> for complete details on data rights, GDPR/CCPA compliance, and third-party advertising cookies.
+          </p>
+          <div class="flex flex-wrap gap-4 text-xs text-slate-700 dark:text-slate-300 font-medium">
+            <span>Support Contact: <a href="mailto:support@qrloop.io" class="underline text-emerald-800 dark:text-emerald-300 font-semibold">support@qrloop.io</a></span>
+            <span>•</span>
+            <span>Privacy Desk: <a href="mailto:privacy@qrloop.io" class="underline text-emerald-800 dark:text-emerald-300 font-semibold">privacy@qrloop.io</a></span>
+            <span>•</span>
+            <span>Open Source: <a href="https://github.com/barath0508/QR" target="_blank" rel="noopener noreferrer" class="underline text-emerald-800 dark:text-emerald-300 font-semibold">GitHub Repository</a></span>
+          </div>
+        </section>
+
+      </div>
     </main>
 
-    <!-- Pre-rendered Static Cookie Notice Banner for Crawler Compliance -->
-    <aside aria-label="Privacy and Cookie Consent" class="w-full bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-white/10 py-4 px-4 text-xs text-slate-700 dark:text-slate-300">
-      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p>
-          QRLoop and its advertising partners (including Google AdSense) use cookies to analyze site traffic, serve personalized ads, and support our 100% free dynamic QR service. Learn more in our <a href="/cookies" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">Cookie Policy</a> and <a href="/privacy" class="text-emerald-800 dark:text-emerald-400 underline font-semibold">Privacy Policy</a>.
-        </p>
-        <div class="flex items-center gap-2 flex-shrink-0">
-          <a href="/cookies" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs">Manage Consent</a>
-        </div>
-      </div>
-    </aside>
-
     <!-- Global Pre-rendered Semantic Footer with All Mandatory Links -->
-    <footer role="contentinfo" class="border-t border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950 py-12 px-4 sm:px-6 lg:px-8 text-xs text-slate-700 dark:text-slate-300">
-      <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
-        <div class="col-span-2 md:col-span-1 space-y-3">
-          <div class="font-bold text-base text-slate-900 dark:text-white">QRLoop</div>
-          <p class="text-slate-600 dark:text-slate-400">The open, modern dynamic QR generator platform with sub-50ms redirects and vector print downloads.</p>
-          <p class="text-[11px]"><a href="https://github.com/barath0508/QR" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-800 dark:text-emerald-400 font-semibold">Open Source on GitHub</a></p>
+    <footer class="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-700 dark:text-slate-300 mt-16 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+          
+          <div class="space-y-4 col-span-2 md:col-span-1">
+            <a href="/" class="inline-flex items-center gap-2.5" aria-label="QRLoop Home">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-600 to-cyan-500 flex items-center justify-center shadow-xs">
+                <span class="font-black text-xs text-slate-950">QR</span>
+              </div>
+              <span class="font-display font-black text-lg text-slate-900 dark:text-white">
+                QR<span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Loop</span>
+              </span>
+            </a>
+            <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              The modern open dynamic QR platform with sub-50ms redirects, privacy-first telemetry, and vector print downloads.
+            </p>
+            <div class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
+              <span>Lifetime active redirects. No paywall.</span>
+            </div>
+            <div class="pt-1">
+              <a href="https://github.com/barath0508/QR" target="_blank" rel="noopener noreferrer" aria-label="QRLoop Source Code on GitHub" class="inline-flex items-center gap-1.5 text-xs text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors">
+                <span>Open Source on GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">QR Tools</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="/dynamic-qr" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Dynamic QR Studio</a></li>
+              <li><a href="/static-qr" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Free Static Generator</a></li>
+              <li><a href="/dashboard" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">QR Management Portal</a></li>
+              <li><a href="/blog" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Guides & Tutorials</a></li>
+              <li><a href="/compare" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Why Free vs Paid Tools</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">Solutions</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="/qr-code-for-restaurants" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Restaurant Menus</a></li>
+              <li><a href="/qr-code-for-events" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Event Registration</a></li>
+              <li><a href="/qr-code-for-wifi" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Instant Wi-Fi Access</a></li>
+              <li><a href="/qr-code-for-business-cards" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Digital Business Cards</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">Company</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="/about" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">About QRLoop</a></li>
+              <li><a href="/contact" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Contact & Support</a></li>
+              <li><a href="/compare" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Why Free vs Paid</a></li>
+              <li><a href="/blog" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Blog & Tutorials</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">Legal & Trust</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="/privacy" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left font-semibold text-emerald-800 dark:text-emerald-300">Privacy Policy</a></li>
+              <li><a href="/terms" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left font-semibold text-cyan-800 dark:text-cyan-300">Terms of Service</a></li>
+              <li><a href="/cookies" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left font-semibold text-amber-800 dark:text-amber-300">Cookie Policy</a></li>
+              <li><a href="/contact" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors block text-left">Report Abuse / Security</a></li>
+            </ul>
+          </div>
+
         </div>
-        <div>
-          <h3 class="font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-wider text-[11px]">QR Tools</h3>
-          <ul class="space-y-1.5">
-            <li><a href="/dynamic-qr" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Dynamic QR Studio</a></li>
-            <li><a href="/static-qr" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Free Static Generator</a></li>
-            <li><a href="/dashboard" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">My Codes & Dashboard</a></li>
-            <li><a href="/blog" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Knowledge Hub & Guides</a></li>
-            <li><a href="/compare" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Comparison Matrix</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-wider text-[11px]">Solutions</h3>
-          <ul class="space-y-1.5">
-            <li><a href="/qr-code-for-restaurants" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Restaurant Menus</a></li>
-            <li><a href="/qr-code-for-events" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Event Registration</a></li>
-            <li><a href="/qr-code-for-wifi" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Instant Wi-Fi Access</a></li>
-            <li><a href="/qr-code-for-business-cards" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Digital Business Cards</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-wider text-[11px]">Company</h3>
-          <ul class="space-y-1.5">
-            <li><a href="/about" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">About QRLoop</a></li>
-            <li><a href="/contact" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Contact & Support</a></li>
-            <li><a href="/compare" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Why Free vs Paid</a></li>
-            <li><a href="/blog" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Blog & Tutorials</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-wider text-[11px]">Legal & Trust</h3>
-          <ul class="space-y-1.5">
-            <li><a href="/privacy" class="hover:underline font-semibold text-emerald-800 dark:text-emerald-400">Privacy Policy</a></li>
-            <li><a href="/terms" class="hover:underline font-semibold text-cyan-800 dark:text-cyan-400">Terms of Service</a></li>
-            <li><a href="/cookies" class="hover:underline font-semibold text-amber-800 dark:text-amber-400">Cookie Policy</a></li>
-            <li><a href="/contact" class="hover:underline hover:text-emerald-700 dark:hover:text-emerald-400">Report Abuse / Security</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="max-w-7xl mx-auto border-t border-slate-200 dark:border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-slate-600 dark:text-slate-400">© 2026 QRLoop Technologies. Built for creators and businesses worldwide.</p>
-        <div class="flex items-center gap-4">
-          <a href="/privacy" class="hover:underline text-slate-700 dark:text-slate-300">Privacy Policy</a>
-          <a href="/terms" class="hover:underline text-slate-700 dark:text-slate-300">Terms of Service</a>
-          <a href="/cookies" class="hover:underline text-slate-700 dark:text-slate-300">Cookie Policy</a>
-          <a href="/about" class="hover:underline text-slate-700 dark:text-slate-300">About</a>
-          <a href="/contact" class="hover:underline text-slate-700 dark:text-slate-300">Contact</a>
+
+        <div class="border-t border-slate-200 dark:border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-700 dark:text-slate-300">
+          <p>© 2026 QRLoop Technologies. Built for creators and businesses worldwide.</p>
+          <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <a href="/privacy" class="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline">Privacy Policy</a>
+            <a href="/terms" class="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline">Terms of Service</a>
+            <a href="/cookies" class="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline">Cookie Settings</a>
+            <a href="/about" class="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline">About</a>
+            <a href="/contact" class="hover:text-slate-950 dark:hover:text-white transition-colors underline-offset-2 hover:underline">Contact</a>
+          </div>
         </div>
       </div>
     </footer>
+
   </div>
 
   <noscript>
