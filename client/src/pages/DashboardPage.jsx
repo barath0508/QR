@@ -253,18 +253,12 @@ export default function DashboardPage({
         const list = res.qr_codes || res.qrs || [];
         setQrs(list);
       } else {
-        const overview = await api.getDashboardOverview().catch(() => ({ qr_codes: [] }));
-        const list = overview.qr_codes || overview.qrs || [];
-        if (list.length > 0) {
-          setQrs(list);
-        } else {
-          // Fallback to local guest saved QRs
-          try {
-            const guestList = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
-            setQrs(guestList);
-          } catch (e) {
-            setQrs([]);
-          }
+        // Guest user: Load locally stored guest QRs without calling protected auth endpoints
+        try {
+          const guestList = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
+          setQrs(guestList);
+        } catch (e) {
+          setQrs([]);
         }
       }
     } catch (err) {

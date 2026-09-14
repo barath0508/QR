@@ -36,7 +36,8 @@ export default function AnalyticsPage({
   selectedQrId, 
   onBack, 
   onNavigateToStudio,
-  onBackToHome
+  onBackToHome,
+  user
 }) {
   const [qrsList, setQrsList] = useState([]);
   const [currentId, setCurrentId] = useState(selectedQrId || null);
@@ -48,18 +49,32 @@ export default function AnalyticsPage({
   useEffect(() => {
     async function loadList() {
       try {
-        const res = await api.listUserQRs().catch(() => ({ qr_codes: [] }));
-        const list = res.qr_codes || res.qrs || [];
-        setQrsList(list);
-        if (!currentId && list.length > 0) {
-          setCurrentId(list[0].id);
+        const hasAuth = user || (typeof localStorage !== 'undefined' && localStorage.getItem('qrloop_token'));
+        if (hasAuth) {
+          const res = await api.listUserQRs().catch(() => ({ qr_codes: [] }));
+          const list = res.qr_codes || res.qrs || [];
+          setQrsList(list);
+          if (!currentId && list.length > 0) {
+            setCurrentId(list[0].id);
+          }
+        } else {
+          // Guest user: Load from local guest list
+          try {
+            const guestList = JSON.parse(localStorage.getItem('qrloop_guest_qrs') || '[]');
+            setQrsList(guestList);
+            if (!currentId && guestList.length > 0) {
+              setCurrentId(guestList[0].id);
+            }
+          } catch (e) {
+            setQrsList([]);
+          }
         }
       } catch (err) {
         console.error('Failed to load QR list for analytics:', err);
       }
     }
     loadList();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (!currentId) {

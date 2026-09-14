@@ -1,27 +1,29 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import LandingPage from './pages/LandingPage';
 import { api, authStorage } from './services/api';
 import { trackEvent } from './utils/analytics';
 import { applyPageSEO } from './utils/seo';
+import { lazyWithRetry } from './utils/lazyWithRetry';
 
-// Lazy-load sub-routes and modals to optimize initial mobile bundle size
-const DynamicQRPage = lazy(() => import('./pages/DynamicQRPage'));
-const StaticQRPage = lazy(() => import('./pages/StaticQRPage'));
-const DashboardPage = lazy(() => import('./pages/DashboardPage'));
-const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
-const BlogPage = lazy(() => import('./pages/BlogPage'));
-const ComparePage = lazy(() => import('./pages/ComparePage'));
-const UseCasePage = lazy(() => import('./pages/UseCasePage'));
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
-const TermsPage = lazy(() => import('./pages/TermsPage'));
-const CookiePolicyPage = lazy(() => import('./pages/CookiePolicyPage'));
-const CommunityPage = lazy(() => import('./pages/CommunityPage'));
-const AuthModal = lazy(() => import('./components/AuthModal'));
+// Lazy-load sub-routes and modals with auto-recovery on stale deployment chunk hashes
+const DynamicQRPage = lazyWithRetry(() => import('./pages/DynamicQRPage'));
+const StaticQRPage = lazyWithRetry(() => import('./pages/StaticQRPage'));
+const DashboardPage = lazyWithRetry(() => import('./pages/DashboardPage'));
+const AnalyticsPage = lazyWithRetry(() => import('./pages/AnalyticsPage'));
+const BlogPage = lazyWithRetry(() => import('./pages/BlogPage'));
+const ComparePage = lazyWithRetry(() => import('./pages/ComparePage'));
+const UseCasePage = lazyWithRetry(() => import('./pages/UseCasePage'));
+const AboutPage = lazyWithRetry(() => import('./pages/AboutPage'));
+const ContactPage = lazyWithRetry(() => import('./pages/ContactPage'));
+const PrivacyPage = lazyWithRetry(() => import('./pages/PrivacyPage'));
+const TermsPage = lazyWithRetry(() => import('./pages/TermsPage'));
+const CookiePolicyPage = lazyWithRetry(() => import('./pages/CookiePolicyPage'));
+const CommunityPage = lazyWithRetry(() => import('./pages/CommunityPage'));
+const AuthModal = lazyWithRetry(() => import('./components/AuthModal'));
 
 export default function App() {
   const useCaseRoutes = [
@@ -175,65 +177,67 @@ export default function App() {
         toggleTheme={toggleTheme}
       />
 
-      {/* Main View Router with Suspense for code splitting */}
+      {/* Main View Router with ErrorBoundary and Suspense for code splitting */}
       <main className="flex-1 z-10">
-        <Suspense fallback={
-          <div className="min-h-[50vh] flex items-center justify-center" aria-label="Loading page content">
-            <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
-          </div>
-        }>
-          {currentTab === 'home' && (
-            <LandingPage
-              onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
-              onNavigateToStatic={() => handleNavigate('static-qr')}
-              onNavigateToBlog={() => handleNavigate('blog')}
-              onNavigateToCompare={() => handleNavigate('compare')}
-              onNavigateToDashboard={() => handleNavigate('dashboard')}
-            />
-          )}
+        <ErrorBoundary>
+          <Suspense fallback={
+            <div className="min-h-[50vh] flex items-center justify-center" aria-label="Loading page content">
+              <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+            </div>
+          }>
+            {currentTab === 'home' && (
+              <LandingPage
+                onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+                onNavigateToStatic={() => handleNavigate('static-qr')}
+                onNavigateToBlog={() => handleNavigate('blog')}
+                onNavigateToCompare={() => handleNavigate('compare')}
+                onNavigateToDashboard={() => handleNavigate('dashboard')}
+              />
+            )}
 
-          {currentTab === 'dynamic-qr' && (
-            <DynamicQRPage
-              user={user}
-              initialQR={editingQRForStudio}
-              onOpenAuth={handleOpenAuth}
-              onNavigateToDashboard={() => handleNavigate('dashboard')}
-              onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
-              onBackToHome={() => handleNavigate('home')}
-            />
-          )}
+            {currentTab === 'dynamic-qr' && (
+              <DynamicQRPage
+                user={user}
+                initialQR={editingQRForStudio}
+                onOpenAuth={handleOpenAuth}
+                onNavigateToDashboard={() => handleNavigate('dashboard')}
+                onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
+                onBackToHome={() => handleNavigate('home')}
+              />
+            )}
 
-          {currentTab === 'static-qr' && (
-            <StaticQRPage
-              onBackToHome={() => handleNavigate('home')}
-              onNavigateToDynamic={() => {
-                setEditingQRForStudio(null);
-                handleNavigate('dynamic-qr');
-              }}
-            />
-          )}
+            {currentTab === 'static-qr' && (
+              <StaticQRPage
+                onBackToHome={() => handleNavigate('home')}
+                onNavigateToDynamic={() => {
+                  setEditingQRForStudio(null);
+                  handleNavigate('dynamic-qr');
+                }}
+              />
+            )}
 
-          {currentTab === 'dashboard' && (
-            <DashboardPage
-              user={user}
-              onNavigateToStudio={(qr) => {
-                setEditingQRForStudio(qr || null);
-                handleNavigate('dynamic-qr');
-              }}
-              onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
-              onOpenAuth={handleOpenAuth}
-              onBackToHome={() => handleNavigate('home')}
-            />
-          )}
+            {currentTab === 'dashboard' && (
+              <DashboardPage
+                user={user}
+                onNavigateToStudio={(qr) => {
+                  setEditingQRForStudio(qr || null);
+                  handleNavigate('dynamic-qr');
+                }}
+                onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
+                onOpenAuth={handleOpenAuth}
+                onBackToHome={() => handleNavigate('home')}
+              />
+            )}
 
-          {currentTab === 'analytics' && (
-            <AnalyticsPage
-              selectedQrId={selectedQrId}
-              onBack={() => handleNavigate('dashboard')}
-              onNavigateToStudio={() => handleNavigate('dynamic-qr')}
-              onBackToHome={() => handleNavigate('home')}
-            />
-          )}
+            {currentTab === 'analytics' && (
+              <AnalyticsPage
+                user={user}
+                selectedQrId={selectedQrId}
+                onBack={() => handleNavigate('dashboard')}
+                onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+                onBackToHome={() => handleNavigate('home')}
+              />
+            )}
 
           {currentTab === 'blog' && (
             <BlogPage
@@ -307,6 +311,7 @@ export default function App() {
             />
           )}
         </Suspense>
+        </ErrorBoundary>
       </main>
 
       {/* Global Footer */}
