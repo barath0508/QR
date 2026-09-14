@@ -161,3 +161,161 @@ INSERT INTO qr_codes (
     '{"fgColor": "#0F172A", "bgColor": "#FFFFFF", "dotStyle": "rounded", "eyeStyle": "rounded", "errorCorrection": "M"}'::jsonb
 ) ON CONFLICT (short_code) DO NOTHING;
 
+-- ==============================================================================
+-- 5. Community Discussions Forum Schema (Multi-user global discussions)
+-- ==============================================================================
+
+CREATE TABLE IF NOT EXISTS community_topics (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    category TEXT NOT NULL,
+    category_label TEXT NOT NULL,
+    author TEXT NOT NULL,
+    role TEXT DEFAULT 'Community Member',
+    content TEXT NOT NULL,
+    tags JSONB DEFAULT '[]'::jsonb,
+    upvotes INTEGER DEFAULT 0,
+    is_pinned BOOLEAN DEFAULT false,
+    created_at TIMESTAMPTZ DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS community_replies (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    topic_id UUID REFERENCES community_topics(id) ON DELETE CASCADE,
+    author TEXT NOT NULL,
+    role TEXT DEFAULT 'Community Member',
+    text TEXT NOT NULL,
+    upvotes INTEGER DEFAULT 0,
+    is_verified BOOLEAN DEFAULT false,
+    created_at TIMESTAMPTZ DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
+);
+
+-- Indexes for blazing fast community lookups
+CREATE INDEX IF NOT EXISTS idx_community_topics_category ON community_topics(category);
+CREATE INDEX IF NOT EXISTS idx_community_topics_created_at ON community_topics(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_community_replies_topic_id ON community_replies(topic_id);
+CREATE INDEX IF NOT EXISTS idx_community_replies_created_at ON community_replies(created_at ASC);
+
+-- Row Level Security (RLS) Configuration for Community
+ALTER TABLE community_topics ENABLE ROW LEVEL SECURITY;
+ALTER TABLE community_replies ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access to community discussions
+CREATE POLICY "Public can view community topics"
+ON community_topics FOR SELECT
+USING (true);
+
+-- Allow public write access to create new community discussions
+CREATE POLICY "Public can insert community topics"
+ON community_topics FOR INSERT
+WITH CHECK (true);
+
+-- Allow updating upvotes on community topics
+CREATE POLICY "Public can update community topics upvotes"
+ON community_topics FOR UPDATE
+USING (true)
+WITH CHECK (true);
+
+-- Allow public read access to replies
+CREATE POLICY "Public can view community replies"
+ON community_replies FOR SELECT
+USING (true);
+
+-- Allow public write access to add replies
+CREATE POLICY "Public can insert community replies"
+ON community_replies FOR INSERT
+WITH CHECK (true);
+
+-- Allow updating upvotes on replies
+CREATE POLICY "Public can update community replies upvotes"
+ON community_replies FOR UPDATE
+USING (true)
+WITH CHECK (true);
+
+-- Seed Initial High-Quality Discussions
+INSERT INTO community_topics (
+    id,
+    title,
+    category,
+    category_label,
+    author,
+    role,
+    content,
+    tags,
+    upvotes,
+    is_pinned
+) VALUES 
+(
+    'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+    'How to test your QR code before printing 10,000 flyers (The 10:1 distance rule)',
+    'print-design',
+    'Print & Design',
+    'Marcus Vance',
+    'Hospitality Director • Chicago',
+    'Before sending any design file to an offset or digital printer, always calculate the maximum viewing distance.\n\nThe golden formula is the 10:1 distance-to-size ratio:\n• A tabletop standee viewed from 12 inches away requires at least a 1.2-inch (30mm) QR code.\n• A wall poster scanned from 5 feet (60 inches) away requires a 6-inch (150mm) QR code.\n• A storefront window banner viewed from 15 feet away needs a 1.5-foot (450mm) QR code.\n\nAlso always export as lossless vector SVG from QRLoop rather than PNG. Raster images get blurry at large scale, whereas SVG curves remain infinitely sharp for laser cutters and high-DPI plates.',
+    '["printing", "svg", "dimensions", "menus"]'::jsonb,
+    54,
+    true
+),
+(
+    'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
+    'Why did my smartphone camera fail to scan white-on-yellow QR codes? (Contrast guidelines)',
+    'troubleshooting',
+    'Troubleshooting',
+    'Sarah Chen',
+    'Tech Lead • Omnichannel',
+    'A client asked us for a "pastel aesthetic" QR code with white dots on a pale lemon-yellow background. When printed, almost 70% of iOS and Android native camera apps could not lock focus or decode the matrix.\n\nHere is why:\nBarcode decoders rely on luminance contrast, not color contrast. Smartphone camera sensors first convert the image to grayscale before running edge detection. Light yellow and white have almost identical grayscale values.\n\nBest practice rule:\n1. Always maintain at least a 4:1 luminance ratio between foreground and background.\n2. Keep the finder eyes (the three corner squares) dark.\n3. If using light branding colors, put them on a dark charcoal or navy background instead.',
+    '["contrast", "camera-focus", "accessibility", "colors"]'::jsonb,
+    46,
+    false
+),
+(
+    'c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f',
+    'Sunrise 2027: How retail brands should prepare for 2D GS1 Digital Link barcodes',
+    'redirects',
+    'Redirects & Analytics',
+    'David K.',
+    'Packaging Systems Architect',
+    'The standard 1D linear UPC barcode is being phased out across global point-of-sale checkout registers by 2027 under GS1 "Sunrise 2027".\n\nBrands are transitioning to GS1 Digital Link 2D QR codes. A single QR code on a cereal box will both beep at the cash register and open allergen/promotional information when scanned by consumers.\n\nThe critical technical requirement is dynamic redirect routing: your packaging prints once and lasts for 2 years on retail shelves, while your marketing campaign landing pages change monthly.\n\nDynamic QR management platforms with persistent shortcodes like QRLoop ensure your packaging investments remain future-proof.',
+    '["gs1", "retail", "packaging", "standards"]'::jsonb,
+    38,
+    false
+)
+ON CONFLICT (id) DO NOTHING;
+
+-- Seed Initial Community Replies
+INSERT INTO community_replies (
+    topic_id,
+    author,
+    role,
+    text,
+    upvotes,
+    is_verified
+) VALUES 
+(
+    'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+    'Elena Rostova',
+    'Brand Designer',
+    'This is gold. We also recommend checking the quiet zone — at least 4 modules of blank background space around the perimeter. Many designers wrap tight borders around the QR and it fails on older phone cameras.',
+    18,
+    false
+),
+(
+    'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+    'Liam O''Connor',
+    'Operations Lead',
+    'Can confirm! We printed 2,500 event flyers using QRLoop vector SVG and every single scan connected flawlessly under outdoor venue lighting.',
+    12,
+    false
+),
+(
+    'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
+    'Devon Miller',
+    'UI Designer',
+    'Great explanation. The grayscale conversion tip is something even seasoned graphic artists overlook. QRLoop color picker default dark navy (#0F172A) has saved us many times.',
+    15,
+    false
+);
+
+

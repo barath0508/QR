@@ -124,4 +124,37 @@ export const api = {
   getStatus: async () => {
     return request('/status');
   },
+
+  // Community Discussions Forum (Supabase Cloud / SQLite)
+  getCommunityTopics: async () => {
+    return request('/community/topics');
+  },
+
+  createCommunityTopic: async (topicData) => {
+    return request('/community/topics', {
+      method: 'POST',
+      body: JSON.stringify(topicData),
+    });
+  },
+
+  addCommunityReply: async (topicId, replyData) => {
+    return request(`/community/topics/${topicId}/replies`, {
+      method: 'POST',
+      body: JSON.stringify(replyData),
+    });
+  },
+
+  upvoteCommunityTopic: async (topicId, delta = 1) => {
+    return request(`/community/topics/${topicId}/upvote`, {
+      method: 'POST',
+      body: JSON.stringify({ delta }),
+    });
+  },
+
+  upvoteCommunityReply: async (replyId, delta = 1) => {
+    return request(`/community/replies/${replyId}/upvote`, {
+      method: 'POST',
+      body: JSON.stringify({ delta }),
+    });
+  },
 };

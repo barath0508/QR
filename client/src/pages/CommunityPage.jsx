@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import Breadcrumb from '../components/Breadcrumb';
 import AdBanner from '../components/AdBanner';
+import { api } from '../services/api';
 
 const DEFAULT_TOPICS = [
   {
@@ -248,6 +249,8 @@ export default function CommunityPage({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isNewTopicModalOpen, setIsNewTopicModalOpen] = useState(false);
+  const [isLiveConnected, setIsLiveConnected] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // New topic form state
   const [newTitle, setNewTitle] = useState('');
@@ -264,7 +267,30 @@ export default function CommunityPage({
   const [replyRole, setReplyRole] = useState('');
   const [replySuccess, setReplySuccess] = useState(false);
 
-  // Persist topics
+  // Fetch live global discussions from Supabase / Backend on mount
+  useEffect(() => {
+    let isMounted = true;
+    const loadCommunityDiscussions = async () => {
+      try {
+        setIsSyncing(true);
+        const res = await api.getCommunityTopics();
+        if (isMounted && res && Array.isArray(res.topics) && res.topics.length > 0) {
+          // Merge server topics with any local discussions
+          setTopics(res.topics);
+          setIsLiveConnected(true);
+        }
+      } catch (err) {
+        console.warn('ℹ️ Running in cached community mode:', err.message);
+      } finally {
+        if (isMounted) setIsSyncing(false);
+      }
+    };
+
+    loadCommunityDiscussions();
+    return () => { isMounted = false; };
+  }, []);
+
+  // Persist topics to local cache
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -273,7 +299,7 @@ export default function CommunityPage({
     }
   }, [topics]);
 
-  // Persist votes
+  // Persist votes to local cache
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -285,16 +311,24 @@ export default function CommunityPage({
   const activeTopic = topics.find(t => t.id === selectedTopicId);
 
   const handleUpvoteTopic = (topicId) => {
-    if (votedTopicIds.includes(topicId)) {
+    const isVoted = votedTopicIds.includes(topicId);
+    const delta = isVoted ? -1 : 1;
+
+    if (isVoted) {
       setVotedTopicIds(prev => prev.filter(id => id !== topicId));
       setTopics(prev => prev.map(t => t.id === topicId ? { ...t, upvotes: Math.max(0, (t.upvotes || 0) - 1) } : t));
     } else {
       setVotedTopicIds(prev => [...prev, topicId]);
       setTopics(prev => prev.map(t => t.id === topicId ? { ...t, upvotes: (t.upvotes || 0) + 1 } : t));
     }
+
+    // Background sync upvote to backend database
+    api.upvoteCommunityTopic(topicId, delta).catch(err => {
+      console.warn('Topic upvote sync notice:', err.message);
+    });
   };
 
-  const handleCreateTopic = (e) => {
+  const handleCreateTopic = async (e) => {
     e.preventDefault();
     setFormError('');
 
@@ -312,8 +346,9 @@ export default function CommunityPage({
     const now = new Date();
     const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
+    const tempId = `topic-${Date.now()}`;
     const newTopicObj = {
-      id: `topic-${Date.now()}`,
+      id: tempId,
       title: newTitle.trim(),
       category: newCategory,
       categoryLabel: categoryObj.label,
@@ -327,28 +362,60 @@ export default function CommunityPage({
       replies: []
     };
 
+    // Optimistic UI update
     setTopics(prev => [newTopicObj, ...prev]);
-    setVotedTopicIds(prev => [...prev, newTopicObj.id]);
-    setSelectedTopicId(newTopicObj.id);
+    setVotedTopicIds(prev => [...prev, tempId]);
+    setSelectedTopicId(tempId);
     setIsNewTopicModalOpen(false);
 
     // Reset fields
+    const titleVal = newTitle.trim();
+    const categoryVal = newCategory;
+    const categoryLabelVal = categoryObj.label;
+    const authorVal = newAuthor.trim();
+    const roleVal = newRole.trim() || 'Community Creator';
+    const contentVal = newContent.trim();
+    const tagsVal = newTopicObj.tags;
+
     setNewTitle('');
     setNewAuthor('');
     setNewRole('');
     setNewContent('');
     setNewTags('');
+
+    // Global Cloud sync
+    try {
+      const res = await api.createCommunityTopic({
+        title: titleVal,
+        category: categoryVal,
+        categoryLabel: categoryLabelVal,
+        author: authorVal,
+        role: roleVal,
+        content: contentVal,
+        tags: tagsVal
+      });
+
+      if (res && res.topic) {
+        setTopics(prev => prev.map(t => t.id === tempId ? { ...res.topic, upvotes: 1 } : t));
+        setSelectedTopicId(res.topic.id);
+        setVotedTopicIds(prev => prev.map(id => id === tempId ? res.topic.id : id));
+        setIsLiveConnected(true);
+      }
+    } catch (err) {
+      console.warn('Backend topic creation synced to local session:', err.message);
+    }
   };
 
-  const handlePostReply = (e) => {
+  const handlePostReply = async (e) => {
     e.preventDefault();
     if (!replyText.trim() || !replyAuthor.trim()) return;
 
     const now = new Date();
     const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
+    const tempId = `reply-${Date.now()}`;
     const newReply = {
-      id: `reply-${Date.now()}`,
+      id: tempId,
       author: replyAuthor.trim(),
       role: replyRole.trim() || 'Community Member',
       date: formattedDate,
@@ -356,8 +423,14 @@ export default function CommunityPage({
       upvotes: 1
     };
 
+    const targetTopicId = selectedTopicId;
+    const replyTextVal = replyText.trim();
+    const replyAuthorVal = replyAuthor.trim();
+    const replyRoleVal = replyRole.trim() || 'Community Member';
+
+    // Optimistic local state update
     setTopics(prev => prev.map(t => {
-      if (t.id === selectedTopicId) {
+      if (t.id === targetTopicId) {
         return {
           ...t,
           replies: [...(t.replies || []), newReply]
@@ -371,6 +444,30 @@ export default function CommunityPage({
     setReplyRole('');
     setReplySuccess(true);
     setTimeout(() => setReplySuccess(false), 3000);
+
+    // Global Cloud sync
+    try {
+      const res = await api.addCommunityReply(targetTopicId, {
+        author: replyAuthorVal,
+        role: replyRoleVal,
+        text: replyTextVal
+      });
+
+      if (res && res.reply) {
+        setTopics(prev => prev.map(t => {
+          if (t.id === targetTopicId) {
+            return {
+              ...t,
+              replies: (t.replies || []).map(r => r.id === tempId ? res.reply : r)
+            };
+          }
+          return t;
+        }));
+        setIsLiveConnected(true);
+      }
+    } catch (err) {
+      console.warn('Backend reply creation synced to local session:', err.message);
+    }
   };
 
   const filteredTopics = topics.filter(t => {
@@ -593,9 +690,15 @@ export default function CommunityPage({
           
           {/* Hero Banner */}
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-              <span>QRLoop Open Creator & Developer Community</span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                <span>QRLoop Open Creator & Developer Community</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 text-[11px] font-medium">
+                <span className={`w-2 h-2 rounded-full ${isLiveConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-400'}`} />
+                <span>{isLiveConnected ? 'Live Cloud Sync' : (isSyncing ? 'Connecting...' : 'Active Discussions')} ({topics.length} Threads)</span>
+              </div>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
               Community Discussions & Knowledge Sharing

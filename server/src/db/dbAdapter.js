@@ -388,7 +388,321 @@ const dbAdapter = {
         totalUsers: users,
       };
     }
+  },
+
+  // ==============================================================================
+  // Community Discussions Forum Methods (Supabase Cloud + SQLite Fallback)
+  // ==============================================================================
+
+  async getCommunityTopics() {
+    // 1. Try Supabase Cloud if configured
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseClient();
+        const { data: topics, error: topicsErr } = await supabase
+          .from('community_topics')
+          .select('*')
+          .order('is_pinned', { ascending: false })
+          .order('created_at', { ascending: false });
+
+        if (topicsErr) throw topicsErr;
+
+        if (topics && topics.length > 0) {
+          const topicIds = topics.map(t => t.id);
+          const { data: replies } = await supabase
+            .from('community_replies')
+            .select('*')
+            .in('topic_id', topicIds)
+            .order('created_at', { ascending: true });
+
+          const repliesByTopic = {};
+          (replies || []).forEach(r => {
+            if (!repliesByTopic[r.topic_id]) repliesByTopic[r.topic_id] = [];
+            repliesByTopic[r.topic_id].push({
+              id: r.id,
+              author: r.author,
+              role: r.role || 'Community Member',
+              text: r.text,
+              upvotes: r.upvotes || 0,
+              isVerified: Boolean(r.is_verified),
+              date: r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently',
+              isoDate: r.created_at
+            });
+          });
+
+          return topics.map(t => ({
+            id: t.id,
+            title: t.title,
+            category: t.category,
+            categoryLabel: t.category_label,
+            author: t.author,
+            role: t.role || 'Community Member',
+            date: t.created_at ? new Date(t.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently',
+            isoDate: t.created_at,
+            content: t.content,
+            tags: Array.isArray(t.tags) ? t.tags : (typeof t.tags === 'string' ? JSON.parse(t.tags || '[]') : []),
+            upvotes: t.upvotes || 0,
+            isPinned: Boolean(t.is_pinned),
+            replies: repliesByTopic[t.id] || []
+          }));
+        }
+      } catch (err) {
+        console.warn('ℹ️ Supabase community_topics query failed or table not yet created. Falling back to local SQLite:', err.message);
+      }
+    }
+
+    // 2. SQLite local fallback
+    if (sqliteDb.isAvailable && sqliteDb.isAvailable()) {
+      try {
+        const topics = sqliteDb.prepare('SELECT * FROM community_topics ORDER BY is_pinned DESC, created_at DESC').all();
+        const replies = sqliteDb.prepare('SELECT * FROM community_replies ORDER BY created_at ASC').all();
+
+        const repliesByTopic = {};
+        (replies || []).forEach(r => {
+          if (!repliesByTopic[r.topic_id]) repliesByTopic[r.topic_id] = [];
+          repliesByTopic[r.topic_id].push({
+            id: r.id,
+            author: r.author,
+            role: r.role || 'Community Member',
+            text: r.text,
+            upvotes: r.upvotes || 0,
+            isVerified: Boolean(r.is_verified),
+            date: r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently',
+            isoDate: r.created_at
+          });
+        });
+
+        return topics.map(t => {
+          let tags = [];
+          try {
+            tags = typeof t.tags === 'string' ? JSON.parse(t.tags) : (Array.isArray(t.tags) ? t.tags : []);
+          } catch (e) {}
+
+          return {
+            id: t.id,
+            title: t.title,
+            category: t.category,
+            categoryLabel: t.category_label,
+            author: t.author,
+            role: t.role || 'Community Member',
+            date: t.created_at ? new Date(t.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently',
+            isoDate: t.created_at,
+            content: t.content,
+            tags,
+            upvotes: t.upvotes || 0,
+            isPinned: Boolean(t.is_pinned),
+            replies: repliesByTopic[t.id] || []
+          };
+        });
+      } catch (err) {
+        console.warn('⚠️ SQLite community topics query error:', err.message);
+      }
+    }
+
+    return [];
+  },
+
+  async createCommunityTopic({ title, category, categoryLabel, author, role, content, tags }) {
+    const id = uuidv4();
+    const cleanTags = Array.isArray(tags) ? tags : [];
+
+    // Try Supabase first
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseClient();
+        const { data, error } = await supabase
+          .from('community_topics')
+          .insert([{
+            id,
+            title: title.trim(),
+            category: category.trim(),
+            category_label: categoryLabel || category,
+            author: author.trim(),
+            role: role?.trim() || 'Community Member',
+            content: content.trim(),
+            tags: cleanTags,
+            upvotes: 0,
+            is_pinned: false
+          }])
+          .select()
+          .single();
+
+        if (error) throw error;
+        return {
+          id: data.id,
+          title: data.title,
+          category: data.category,
+          categoryLabel: data.category_label,
+          author: data.author,
+          role: data.role,
+          date: 'Just now',
+          isoDate: data.created_at,
+          content: data.content,
+          tags: Array.isArray(data.tags) ? data.tags : cleanTags,
+          upvotes: data.upvotes || 0,
+          isPinned: Boolean(data.is_pinned),
+          replies: []
+        };
+      } catch (err) {
+        console.warn('ℹ️ Supabase topic insert error. Falling back to SQLite:', err.message);
+      }
+    }
+
+    // SQLite fallback
+    if (sqliteDb.isAvailable && sqliteDb.isAvailable()) {
+      sqliteDb.prepare(`
+        INSERT INTO community_topics (id, title, category, category_label, author, role, content, tags, upvotes, is_pinned)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0)
+      `).run(
+        id,
+        title.trim(),
+        category.trim(),
+        categoryLabel || category,
+        author.trim(),
+        role?.trim() || 'Community Member',
+        content.trim(),
+        JSON.stringify(cleanTags)
+      );
+
+      return {
+        id,
+        title: title.trim(),
+        category: category.trim(),
+        categoryLabel: categoryLabel || category,
+        author: author.trim(),
+        role: role?.trim() || 'Community Member',
+        date: 'Just now',
+        isoDate: new Date().toISOString(),
+        content: content.trim(),
+        tags: cleanTags,
+        upvotes: 0,
+        isPinned: false,
+        replies: []
+      };
+    }
+
+    throw new Error('No database available to save community topic');
+  },
+
+  async addCommunityReply({ topicId, author, role, text }) {
+    const id = uuidv4();
+
+    // Try Supabase first
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseClient();
+        const { data, error } = await supabase
+          .from('community_replies')
+          .insert([{
+            id,
+            topic_id: topicId,
+            author: author.trim(),
+            role: role?.trim() || 'Community Member',
+            text: text.trim(),
+            upvotes: 0,
+            is_verified: false
+          }])
+          .select()
+          .single();
+
+        if (error) throw error;
+        return {
+          id: data.id,
+          topicId: data.topic_id,
+          author: data.author,
+          role: data.role,
+          text: data.text,
+          upvotes: data.upvotes || 0,
+          isVerified: Boolean(data.is_verified),
+          date: 'Just now',
+          isoDate: data.created_at
+        };
+      } catch (err) {
+        console.warn('ℹ️ Supabase reply insert error. Falling back to SQLite:', err.message);
+      }
+    }
+
+    // SQLite fallback
+    if (sqliteDb.isAvailable && sqliteDb.isAvailable()) {
+      sqliteDb.prepare(`
+        INSERT INTO community_replies (id, topic_id, author, role, text, upvotes, is_verified)
+        VALUES (?, ?, ?, ?, ?, 0, 0)
+      `).run(
+        id,
+        topicId,
+        author.trim(),
+        role?.trim() || 'Community Member',
+        text.trim()
+      );
+
+      return {
+        id,
+        topicId,
+        author: author.trim(),
+        role: role?.trim() || 'Community Member',
+        text: text.trim(),
+        upvotes: 0,
+        isVerified: false,
+        date: 'Just now',
+        isoDate: new Date().toISOString()
+      };
+    }
+
+    throw new Error('No database available to save reply');
+  },
+
+  async upvoteCommunityTopic(topicId, delta = 1) {
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseClient();
+        const { data: current } = await supabase.from('community_topics').select('upvotes').eq('id', topicId).single();
+        if (current) {
+          const newUpvotes = Math.max(0, (current.upvotes || 0) + delta);
+          await supabase.from('community_topics').update({ upvotes: newUpvotes }).eq('id', topicId);
+          return newUpvotes;
+        }
+      } catch (err) {
+        console.warn('ℹ️ Supabase topic upvote fallback to SQLite:', err.message);
+      }
+    }
+
+    if (sqliteDb.isAvailable && sqliteDb.isAvailable()) {
+      sqliteDb.prepare(`
+        UPDATE community_topics SET upvotes = MAX(0, upvotes + ?) WHERE id = ?
+      `).run(delta, topicId);
+      const row = sqliteDb.prepare('SELECT upvotes FROM community_topics WHERE id = ?').get(topicId);
+      return row ? row.upvotes : 0;
+    }
+
+    return 0;
+  },
+
+  async upvoteCommunityReply(replyId, delta = 1) {
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseClient();
+        const { data: current } = await supabase.from('community_replies').select('upvotes').eq('id', replyId).single();
+        if (current) {
+          const newUpvotes = Math.max(0, (current.upvotes || 0) + delta);
+          await supabase.from('community_replies').update({ upvotes: newUpvotes }).eq('id', replyId);
+          return newUpvotes;
+        }
+      } catch (err) {
+        console.warn('ℹ️ Supabase reply upvote fallback to SQLite:', err.message);
+      }
+    }
+
+    if (sqliteDb.isAvailable && sqliteDb.isAvailable()) {
+      sqliteDb.prepare(`
+        UPDATE community_replies SET upvotes = MAX(0, upvotes + ?) WHERE id = ?
+      `).run(delta, replyId);
+      const row = sqliteDb.prepare('SELECT upvotes FROM community_replies WHERE id = ?').get(replyId);
+      return row ? row.upvotes : 0;
+    }
+
+    return 0;
   }
 };
 
 module.exports = dbAdapter;
+

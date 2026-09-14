@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const qrRoutes = require('./routes/qrRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const redirectRoutes = require('./routes/redirectRoutes');
+const communityRoutes = require('./routes/communityRoutes');
 const { generalLimiter } = require('./middleware/rateLimiter');
 const dbAdapter = require('./db/dbAdapter');
 
@@ -38,6 +39,9 @@ app.use('/qr', qrRoutes);
 
 app.use('/api/analytics', analyticsRoutes);
 app.use('/analytics', analyticsRoutes);
+
+app.use('/api/community', communityRoutes);
+app.use('/community', communityRoutes);
 
 // 3. Health & Status
 const handleStatus = (req, res) => {

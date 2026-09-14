@@ -78,6 +78,36 @@ if (Database) {
       CREATE INDEX IF NOT EXISTS idx_scan_logs_qr_id ON scan_logs(qr_id);
       CREATE INDEX IF NOT EXISTS idx_scan_logs_short_code ON scan_logs(short_code);
       CREATE INDEX IF NOT EXISTS idx_scan_logs_scanned_at ON scan_logs(scanned_at DESC);
+
+      CREATE TABLE IF NOT EXISTS community_topics (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        category TEXT NOT NULL,
+        category_label TEXT NOT NULL,
+        author TEXT NOT NULL,
+        role TEXT DEFAULT 'Community Member',
+        content TEXT NOT NULL,
+        tags TEXT DEFAULT '[]',
+        upvotes INTEGER DEFAULT 0,
+        is_pinned INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now')),
+        updated_at TEXT DEFAULT (datetime('now'))
+      );
+
+      CREATE TABLE IF NOT EXISTS community_replies (
+        id TEXT PRIMARY KEY,
+        topic_id TEXT REFERENCES community_topics(id) ON DELETE CASCADE,
+        author TEXT NOT NULL,
+        role TEXT DEFAULT 'Community Member',
+        text TEXT NOT NULL,
+        upvotes INTEGER DEFAULT 0,
+        is_verified INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now'))
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_community_topics_category ON community_topics(category);
+      CREATE INDEX IF NOT EXISTS idx_community_topics_created_at ON community_topics(created_at DESC);
+      CREATE INDEX IF NOT EXISTS idx_community_replies_topic_id ON community_replies(topic_id);
     `);
 
     // Seed default demo dynamic QR if not exists
@@ -104,6 +134,81 @@ if (Database) {
           logoSize: 20
         })
       );
+    }
+
+    // Seed initial community discussions if empty
+    const topicCount = db.prepare('SELECT COUNT(*) as count FROM community_topics').get();
+    if (topicCount && topicCount.count === 0) {
+      const seedTopics = [
+        {
+          id: 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+          title: 'How to test your QR code before printing 10,000 flyers (The 10:1 distance rule)',
+          category: 'print-design',
+          category_label: 'Print & Design',
+          author: 'Marcus Vance',
+          role: 'Hospitality Director • Chicago',
+          content: 'Before sending any design file to an offset or digital printer, always calculate the maximum viewing distance.\n\nThe golden formula is the 10:1 distance-to-size ratio:\n• A tabletop standee viewed from 12 inches away requires at least a 1.2-inch (30mm) QR code.\n• A wall poster scanned from 5 feet (60 inches) away requires a 6-inch (150mm) QR code.\n• A storefront window banner viewed from 15 feet away needs a 1.5-foot (450mm) QR code.\n\nAlso always export as lossless vector SVG from QRLoop rather than PNG. Raster images get blurry at large scale, whereas SVG curves remain infinitely sharp for laser cutters and high-DPI plates.',
+          tags: JSON.stringify(['printing', 'svg', 'dimensions', 'menus']),
+          upvotes: 54,
+          is_pinned: 1,
+          replies: [
+            {
+              id: 'rep-1',
+              author: 'Elena Rostova',
+              role: 'Brand Designer',
+              text: 'This is gold. We also recommend checking the quiet zone — at least 4 modules of blank background space around the perimeter. Many designers wrap tight borders around the QR and it fails on older phone cameras.',
+              upvotes: 18,
+              is_verified: 0
+            },
+            {
+              id: 'rep-2',
+              author: 'Liam O\'Connor',
+              role: 'Operations Lead',
+              text: 'Can confirm! We printed 2,500 event flyers using QRLoop vector SVG and every single scan connected flawlessly under outdoor venue lighting.',
+              upvotes: 12,
+              is_verified: 0
+            }
+          ]
+        },
+        {
+          id: 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
+          title: 'Why did my smartphone camera fail to scan white-on-yellow QR codes? (Contrast guidelines)',
+          category: 'troubleshooting',
+          category_label: 'Troubleshooting',
+          author: 'Sarah Chen',
+          role: 'Tech Lead • Omnichannel',
+          content: 'A client asked us for a "pastel aesthetic" QR code with white dots on a pale lemon-yellow background. When printed, almost 70% of iOS and Android native camera apps could not lock focus or decode the matrix.\n\nHere is why:\nBarcode decoders rely on luminance contrast, not color contrast. Smartphone camera sensors first convert the image to grayscale before running edge detection. Light yellow and white have almost identical grayscale values.\n\nBest practice rule:\n1. Always maintain at least a 4:1 luminance ratio between foreground and background.\n2. Keep the finder eyes (the three corner squares) dark.\n3. If using light branding colors, put them on a dark charcoal or navy background instead.',
+          tags: JSON.stringify(['contrast', 'camera-focus', 'accessibility', 'colors']),
+          upvotes: 46,
+          is_pinned: 0,
+          replies: [
+            {
+              id: 'rep-3',
+              author: 'Devon Miller',
+              role: 'UI Designer',
+              text: 'Great explanation. The grayscale conversion tip is something even seasoned graphic artists overlook. QRLoop color picker default dark navy (#0F172A) has saved us many times.',
+              upvotes: 15,
+              is_verified: 0
+            }
+          ]
+        }
+      ];
+
+      const insertTopic = db.prepare(`
+        INSERT INTO community_topics (id, title, category, category_label, author, role, content, tags, upvotes, is_pinned)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+      const insertReply = db.prepare(`
+        INSERT INTO community_replies (id, topic_id, author, role, text, upvotes, is_verified)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      for (const t of seedTopics) {
+        insertTopic.run(t.id, t.title, t.category, t.category_label, t.author, t.role, t.content, t.tags, t.upvotes, t.is_pinned);
+        for (const r of t.replies) {
+          insertReply.run(r.id, t.id, r.author, r.role, r.text, r.upvotes, r.is_verified);
+        }
+      }
     }
   } catch (err) {
     console.error('⚠️ Failed to initialize SQLite database:', err.message);
