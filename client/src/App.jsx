@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import AuthModal from './components/AuthModal';
 import CookieConsent from './components/CookieConsent';
 import LandingPage from './pages/LandingPage';
-import DynamicQRPage from './pages/DynamicQRPage';
-import StaticQRPage from './pages/StaticQRPage';
-import DashboardPage from './pages/DashboardPage';
-import AnalyticsPage from './pages/AnalyticsPage';
-import BlogPage from './pages/BlogPage';
-import ComparePage from './pages/ComparePage';
-import UseCasePage from './pages/UseCasePage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import PrivacyPage from './pages/PrivacyPage';
-import TermsPage from './pages/TermsPage';
-import CookiePolicyPage from './pages/CookiePolicyPage';
 import { api, authStorage } from './services/api';
 import { trackEvent } from './utils/analytics';
 import { applyPageSEO } from './utils/seo';
+
+// Lazy-load sub-routes and modals to optimize initial mobile bundle size
+const DynamicQRPage = lazy(() => import('./pages/DynamicQRPage'));
+const StaticQRPage = lazy(() => import('./pages/StaticQRPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const ComparePage = lazy(() => import('./pages/ComparePage'));
+const UseCasePage = lazy(() => import('./pages/UseCasePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const CookiePolicyPage = lazy(() => import('./pages/CookiePolicyPage'));
+const AuthModal = lazy(() => import('./components/AuthModal'));
 
 export default function App() {
   const useCaseRoutes = [
@@ -171,136 +173,144 @@ export default function App() {
         toggleTheme={toggleTheme}
       />
 
-      {/* Main View Router */}
+      {/* Main View Router with Suspense for code splitting */}
       <main className="flex-1 z-10">
-        {currentTab === 'home' && (
-          <LandingPage
-            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
-            onNavigateToStatic={() => handleNavigate('static-qr')}
-            onNavigateToBlog={() => handleNavigate('blog')}
-            onNavigateToCompare={() => handleNavigate('compare')}
-            onNavigateToDashboard={() => handleNavigate('dashboard')}
-          />
-        )}
+        <Suspense fallback={
+          <div className="min-h-[50vh] flex items-center justify-center" aria-label="Loading page content">
+            <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+          </div>
+        }>
+          {currentTab === 'home' && (
+            <LandingPage
+              onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+              onNavigateToStatic={() => handleNavigate('static-qr')}
+              onNavigateToBlog={() => handleNavigate('blog')}
+              onNavigateToCompare={() => handleNavigate('compare')}
+              onNavigateToDashboard={() => handleNavigate('dashboard')}
+            />
+          )}
 
-        {currentTab === 'dynamic-qr' && (
-          <DynamicQRPage
-            user={user}
-            initialQR={editingQRForStudio}
-            onOpenAuth={handleOpenAuth}
-            onNavigateToDashboard={() => handleNavigate('dashboard')}
-            onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
-            onBackToHome={() => handleNavigate('home')}
-          />
-        )}
+          {currentTab === 'dynamic-qr' && (
+            <DynamicQRPage
+              user={user}
+              initialQR={editingQRForStudio}
+              onOpenAuth={handleOpenAuth}
+              onNavigateToDashboard={() => handleNavigate('dashboard')}
+              onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
+              onBackToHome={() => handleNavigate('home')}
+            />
+          )}
 
-        {currentTab === 'static-qr' && (
-          <StaticQRPage
-            onBackToHome={() => handleNavigate('home')}
-            onNavigateToDynamic={() => {
-              setEditingQRForStudio(null);
-              handleNavigate('dynamic-qr');
-            }}
-          />
-        )}
+          {currentTab === 'static-qr' && (
+            <StaticQRPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToDynamic={() => {
+                setEditingQRForStudio(null);
+                handleNavigate('dynamic-qr');
+              }}
+            />
+          )}
 
-        {currentTab === 'dashboard' && (
-          <DashboardPage
-            user={user}
-            onNavigateToStudio={(qr) => {
-              setEditingQRForStudio(qr || null);
-              handleNavigate('dynamic-qr');
-            }}
-            onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
-            onOpenAuth={handleOpenAuth}
-          />
-        )}
+          {currentTab === 'dashboard' && (
+            <DashboardPage
+              user={user}
+              onNavigateToStudio={(qr) => {
+                setEditingQRForStudio(qr || null);
+                handleNavigate('dynamic-qr');
+              }}
+              onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
+              onOpenAuth={handleOpenAuth}
+            />
+          )}
 
-        {currentTab === 'analytics' && (
-          <AnalyticsPage
-            selectedQrId={selectedQrId}
-            onBack={() => handleNavigate('dashboard')}
-            onNavigateToStudio={() => handleNavigate('dynamic-qr')}
-          />
-        )}
+          {currentTab === 'analytics' && (
+            <AnalyticsPage
+              selectedQrId={selectedQrId}
+              onBack={() => handleNavigate('dashboard')}
+              onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+            />
+          )}
 
-        {currentTab === 'blog' && (
-          <BlogPage
-            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
-            onNavigateToStatic={() => handleNavigate('static-qr')}
-          />
-        )}
+          {currentTab === 'blog' && (
+            <BlogPage
+              onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+              onNavigateToStatic={() => handleNavigate('static-qr')}
+            />
+          )}
 
-        {currentTab === 'compare' && (
-          <ComparePage
-            onNavigateToStudio={() => handleNavigate('dynamic-qr')}
-          />
-        )}
+          {currentTab === 'compare' && (
+            <ComparePage
+              onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+            />
+          )}
 
-        {currentTab === 'about' && (
-          <AboutPage
-            onBackToHome={() => handleNavigate('home')}
-            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
-            onNavigateToContact={() => handleNavigate('contact')}
-            onNavigateToBlog={() => handleNavigate('blog')}
-          />
-        )}
+          {currentTab === 'about' && (
+            <AboutPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+              onNavigateToContact={() => handleNavigate('contact')}
+              onNavigateToBlog={() => handleNavigate('blog')}
+            />
+          )}
 
-        {currentTab === 'contact' && (
-          <ContactPage
-            onBackToHome={() => handleNavigate('home')}
-            onNavigateToBlog={() => handleNavigate('blog')}
-          />
-        )}
+          {currentTab === 'contact' && (
+            <ContactPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToBlog={() => handleNavigate('blog')}
+            />
+          )}
 
-        {currentTab === 'privacy' && (
-          <PrivacyPage
-            onBackToHome={() => handleNavigate('home')}
-            onNavigateToCookies={() => handleNavigate('cookies')}
-            onNavigateToContact={() => handleNavigate('contact')}
-          />
-        )}
+          {currentTab === 'privacy' && (
+            <PrivacyPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToCookies={() => handleNavigate('cookies')}
+              onNavigateToContact={() => handleNavigate('contact')}
+            />
+          )}
 
-        {currentTab === 'terms' && (
-          <TermsPage
-            onBackToHome={() => handleNavigate('home')}
-            onNavigateToPrivacy={() => handleNavigate('privacy')}
-            onNavigateToContact={() => handleNavigate('contact')}
-          />
-        )}
+          {currentTab === 'terms' && (
+            <TermsPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToPrivacy={() => handleNavigate('privacy')}
+              onNavigateToContact={() => handleNavigate('contact')}
+            />
+          )}
 
-        {currentTab === 'cookies' && (
-          <CookiePolicyPage
-            onBackToHome={() => handleNavigate('home')}
-            onNavigateToPrivacy={() => handleNavigate('privacy')}
-            onNavigateToContact={() => handleNavigate('contact')}
-          />
-        )}
+          {currentTab === 'cookies' && (
+            <CookiePolicyPage
+              onBackToHome={() => handleNavigate('home')}
+              onNavigateToPrivacy={() => handleNavigate('privacy')}
+              onNavigateToContact={() => handleNavigate('contact')}
+            />
+          )}
 
-        {useCaseRoutes.includes(currentTab) && (
-          <UseCasePage
-            slug={currentTab}
-            onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
-            onNavigateToStatic={() => handleNavigate('static-qr')}
-            onBackToHome={() => handleNavigate('home')}
-          />
-        )}
+          {useCaseRoutes.includes(currentTab) && (
+            <UseCasePage
+              slug={currentTab}
+              onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
+              onNavigateToStatic={() => handleNavigate('static-qr')}
+              onBackToHome={() => handleNavigate('home')}
+            />
+          )}
+        </Suspense>
       </main>
 
       {/* Global Footer */}
       <Footer onNavigate={(tab) => handleNavigate(tab)} />
 
-      {/* Cookie Consent Banner (EU User Consent Policy Compliance) */}
+      {/* Cookie Consent Banner */}
       <CookieConsent onNavigate={(tab) => handleNavigate(tab)} />
 
-      {/* Auth Modal with contextual prompt support */}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authModalMode}
-        customPrompt={authCustomPrompt}
-        onAuthSuccess={handleAuthSuccess}
-      />
+      {/* Auth Modal with Suspense */}
+      <Suspense fallback={null}>
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+          initialMode={authModalMode}
+          customPrompt={authCustomPrompt}
+          onAuthSuccess={handleAuthSuccess}
+        />
+      </Suspense>
     </div>
   );
 }

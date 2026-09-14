@@ -59,8 +59,8 @@ export default function LandingPage({
       {/* 1. Hero Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-semibold shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-bold shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
           <span>The Open Dynamic QR Platform • 100% Free Forever</span>
         </div>
 
@@ -73,7 +73,7 @@ export default function LandingPage({
         </h1>
 
         {/* Subtitle */}
-        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
+        <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
           Create custom QR codes for websites, menus, flyers, packaging, events and marketing campaigns. Edit destination URLs after printing, measure QR scans, and download print-ready PNG, SVG or PDF files.
         </p>
 
@@ -92,25 +92,25 @@ export default function LandingPage({
           <a
             href="/static-qr"
             onClick={handleLinkClick(onNavigateToStatic)}
-            className="w-full sm:w-auto h-12 px-6 rounded-xl bg-white dark:bg-dark-900 hover:bg-slate-50 dark:hover:bg-dark-850 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all"
+            className="w-full sm:w-auto h-12 px-6 rounded-xl bg-white dark:bg-dark-900 hover:bg-slate-50 dark:hover:bg-dark-850 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all"
           >
-            <QrCode className="w-4 h-4 text-cyan-500" />
+            <QrCode className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             <span>Quick Static Generator</span>
           </a>
         </div>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-y-2.5 gap-x-8 pt-4 text-xs font-medium text-slate-500 dark:text-slate-400">
+        <div className="flex flex-wrap items-center justify-center gap-y-2.5 gap-x-8 pt-4 text-xs font-semibold text-slate-700 dark:text-slate-300">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Sub-50ms Fast 302 Redirects</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Vector SVG & Print-Ready PDF</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>No 14-Day Expiration Trap</span>
           </div>
         </div>
@@ -265,14 +265,14 @@ export default function LandingPage({
           <div className="absolute -right-16 -top-20 h-48 w-48 rounded-full bg-emerald-400/15 blur-3xl" />
           <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="max-w-2xl space-y-2">
-              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300">
                 <Share2 className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-wider font-mono">Help a creator</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
                 Know someone who needs a QR code?
               </h2>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                 Share a free, no-expiration QR generator with a business owner, designer, restaurant, or event organizer. One click copies a trackable referral link.
               </p>
             </div>
@@ -292,8 +292,8 @@ export default function LandingPage({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-emerald-500" />
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
+              <BookOpen className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
                 Knowledge Hub
               </span>
             </div>
@@ -305,7 +305,7 @@ export default function LandingPage({
           <a
             href="/blog"
             onClick={handleLinkClick(onNavigateToBlog)}
-            className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 flex items-center gap-1.5 transition-colors"
+            className="text-sm font-bold text-emerald-800 dark:text-emerald-400 hover:text-emerald-600 flex items-center gap-1.5 transition-colors"
           >
             <span>View All Articles</span>
             <ArrowRight className="w-4 h-4" />
@@ -318,11 +318,11 @@ export default function LandingPage({
             onClick={handleLinkClick(onNavigateToBlog)}
             className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group block"
           >
-            <span className="text-[11px] uppercase font-bold text-red-600 dark:text-red-400 font-mono">Industry Warning</span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
+            <span className="text-[11px] uppercase font-bold text-red-700 dark:text-red-400 font-mono">Industry Warning</span>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors leading-snug">
               The 14-Day QR Paywall Trap: How Paid Services Hold Your Links Hostage
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed">
               Learn how commercial generators bait users into printing brochures before locking links behind monthly subscriptions.
             </p>
           </a>
@@ -332,11 +332,11 @@ export default function LandingPage({
             onClick={handleLinkClick(onNavigateToBlog)}
             className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group block"
           >
-            <span className="text-[11px] uppercase font-bold text-emerald-600 dark:text-emerald-400 font-mono">Best Practices</span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
+            <span className="text-[11px] uppercase font-bold text-emerald-800 dark:text-emerald-300 font-mono">Best Practices</span>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors leading-snug">
               Dynamic vs Static QR Codes: The Complete Business Guide
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed">
               A comprehensive checklist to choose between static and dynamic codes for product packaging and marketing.
             </p>
           </a>
@@ -346,11 +346,11 @@ export default function LandingPage({
             onClick={handleLinkClick(onNavigateToBlog)}
             className="p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/60 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs dark:shadow-none space-y-2.5 group block"
           >
-            <span className="text-[11px] uppercase font-bold text-cyan-600 dark:text-cyan-400 font-mono">Print & Design</span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
+            <span className="text-[11px] uppercase font-bold text-cyan-800 dark:text-cyan-300 font-mono">Print & Design</span>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors leading-snug">
               Professional QR Print Specifications: The 10:1 Scanning Rule
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed">
               Essential guidelines on resolution, quiet zone margins, and contrast ratios for crisp camera scanning.
             </p>
           </a>
@@ -362,15 +362,15 @@ export default function LandingPage({
         <div className="p-8 sm:p-10 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-dark-900 dark:via-dark-850 dark:to-dark-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs dark:shadow-xl transition-colors">
           <div className="space-y-2 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2">
-              <ShieldCheck className="w-5 h-5 text-emerald-500" />
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
+              <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
                 100% Free • No Subscription
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
               Why pay $35/month for dynamic QR codes?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 max-w-xl leading-relaxed">
               See how QRLoop compares against QRCode Monkey, Bitly, and Uniqode. Lifetime redirects with zero scan limits.
             </p>
           </div>
@@ -389,13 +389,13 @@ export default function LandingPage({
       {/* 7. Comprehensive SEO FAQ Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
             Frequently Asked Questions
           </span>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
             Everything You Need to Know About Dynamic & Static QR Codes
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+          <p className="text-sm text-slate-700 dark:text-slate-300 max-w-xl mx-auto">
             Clear answers about QR customization, vector image exports, analytics, and lifetime active links.
           </p>
         </div>
@@ -405,7 +405,7 @@ export default function LandingPage({
             <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
               What is the best free dynamic QR code generator?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
               <strong>QRLoop</strong> is designed to be the best free dynamic QR code generator because unlike commercial alternatives, it never locks your codes after a 14-day trial. You get editable destination URLs, real-time scan analytics, custom logo embedding, and lossless vector exports completely free.
             </p>
           </div>
@@ -414,8 +414,8 @@ export default function LandingPage({
             <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
               How do dynamic QR codes work for a website?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-              A dynamic QR code encodes a short, high-speed redirect link (e.g. <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-600 dark:text-emerald-400 font-mono text-xs">/r/:shortcode</code>) rather than a long URL. When scanned, our global edge redirects the user to your destination website in under 50ms while logging scan telemetry (device, operating system, timestamp, and location). You can update the destination URL at any time from your dashboard without changing your printed QR codes.
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              A dynamic QR code encodes a short, high-speed redirect link (e.g. <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-dark-800 text-emerald-700 dark:text-emerald-400 font-mono text-xs">/r/:shortcode</code>) rather than a long URL. When scanned, our global edge redirects the user to your destination website in under 50ms while logging scan telemetry (device, operating system, timestamp, and location). You can update the destination URL at any time from your dashboard without changing your printed QR codes.
             </p>
           </div>
 
@@ -423,7 +423,7 @@ export default function LandingPage({
             <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
               What QR customization options are available?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
               QRLoop gives you total design control: choose dot module shapes (dots, rounded squares, class blocks), corner eye designs (square, rounded, circle), custom color gradients, background transparency, and center brand logos or social icons with automatic quiet-zone masking.
             </p>
           </div>
@@ -432,7 +432,7 @@ export default function LandingPage({
             <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
               How do I export a QR code to high-resolution image formats?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
               You can download your customized QR code in multiple formats: <strong>PNG</strong> for digital use and social media, <strong>lossless vector SVG</strong> for scalable commercial billboards and packaging, and <strong>print-ready A4 PDF</strong> with centered cut-out guidelines for restaurant table standees and desk signage.
             </p>
           </div>
@@ -441,7 +441,7 @@ export default function LandingPage({
             <h3 className="text-base font-bold text-slate-900 dark:text-white font-display">
               Do QRLoop dynamic QR codes ever expire?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
               No! QRLoop dynamic QR codes have <strong>lifetime active redirects</strong>. There are zero scan limits, no monthly renewal fees, and no 14-day expiration traps. You can print them on physical marketing collateral with complete confidence.
             </p>
           </div>

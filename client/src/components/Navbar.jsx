@@ -60,14 +60,14 @@ export default function Navbar({
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-cyanGlow-500 shadow-glow-emerald transition-transform group-hover:scale-105">
             <QrCode className="w-5 h-5 text-dark-950 stroke-[2.4]" />
             <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white dark:border-dark-950 flex items-center justify-center">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 will-change-transform [transform:translateZ(0)]"></span>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="font-display font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
               QR<span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-cyanGlow-500">Loop</span>
             </span>
-            <span className="hidden sm:inline-block text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20 font-mono">
+            <span className="hidden sm:inline-block text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-brand-500/15 text-brand-700 dark:text-brand-300 border border-brand-500/25 font-mono">
               FREE
             </span>
           </div>
@@ -83,10 +83,10 @@ export default function Navbar({
                 key={item.id}
                 href={item.href}
                 onClick={handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-semibold transition-all ${
                   isActive
-                    ? 'bg-white dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-xs border border-slate-200/80 dark:border-brand-500/30 font-semibold'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5'
+                    ? 'bg-white dark:bg-brand-500/20 text-brand-700 dark:text-brand-300 shadow-xs border border-slate-200/80 dark:border-brand-500/30'
+                    : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 hover:bg-slate-200/40 dark:hover:bg-white/5'
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-brand-500' : 'text-slate-400 dark:text-slate-500'}`} />
