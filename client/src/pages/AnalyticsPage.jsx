@@ -30,11 +30,13 @@ import {
 } from 'recharts';
 import { api } from '../services/api';
 import AdBanner from '../components/AdBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function AnalyticsPage({ 
   selectedQrId, 
   onBack, 
-  onNavigateToStudio 
+  onNavigateToStudio,
+  onBackToHome
 }) {
   const [qrsList, setQrsList] = useState([]);
   const [currentId, setCurrentId] = useState(selectedQrId || null);
@@ -126,13 +128,13 @@ export default function AnalyticsPage({
       {/* Top Breadcrumb & Controls */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <button
-            onClick={onBack}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-2 transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Dashboard</span>
-          </button>
+          <Breadcrumb
+            items={[
+              { label: 'Dashboard', href: '/dashboard', onClick: onBack },
+              { label: qrInfo.title ? `${qrInfo.title} Telemetry` : 'Scan Telemetry & Insights' }
+            ]}
+            onNavigateHome={onBackToHome}
+          />
           <h1 className="text-2xl sm:text-3xl font-display font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
             <span>Scan Telemetry & Insights</span>
             {qrInfo.title && (

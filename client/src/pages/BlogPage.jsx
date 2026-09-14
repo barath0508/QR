@@ -14,8 +14,9 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import AdBanner from '../components/AdBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
-export default function BlogPage({ onNavigateToDynamic, onNavigateToStatic }) {
+export default function BlogPage({ onNavigateToDynamic, onNavigateToStatic, onBackToHome }) {
   const [selectedArticleId, setSelectedArticleId] = useState(null);
   const [shareCopied, setShareCopied] = useState(false);
 
@@ -223,13 +224,13 @@ Using **dynamic QR code infrastructure** ensures brands can:
       {/* Article Detail View */}
       {activeArticle ? (
         <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
-          <button
-            onClick={() => setSelectedArticleId(null)}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to All Articles</span>
-          </button>
+          <Breadcrumb
+            items={[
+              { label: 'Knowledge Hub & Guides', href: '/blog', onClick: () => setSelectedArticleId(null) },
+              { label: activeArticle.title }
+            ]}
+            onNavigateHome={onBackToHome}
+          />
 
           <div className="space-y-3">
             <span className={`inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${activeArticle.badgeColor}`}>
@@ -284,6 +285,12 @@ Using **dynamic QR code infrastructure** ensures brands can:
       ) : (
         /* Blog Index View */
         <div className="space-y-12">
+          <div className="max-w-2xl mx-auto">
+            <Breadcrumb
+              items={[{ label: 'Knowledge Hub & Guides' }]}
+              onNavigateHome={onBackToHome}
+            />
+          </div>
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs font-semibold">
               <BookOpen className="w-3.5 h-3.5 text-brand-500" />

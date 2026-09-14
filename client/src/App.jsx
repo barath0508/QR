@@ -220,6 +220,7 @@ export default function App() {
               }}
               onNavigateToAnalytics={(qrId) => handleNavigate('analytics', qrId)}
               onOpenAuth={handleOpenAuth}
+              onBackToHome={() => handleNavigate('home')}
             />
           )}
 
@@ -228,6 +229,7 @@ export default function App() {
               selectedQrId={selectedQrId}
               onBack={() => handleNavigate('dashboard')}
               onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+              onBackToHome={() => handleNavigate('home')}
             />
           )}
 
@@ -235,12 +237,14 @@ export default function App() {
             <BlogPage
               onNavigateToDynamic={() => handleNavigate('dynamic-qr')}
               onNavigateToStatic={() => handleNavigate('static-qr')}
+              onBackToHome={() => handleNavigate('home')}
             />
           )}
 
           {currentTab === 'compare' && (
             <ComparePage
               onNavigateToStudio={() => handleNavigate('dynamic-qr')}
+              onBackToHome={() => handleNavigate('home')}
             />
           )}
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Check, X, Shield, Zap, AlertTriangle, ArrowRight, Sparkles, QrCode } from 'lucide-react';
 import AdBanner from '../components/AdBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
-export default function ComparePage({ onNavigateToStudio }) {
+export default function ComparePage({ onNavigateToStudio, onBackToHome }) {
   const comparisonData = [
     {
       feature: 'Dynamic QR Codes (Edit URL Anytime)',
@@ -58,6 +59,14 @@ export default function ComparePage({ onNavigateToStudio }) {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       
+      {/* Breadcrumb Navigation */}
+      <div className="max-w-3xl mx-auto">
+        <Breadcrumb
+          items={[{ label: 'Why Free vs Paid' }]}
+          onNavigateHome={onBackToHome}
+        />
+      </div>
+
       {/* Hero Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs font-semibold">

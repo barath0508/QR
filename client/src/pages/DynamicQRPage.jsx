@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, Zap, Shield, ArrowLeft, CheckCircle2, Lock, UserCheck } from 'lucide-react';
 import QRStudio from '../components/QRStudio';
 import AdBanner from '../components/AdBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function DynamicQRPage({ 
   user, 
@@ -18,13 +19,10 @@ export default function DynamicQRPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/5">
           <div>
-            <button
-              onClick={onBackToHome}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-2 transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Home</span>
-            </button>
+            <Breadcrumb
+              items={[{ label: 'Dynamic QR Studio' }]}
+              onNavigateHome={onBackToHome}
+            />
             <div className="flex items-center gap-2">
               <h1 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
                 Dynamic QR Code Studio

@@ -10,6 +10,7 @@ import {
   HelpCircle,
   Sparkles
 } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function ContactPage({ onBackToHome, onNavigateToBlog }) {
   const [formData, setFormData] = useState({
@@ -50,15 +51,12 @@ export default function ContactPage({ onBackToHome, onNavigateToBlog }) {
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12 animate-fade-in text-slate-800 dark:text-slate-200">
       
       {/* Navigation Header */}
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-6">
-        <button
-          onClick={onBackToHome}
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Home</span>
-        </button>
-        <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold tracking-wider uppercase">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
+        <Breadcrumb
+          items={[{ label: 'Contact & Support' }]}
+          onNavigateHome={onBackToHome}
+        />
+        <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold tracking-wider uppercase hidden sm:inline-block">
           Contact & Support
         </span>
       </div>

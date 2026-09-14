@@ -30,6 +30,7 @@ import { downloadCanvasAsPNG, downloadSVG, downloadPrintPDF, copyCanvasToClipboa
 import { drawStyledQRCode } from '../utils/qrRenderer';
 import EditQRModal from '../components/EditQRModal';
 import AdBanner from '../components/AdBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 /**
  * Derives the exact text/URL to encode into the QR code based on dynamic/static mode
@@ -59,25 +60,25 @@ function QRCardThumbnail({ qr, onEnlarge, size = 'default' }) {
   if (size === 'small') {
     return (
       <div 
-        onClick={onEnlarge}
-        className="relative p-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center flex-shrink-0 cursor-pointer group/thumb hover:border-brand-500/40 transition-all"
-        title="Click to preview"
+        onClick={() => onEnlarge && onEnlarge(qr)}
+        className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-1 flex items-center justify-center cursor-pointer hover:border-brand-500/50 transition-colors shadow-xs group"
+        title="Click to preview & export high-res"
       >
-        <canvas ref={canvasRef} className="w-10 h-10 rounded shadow-xs" />
+        <canvas ref={canvasRef} className="w-10 h-10 rounded-lg" />
       </div>
     );
   }
 
   return (
     <div 
-      onClick={onEnlarge}
-      className="relative p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center flex-shrink-0 cursor-pointer group/thumb hover:border-brand-500/50 hover:shadow-md transition-all"
-      title="Click to preview full size & download"
+      onClick={() => onEnlarge && onEnlarge(qr)}
+      className="relative w-full aspect-square rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-4 flex items-center justify-center cursor-pointer hover:border-brand-500/50 transition-colors shadow-inner group overflow-hidden"
+      title="Click to preview & export high-res"
     >
-      <canvas ref={canvasRef} className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg shadow-sm group-hover/thumb:scale-[1.02] transition-transform" />
-      <div className="absolute inset-0 rounded-xl bg-dark-950/40 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center text-white text-[11px] font-semibold gap-1 backdrop-blur-[1px]">
-        <Maximize2 className="w-3.5 h-3.5 text-white" />
-        <span>View</span>
+      <canvas ref={canvasRef} className="w-48 h-48 sm:w-56 sm:h-56 max-w-full rounded-xl transition-transform duration-200 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-xs font-semibold backdrop-blur-[2px]">
+        <Maximize2 className="w-4 h-4" />
+        <span>Preview & Export</span>
       </div>
     </div>
   );
@@ -178,36 +179,32 @@ function QRPreviewModal({ qr, isOpen, onClose, onEditDesign }) {
               onClick={() => downloadCanvasAsPNG(canvasRef.current, `${qr.title || 'qr'}.png`, 2)}
               className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
             >
-              <Download className="w-3.5 h-3.5 text-brand-500" />
-              <span>PNG</span>
+              <Download className="w-3.5 h-3.5" />
+              <span>PNG (HD)</span>
             </button>
             <button
               onClick={() => downloadSVG(text, style, `${qr.title || 'qr'}.svg`)}
               className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
             >
-              <Download className="w-3.5 h-3.5 text-cyan-500" />
-              <span>Vector SVG</span>
+              <Download className="w-3.5 h-3.5" />
+              <span>SVG Vector</span>
             </button>
             <button
-              onClick={() => downloadPrintPDF(canvasRef.current, {
-                title: qr.title,
-                shortUrl: text,
-                destinationUrl: qr.destination_url,
-              }, `${qr.title || 'qr'}_standee.pdf`)}
+              onClick={() => downloadPrintPDF(canvasRef.current, qr.title || 'qr', text)}
               className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
             >
-              <Download className="w-3.5 h-3.5 text-purple-500" />
+              <Download className="w-3.5 h-3.5" />
               <span>Print PDF</span>
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pt-1">
             <button
               onClick={handleCopy}
-              className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-950 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
-              <span>{copied ? 'Copied to Clipboard!' : 'Copy PNG'}</span>
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copied ? 'Copied Image!' : 'Copy to Clipboard'}</span>
             </button>
 
             {onEditDesign && (
@@ -216,7 +213,7 @@ function QRPreviewModal({ qr, isOpen, onClose, onEditDesign }) {
                   onClose();
                   onEditDesign(qr);
                 }}
-                className="py-2.5 px-4 rounded-xl bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/30 text-brand-700 dark:text-brand-300 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                className="py-2.5 px-4 rounded-xl bg-brand-500 hover:bg-brand-400 text-dark-950 text-xs font-bold flex items-center gap-1.5 transition-colors"
               >
                 <Palette className="w-3.5 h-3.5" />
                 <span>Customize in Studio</span>
@@ -234,7 +231,8 @@ export default function DashboardPage({
   user, 
   onNavigateToStudio, 
   onNavigateToAnalytics, 
-  onOpenAuth 
+  onOpenAuth,
+  onBackToHome
 }) {
   const [qrs, setQrs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -333,8 +331,14 @@ export default function DashboardPage({
   const topQR = qrs.length > 0 ? [...qrs].sort((a, b) => (b.total_scans || 0) - (a.total_scans || 0))[0] : null;
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[{ label: 'QR Management Portal' }]}
+        onNavigateHome={onBackToHome}
+      />
+
       {/* Top Header & Overview */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>

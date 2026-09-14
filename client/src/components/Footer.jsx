@@ -8,9 +8,9 @@ export default function Footer({ onNavigate }) {
   };
 
   return (
-    <footer className="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-700 dark:text-slate-300 mt-16 transition-colors">
+    <footer role="contentinfo" className="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-dark-950 text-slate-700 dark:text-slate-300 mt-16 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        <nav aria-label="Footer Navigation" className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           
           {/* 1. Brand Column */}
           <div className="space-y-4 col-span-2 md:col-span-1">
@@ -102,7 +102,7 @@ export default function Footer({ onNavigate }) {
             </ul>
           </div>
 
-          {/* 3. Industry Use Cases */}
+          {/* 3. Solutions & Use Cases */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">
               Solutions
@@ -147,7 +147,7 @@ export default function Footer({ onNavigate }) {
             </ul>
           </div>
 
-          {/* 4. Company & Transparency */}
+          {/* 4. Company & Mission */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">
               Company
@@ -157,20 +157,18 @@ export default function Footer({ onNavigate }) {
                 <a 
                   href="/about"
                   onClick={handleLinkClick('about')} 
-                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left"
                 >
-                  <Info className="w-3 h-3 text-emerald-500" />
-                  <span>About QRLoop</span>
+                  About QRLoop
                 </a>
               </li>
               <li>
                 <a 
                   href="/contact"
                   onClick={handleLinkClick('contact')} 
-                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors flex items-center gap-1.5"
+                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left"
                 >
-                  <Mail className="w-3 h-3 text-cyan-500" />
-                  <span>Contact & Support</span>
+                  Contact & Support
                 </a>
               </li>
               <li>
@@ -179,7 +177,7 @@ export default function Footer({ onNavigate }) {
                   onClick={handleLinkClick('compare')} 
                   className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left"
                 >
-                  Comparison Matrix
+                  Why Free vs Paid
                 </a>
               </li>
               <li>
@@ -194,7 +192,7 @@ export default function Footer({ onNavigate }) {
             </ul>
           </div>
 
-          {/* 5. Legal & Regulatory */}
+          {/* 5. Legal, Trust & Compliance */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">
               Trust & Legal
@@ -202,53 +200,50 @@ export default function Footer({ onNavigate }) {
             <ul className="space-y-2 text-xs">
               <li>
                 <a 
-                  href="/privacy"
+                  href="/privacy" 
                   onClick={handleLinkClick('privacy')} 
-                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors flex items-center gap-1.5 font-medium"
+                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left font-semibold text-emerald-800 dark:text-emerald-300"
                 >
-                  <Shield className="w-3 h-3 text-emerald-500" />
-                  <span>Privacy Policy</span>
+                  Privacy Policy
                 </a>
               </li>
               <li>
                 <a 
-                  href="/terms"
+                  href="/terms" 
                   onClick={handleLinkClick('terms')} 
-                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors flex items-center gap-1.5 font-medium"
+                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left font-semibold text-cyan-800 dark:text-cyan-300"
                 >
-                  <FileText className="w-3 h-3 text-cyan-500" />
-                  <span>Terms of Service</span>
+                  Terms of Service
                 </a>
               </li>
               <li>
                 <a 
-                  href="/cookies"
+                  href="/cookies" 
                   onClick={handleLinkClick('cookies')} 
-                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors flex items-center gap-1.5 font-medium"
+                  className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left font-semibold text-amber-800 dark:text-amber-300"
                 >
-                  <Cookie className="w-3 h-3 text-amber-500" />
-                  <span>Cookie Policy</span>
+                  Cookie Policy
                 </a>
               </li>
               <li>
                 <a 
-                  href="/contact"
+                  href="/contact" 
                   onClick={handleLinkClick('contact')} 
                   className="hover:text-brand-600 dark:hover:text-brand-300 transition-colors block text-left"
                 >
-                  Report Abuse / Security
+                  Report Abuse
                 </a>
               </li>
             </ul>
           </div>
 
-        </div>
+        </nav>
 
         {/* Bottom bar */}
         <div className="border-t border-slate-200 dark:border-white/5 pt-8 space-y-3 text-xs text-slate-700 dark:text-slate-300">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p>© {new Date().getFullYear()} QRLoop Technologies. Built for creators and businesses worldwide.</p>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <nav aria-label="Legal and Compliance Links" className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
               <a 
                 href="/privacy" 
                 onClick={handleLinkClick('privacy')} 
@@ -284,7 +279,7 @@ export default function Footer({ onNavigate }) {
               >
                 Contact
               </a>
-            </div>
+            </nav>
           </div>
           <p className="text-[11px] text-slate-600 dark:text-slate-400 text-center sm:text-left">
             QR Code is a registered trademark of DENSO WAVE INCORPORATED in Japan and other countries. All third-party trademarks belong to their respective owners.

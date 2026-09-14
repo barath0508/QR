@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2, QrCode, ShieldCheck, Sparkles } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
 
 const useCases = {
   'qr-code-for-restaurants': {
@@ -43,6 +44,16 @@ export default function UseCasePage({ slug, onNavigateToDynamic, onNavigateToSta
 
   return (
     <div className="space-y-16 pb-16 pt-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <Breadcrumb
+          items={[
+            { label: 'Solutions', href: '/#solutions', onClick: onBackToHome },
+            { label: content.label }
+          ]}
+          onNavigateHome={onBackToHome}
+        />
+      </div>
+
       <section className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-5">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
           <Sparkles className="w-3.5 h-3.5 text-emerald-500" />

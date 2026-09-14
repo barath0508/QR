@@ -2,6 +2,7 @@ import React from 'react';
 import { Sparkles, ArrowLeft, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 import QRStudio from '../components/QRStudio';
 import AdBanner from '../components/AdBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function StaticQRPage({ onBackToHome, onNavigateToDynamic }) {
   return (
@@ -11,13 +12,10 @@ export default function StaticQRPage({ onBackToHome, onNavigateToDynamic }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/5">
           <div>
-            <button
-              onClick={onBackToHome}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-2 transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Home</span>
-            </button>
+            <Breadcrumb
+              items={[{ label: 'Static QR Generator' }]}
+              onNavigateHome={onBackToHome}
+            />
             <div className="flex items-center gap-2">
               <h1 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
                 Static QR Code Generator
