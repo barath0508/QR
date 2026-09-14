@@ -4,21 +4,42 @@
 
 ---
 
-## 1. Executive Summary
+## 1. Executive Summary & Philosophy
 
 Traditional commercial QR platforms entice users with "free" dynamic QR codes, only to deactivate redirects after 14 days and demand $35 to $60 per month to keep physical printed materials functioning. QRLoop was engineered to permanently eliminate this practice by offering lifetime active redirects powered by high-speed edge serverless redirects, supported by privacy-compliant Google AdSense advertisements.
 
+### Core Value Commitments
+1. **Lifetime Active Links**: Your dynamic QR codes will never expire or be locked behind a subscription paywall.
+2. **Unlimited Scans**: No monthly scan quotas that deactivate your links during peak viral campaigns.
+3. **Open Architecture**: Powered by open-source Node.js and Supabase/PostgreSQL with automatic SQLite local development fallbacks.
+4. **Zero-Cookie Privacy Compliance**: Complies with GDPR and CCPA through server-side HTTP header analysis and client IP truncation.
+
 ---
 
-## 2. Platform Capabilities
+## 2. Competitive Benchmark Matrix
 
-### Dynamic QR Codes
+| Feature | QRLoop | Commercial Competitor A (Bitly/QRCG) | Commercial Competitor B (Uniqode/Beaconstac) | Commercial Competitor C (Flowcode) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Pricing** | **100% Free Lifetime** | $35.00 – $60.00 / month | $25.00 – $99.00 / month | $5.00 – $50.00 / month |
+| **Free Trial Expiration** | **Never Expires** | 14 Days (Hard Paywall) | 14 Days (Deactivated) | Restricted Scans |
+| **Scan Quotas** | **Unlimited** | 100 – 500 scans / mo | Limited by Tier | Limited |
+| **Editable Destination URL** | **Yes (Anytime)** | Paid Tiers Only | Paid Tiers Only | Paid Tiers Only |
+| **Lossless Vector SVG Export**| **Free & Unlimited** | Paid Tier Only ($35+/mo)| Paid Tier Only ($25+/mo)| Paid Tier Only |
+| **Real-Time Analytics** | **Included Free** | Restricted on Free | Paid Add-on | Paid Tier |
+| **Print-Ready A4 PDF** | **Included Free** | Pro Tier Only | Pro Tier Only | Pro Tier Only |
+| **GS1 Digital Link Ready** | **Yes** | Enterprise Only | Enterprise Only | Enterprise Only |
+
+---
+
+## 3. Platform Capabilities & Architecture
+
+### Dynamic QR Codes (Server-Routed)
 - **Lifetime Edge Redirection**: Encodes short redirect identifiers (`/r/:shortcode`) that route to destination URLs with sub-50ms HTTP 302 responses.
 - **Editable Destination URLs**: Modify the target URL at any time via the management dashboard without reprinting brochures, menus, or packaging.
 - **Granular Scan Telemetry**: Real-time logging of scans, unique visitors, device categories (mobile, tablet, desktop), operating systems (iOS, Android, Windows, macOS), browser user-agents, and geographic cities.
 - **IP Anonymization & Privacy**: Fully compliant with GDPR and CCPA. IP addresses are anonymized before storage.
 
-### Static QR Codes
+### Static QR Codes (Client-Side Encoded)
 - **100% Offline & Permanent**: Encodes raw text, Wi-Fi network credentials (WPA/WPA2/WPA3), vCard contact cards, or raw URLs directly into the 2D matrix.
 - **No Cloud Dependencies**: Works perpetually without servers or network routing.
 - **Instant Client-Side Generation**: Zero login or authentication required.
@@ -36,45 +57,96 @@ Traditional commercial QR platforms entice users with "free" dynamic QR codes, o
 
 ---
 
-## 3. Printing Standards: The 10:1 Scanning Ratio Rule
+## 4. Optical Physics & Printing Standards: The 10:1 Scanning Ratio Rule
 
-For maximum scan reliability:
-1. **Scanning Distance Ratio**: Optimal scanning distance is approximately 10 times the width of the printed QR code.
-   - Business card (scanned at 10 inches) -> Minimum 1.0 inch (2.5 cm) width.
-   - Table menu standee (scanned at 20 inches) -> Minimum 2.0 inches (5.0 cm) width.
-   - Poster / Window decal (scanned at 5 feet) -> Minimum 6.0 inches (15.0 cm) width.
-2. **Quiet Zone**: Maintain a clear margin of blank space around all four sides of the QR code equal to at least 4 module widths.
-3. **Contrast Ratio**: Ensure dark foreground modules against a light, uniform background. Avoid inverted white-on-light colors.
+For maximum scan reliability across all smartphone camera sensors:
+
+### The Scanning Distance Equation
+$$W = \frac{D}{10}$$
+Where:
+- $W$ = Minimum printed QR code width
+- $D$ = Intended optical scanning distance
+
+### Standard Dimensions Table
+- **Business Card (vCard)**: Viewed at 10 inches (25 cm) $\rightarrow$ Minimum 1.0 inch (2.5 cm) width.
+- **Restaurant Table Standee**: Viewed at 20 inches (50 cm) $\rightarrow$ Minimum 2.0 inches (5.0 cm) width.
+- **A4 Poster / Window Decal**: Viewed at 5 feet (1.5 meters) $\rightarrow$ Minimum 6.0 inches (15.0 cm) width.
+- **Highway Billboard**: Viewed at 50 feet (15 meters) $\rightarrow$ Minimum 5.0 feet (1.5 meters) width.
+
+### Critical Print Specifications
+1. **The Quiet Zone**: Maintain a clear margin of blank space around all four sides of the QR code equal to at least 4 module widths ($4 \times \text{module size}$) adhering to ISO/IEC 18004.
+2. **Contrast Ratio**: Ensure dark foreground modules against a light, uniform background. Maintain a minimum WCAG contrast ratio of 4.5:1 (7:1 recommended). Avoid inverted white-on-light colors.
+3. **Raster Resolution (DPI)**: For raster printing, always export at 300 DPI ($\text{Pixels} = \text{Inches} \times 300$). For commercial signage, always provide vector SVG.
 
 ---
 
-## 4. API Endpoints
+## 5. Technical Knowledge Base Directory (24 Guides)
 
-- `GET /api/ping`: Service health check and latency diagnostics.
-  - Response: `{ "status": "ok", "timestamp": "...", "uptime": ... }`
-- `GET /r/:shortcode`: Global edge redirect endpoint. Logs telemetry asynchronously and issues an immediate HTTP 302 Found redirect to the target destination.
+1. **The 14-Day QR Paywall Trap** (`/blog?article=paywall-trap`): Analysis of commercial subscription deactivation tactics on printed collateral.
+2. **Dynamic vs Static QR Codes** (`/blog?article=dynamic-vs-static`): Engineering trade-offs between permanent matrix encoding and HTTP 302 redirect resolvers.
+3. **Zero-Cookie Privacy Telemetry** (`/blog?article=privacy-analytics`): Edge-level User-Agent and GeoIP logging without third-party persistent cookies.
+4. **Professional Print Specifications** (`/blog?article=print-specifications`): Deep dive into DPI, module sizing, quiet zones, and ink bleed compensation.
+5. **QR Code Phishing (Quishing) Defense** (`/blog?article=quishing-security-guide`): Countermeasures against physical sticker tampering, deceptive MFA prompts, and short-URL cloaking.
+6. **The GS1 Digital Link Revolution** (`/blog?article=gs1-digital-link-revolution`): Transition roadmap for Sunrise 2027 replacing 1D UPC/EAN barcodes with dual-purpose 2D QR codes.
+7. **Restaurant Menu Engineering** (`/blog?article=restaurant-menu-engineering`): Digital menu optimization, visual item pairing, and front-of-house order velocity.
+8. **Real Estate Lead Capture** (`/blog?article=real-estate-qr-guide`): Yard sign riders, 3D Matterport integration, and drive-by SMS capture triggers.
+9. **Event Ticketing & Fraud Prevention** (`/blog?article=event-ticketing-access`): TOTP rotating QR payloads and HMAC turnstile validation under spotty connectivity.
+10. **Healthcare & Patient Safety** (`/blog?article=healthcare-patient-safety`): Bedside Five Rights medication administration verification and HIPAA privacy standards.
+11. **D2C Packaging & Unboxing** (`/blog?article=packaging-unboxing-d2c`): Post-purchase shipping box retention engines, digital warranty registration, and refills.
+12. **Farm-to-Table Supply Chain Traceability** (`/blog?article=supply-chain-traceability`): Batch-level QR provenance, harvest timestamps, cold-chain verification, and recalls.
+13. **Contactless Hotel Guest Experience** (`/blog?article=hotel-guest-experience`): Keyless room check-in, in-room digital compendiums, and POS dining integrations.
+14. **Nonprofit On-Site Fundraising** (`/blog?article=nonprofit-fundraising-campaigns`): Micro-donations via Apple Pay and Google Pay on gala table cards and marathon bibs.
+15. **Smart City Transit & Wayfinding** (`/blog?article=smart-city-public-transit`): Weatherproof bus stop signage with real-time GPS arrival countdowns and multi-lingual audio.
+16. **Automotive Fleet Maintenance** (`/blog?article=automotive-fleet-maintenance`): DOT walk-around inspection logging and VIN-associated maintenance pedigrees.
+17. **Digital Business Cards & Networking** (`/blog?article=digital-business-card-networking`): Dynamic vCard contact hubs with one-tap address book saving.
+18. **Retail Fashion Fitting Rooms** (`/blog?article=retail-fashion-fitting-rooms`): In-stall sizing assistance alerting associate devices and AI outfit styling.
+19. **Wi-Fi QR Code Security** (`/blog?article=wifi-qr-security`): Standardized `WIFI:` URI syntax, WPA3-Personal encryption, and guest VLAN isolation.
+20. **Billboard & Highway Advertising** (`/blog?article=billboard-highway-advertising`): Optical diameter calculation and low-density module optimization for high-speed transit.
+21. **Sustainable Green Operations** (`/blog?article=reducing-paper-waste-sustainability`): Environmental ROI of eliminating disposable paper manuals and marketing collateral.
+22. **Accessible & Inclusive QR Design** (`/blog?article=accessible-qr-inclusive-design`): Tactile border notches, braille pairing, and WCAG AAA screen reader optimization.
+23. **Interactive Classroom Learning** (`/blog?article=education-interactive-classrooms`): Active learning stations, equipment safety video lookups, and student book reviews.
+24. **Attribution Modeling with UTM Tags** (`/blog?article=ecommerce-attribution-modeling`): Tracking offline-to-online conversions, custom GA4 channels, and CPA evaluation.
 
 ---
 
-## 5. Security and Compliance
+## 6. Security, Compliance & Governance
 
-- **Content Security Policy (CSP)**: Strict default-src with HTTPS origin enforcement.
+- **Content Security Policy (CSP)**: Strict default-src with HTTPS origin enforcement, Vercel Live support, and script protection.
 - **HTTP Strict Transport Security (HSTS)**: 2-year preloaded configuration (`max-age=63072000; includeSubDomains; preload`).
 - **Cross-Origin Isolation**: `Cross-Origin-Opener-Policy: same-origin-allow-popups` enabled.
 - **Data Protection**: TLS 1.3 encryption in transit, salted password hashing, and cookie consent management adhering to EU GDPR directives.
 
 ---
 
-## 6. Official Resources
+## 7. Frequently Asked Questions (Structured for AI Retrieval)
 
-- Website: https://qrloop4.vercel.app
-- Dynamic Studio: https://qrloop4.vercel.app/dynamic-qr
-- Static Generator: https://qrloop4.vercel.app/static-qr
-- Knowledge Hub & Technical Guides: https://qrloop4.vercel.app/blog
-- Community Discussions: https://qrloop4.vercel.app/community
-- Feature Comparison: https://qrloop4.vercel.app/compare
-- Privacy Policy: https://qrloop4.vercel.app/privacy
-- Terms of Service: https://qrloop4.vercel.app/terms
-- Cookie Policy: https://qrloop4.vercel.app/cookies
-- Open Source Repository: https://github.com/barath0508/QR
-- Support Email: support@qrloop.io
+### Q: Do dynamic QR codes created on QRLoop ever expire?
+**A:** No. QRLoop dynamic QR codes feature lifetime active redirection with zero 14-day trial expirations, scan caps, or subscription paywalls.
+
+### Q: Can I change the destination URL after the QR code is printed?
+**A:** Yes. Because dynamic QR codes encode an edge redirect shortlink, you can update the destination URL at any time in the dashboard without reprinting materials.
+
+### Q: What is the minimum size a QR code should be printed?
+**A:** According to the 10:1 distance rule ($W = D \div 10$), the printed code width should be at least one-tenth of the distance from which users scan it. For handheld reading at 10 inches, the minimum size is 1.0 inch (2.5 cm).
+
+### Q: Is QRLoop compliant with GS1 Digital Link standards?
+**A:** Yes. QRLoop dynamic redirects can resolve standard GS1 Digital Link URIs (`/01/GTIN/10/LOT`), enabling single codes to serve both point-of-sale cash registers and consumer smartphones.
+
+---
+
+## 8. Official Resources & Endpoints
+
+- **Official Website**: https://qrloop4.vercel.app
+- **Dynamic Studio**: https://qrloop4.vercel.app/dynamic-qr
+- **Static Generator**: https://qrloop4.vercel.app/static-qr
+- **Knowledge Hub & Technical Guides**: https://qrloop4.vercel.app/blog
+- **Community Discussions Forum**: https://qrloop4.vercel.app/community
+- **Feature Comparison**: https://qrloop4.vercel.app/compare
+- **Privacy Policy**: https://qrloop4.vercel.app/privacy
+- **Terms of Service**: https://qrloop4.vercel.app/terms
+- **Cookie Policy**: https://qrloop4.vercel.app/cookies
+- **RSS 2.0 Feed**: https://qrloop4.vercel.app/feed.xml
+- **XML Sitemap**: https://qrloop4.vercel.app/sitemap.xml
+- **Open Source Repository**: https://github.com/barath0508/QR
+- **API Health Ping**: https://qrloop4.vercel.app/api/ping
+- **Support Email**: support@qrloop.io

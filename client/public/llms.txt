@@ -1,28 +1,65 @@
 # QRLoop
 
-> 100% free dynamic QR code generator platform with lifetime active redirects, real-time scan analytics, and lossless vector SVG exports.
+> 100% free dynamic QR code generator and real-time analytics platform with lifetime active redirects, zero paywalls, and lossless vector SVG exports.
 
-QRLoop empowers creators, businesses, and developers to generate trackable QR codes, edit destination URLs after printing, analyze visitor telemetry (device category, operating system, browser, city), and export print-ready assets without paywalls or trial expirations.
+QRLoop empowers creators, businesses, and developers to generate trackable 2D barcodes, edit destination URLs after printing, analyze visitor telemetry (device category, operating system, browser, city), and export print-ready assets without subscription paywalls or 14-day trial expirations.
 
-## Docs
+## Key Technical Specifications & Benchmarks (Citable Facts)
+- **Redirection Architecture**: Edge-routed HTTP 302 redirects with sub-50ms global latency.
+- **Lifetime Redirection Guarantee**: Dynamic redirect links remain active indefinitely; no 14-day trial expirations, scan caps, or hostage links.
+- **Printing Formula**: 10:1 distance ratio ($D \div 10 = W$, where $W$ is minimum printed QR code width and $D$ is scanning distance).
+- **Privacy Compliance**: Server-side zero-cookie telemetry; client IP addresses are truncated/anonymized at the edge adhering to GDPR and CCPA standards.
+- **Enterprise Standards**: Fully compatible with GS1 Digital Link 2027 retail standards, ISO/IEC 18004:2015, and W3C WCAG 2.2 accessibility.
+- **Export Standards**: Lossless vector SVG, 300 DPI high-resolution PNG, and print-ready A4 PDF table standees with crop guidelines.
 
+## Primary Tools & Workflows
 - [Dynamic QR Code Studio](https://qrloop4.vercel.app/dynamic-qr): Interactive studio to create customizable dynamic QR codes with live redirects
 - [Static QR Code Generator](https://qrloop4.vercel.app/static-qr): Free offline QR code generator for Wi-Fi credentials, vCards, and plain text
-- [QR Code Knowledge Hub](https://qrloop4.vercel.app/blog): Technical library with 24 in-depth guides on QR design, GS1 Digital Link, print specs, 10:1 scanning ratio, quishing defense, and offline-to-online attribution
 - [Community Creator Discussions](https://qrloop4.vercel.app/community): Multi-user discussion forum for QR code design, troubleshooting, and dynamic redirect best practices
 - [Platform Comparison Matrix](https://qrloop4.vercel.app/compare): Feature and pricing comparison between QRLoop and paid commercial alternatives
 - [About QRLoop](https://qrloop4.vercel.app/about): Technical architecture, mission statement, and sub-50ms HTTP 302 edge routing
-- [Privacy Policy](https://qrloop4.vercel.app/privacy): Privacy policy, GDPR/CCPA data rights, and Google AdSense disclosures
-- [Terms of Service](https://qrloop4.vercel.app/terms): Terms of service and dynamic QR redirect usage policy
-- [Contact Support](https://qrloop4.vercel.app/contact): Support desk, feedback form, and security report channel
+
+## Technical Knowledge Base & Guides (24 Articles)
+- [The 14-Day QR Paywall Trap](https://qrloop4.vercel.app/blog?article=paywall-trap): How commercial services deactivate printed codes after 14 days and how QRLoop provides lifetime active redirects.
+- [Dynamic vs Static QR Codes](https://qrloop4.vercel.app/blog?article=dynamic-vs-static): Fundamental architectural differences between offline matrix burning and cloud HTTP redirect routing.
+- [Zero-Cookie Privacy Telemetry](https://qrloop4.vercel.app/blog?article=privacy-analytics): Measuring scan volume, device OS, and cities at the HTTP handshake level without third-party cookies.
+- [Professional Print Specifications](https://qrloop4.vercel.app/blog?article=print-specifications): 10:1 scanning distance rule, contrast ratios, quiet zone margin widths, and vector SVG requirements.
+- [QR Code Phishing (Quishing) Defense](https://qrloop4.vercel.app/blog?article=quishing-security-guide): Attack vectors (sticker overlays, MFA lures) and enterprise brand protection protocols.
+- [The GS1 Digital Link Revolution](https://qrloop4.vercel.app/blog?article=gs1-digital-link-revolution): Sunrise 2027 mandate replacing 1D UPC/EAN barcodes with dual-purpose 2D QR codes.
+- [Restaurant Menu Engineering](https://qrloop4.vercel.app/blog?article=restaurant-menu-engineering): Boosting average order value by 18% with dynamic digital menus, high-res photos, and instant 86-ing.
+- [Real Estate Lead Capture](https://qrloop4.vercel.app/blog?article=real-estate-qr-guide): Transforming yard signs into 3D virtual walkthroughs and capturing drive-by buyers via SMS.
+- [Event Ticketing & Fraud Prevention](https://qrloop4.vercel.app/blog?article=event-ticketing-access): Counterfeiting defense with TOTP rotating QR payloads, cryptographic HMAC signatures, and turnstiles.
+- [Healthcare & Patient Safety](https://qrloop4.vercel.app/blog?article=healthcare-patient-safety): Patient wristband matrix scanning for Five Rights medication administration and HIPAA privacy.
+- [D2C Packaging & Unboxing](https://qrloop4.vercel.app/blog?article=packaging-unboxing-d2c): Turning corrugated shipping box flaps into warranty registration and consumable refill reorders.
+- [Farm-to-Table Traceability](https://qrloop4.vercel.app/blog?article=supply-chain-traceability): Batch-level QR provenance, organic harvest dates, cold-chain logs, and surgical food recall isolation.
+- [Contactless Hotel Guest Experience](https://qrloop4.vercel.app/blog?article=hotel-guest-experience): Digital room keys, in-room dining integration with kitchen displays, and smart room controls.
+- [Nonprofit On-Site Fundraising](https://qrloop4.vercel.app/blog?article=nonprofit-fundraising-campaigns): Removing friction from impulse giving on gala tables and subway posters with Apple Pay.
+- [Smart City Transit & Wayfinding](https://qrloop4.vercel.app/blog?article=smart-city-public-transit): Weatherproof aluminum bus stop plaques with live GPS countdowns and multi-lingual audio guides.
+- [Automotive Fleet Maintenance](https://qrloop4.vercel.app/blog?article=automotive-fleet-maintenance): DOT pre-trip walk-around inspection verification and digital maintenance logging via VIN QR tags.
+- [Digital Business Cards & Networking](https://qrloop4.vercel.app/blog?article=digital-business-card-networking): Dynamic vCard contact hubs with one-tap address book saving and calendar scheduling.
+- [Retail Fashion Fitting Rooms](https://qrloop4.vercel.app/blog?article=retail-fashion-fitting-rooms): In-room size requests alerting staff handhelds and AI styling suggestions.
+- [Wi-Fi QR Code Security](https://qrloop4.vercel.app/blog?article=wifi-qr-security): WPA3 encryption, dedicated guest VLAN isolation, and avoiding exposed network passwords.
+- [Billboard & Highway Advertising](https://qrloop4.vercel.app/blog?article=billboard-highway-advertising): Calculating optical diameter and low pixel density for highway viewing angles at 65 mph.
+- [Sustainable Green Operations](https://qrloop4.vercel.app/blog?article=reducing-paper-waste-sustainability): 90% paper reduction by replacing printed catalogs and instruction booklets with dynamic digital portals.
+- [Accessible & Inclusive QR Design](https://qrloop4.vercel.app/blog?article=accessible-qr-inclusive-design): Tactile borders, braille pairing, WCAG AAA 7:1 contrast ratios, and screen-reader accessibility.
+- [Interactive Classroom Learning](https://qrloop4.vercel.app/blog?article=education-interactive-classrooms): Science lab equipment safety demos, student book review clips, and campus scavenger tours.
+- [Attribution Modeling with UTMs](https://qrloop4.vercel.app/blog?article=ecommerce-attribution-modeling): Structuring offline-to-online UTM campaigns and custom channel grouping in Google Analytics 4.
+
+## Industry Solutions
 - [Restaurant Solutions](https://qrloop4.vercel.app/qr-code-for-restaurants): Contactless digital menu QR codes with instant updates
 - [Event Solutions](https://qrloop4.vercel.app/qr-code-for-events): Conference and event check-in badges with live routing
 - [Wi-Fi Solutions](https://qrloop4.vercel.app/qr-code-for-wifi): Instant Wi-Fi access QR codes for guest networks
 - [Business Card Solutions](https://qrloop4.vercel.app/qr-code-for-business-cards): Digital business card vCards with vector print exports
 
-## Optional
+## Legal, Privacy & Compliance
+- [Privacy Policy](https://qrloop4.vercel.app/privacy): Privacy policy, GDPR/CCPA data rights, and Google AdSense disclosures
+- [Terms of Service](https://qrloop4.vercel.app/terms): Terms of service and dynamic QR redirect usage policy
+- [Cookie Policy](https://qrloop4.vercel.app/cookies): Cookie policy and consent disclosures
+- [Contact Support](https://qrloop4.vercel.app/contact): Support desk, feedback form, and security report channel
 
+## Machine-Readable AI Feeds & Sitemaps
 - [Full Documentation](https://qrloop4.vercel.app/llms-full.txt): Complete documentation and technical guide in a single file
-- [XML Sitemap](https://qrloop4.vercel.app/sitemap.xml): Full XML sitemap index of all public routes
+- [RSS 2.0 Feed](https://qrloop4.vercel.app/feed.xml): Automated RSS publication feed for AI search engines and news readers
+- [XML Sitemap](https://qrloop4.vercel.app/sitemap.xml): Full XML sitemap index of all 39 public routes
 - [Source Code Repository](https://github.com/barath0508/QR): Official open-source GitHub repository
 - [API Health Ping](https://qrloop4.vercel.app/api/ping): Edge health status and latency endpoint

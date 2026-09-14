@@ -14,8 +14,11 @@ import {
   Share2,
   Copy,
   Star,
-  MessageSquare
+  MessageSquare,
+  HelpCircle,
+  ChevronDown
 } from 'lucide-react';
+import { commonFAQs } from '../utils/seo';
 
 export default function LandingPage({ 
   onNavigateToDynamic, 
@@ -719,6 +722,44 @@ export default function LandingPage({
             <span>Explore Community Guides & Discussions</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </a>
+        </div>
+      </section>
+
+      {/* 8.5 Frequently Asked Questions & Standards (High SEO & AI Snippet Value) */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-700 dark:text-brand-300 text-xs font-semibold">
+            <HelpCircle className="w-3.5 h-3.5 text-brand-500" />
+            <span>Frequently Asked Questions & Standards</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+            Everything You Need to Know About QRLoop
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+            Direct, factual answers regarding redirection architecture, lifetime availability, scanning physics, and data privacy.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {commonFAQs.map((faq, idx) => (
+            <details
+              key={idx}
+              className="group p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-dark-900/70 shadow-xs transition-all [&_summary::-webkit-details-marker]:hidden"
+            >
+              <summary className="flex items-center justify-between cursor-pointer list-none font-bold text-sm text-slate-900 dark:text-white">
+                <span className="flex items-center gap-2.5">
+                  <span className="w-6 h-6 rounded-lg bg-brand-500/10 dark:bg-brand-500/20 text-brand-500 text-xs flex items-center justify-center font-mono shrink-0">
+                    {idx + 1}
+                  </span>
+                  <span>{faq.question}</span>
+                </span>
+                <ChevronDown className="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180 shrink-0 ml-2" />
+              </summary>
+              <p className="mt-3.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pl-8.5 border-t border-slate-100 dark:border-white/5 pt-3">
+                {faq.answer}
+              </p>
+            </details>
+          ))}
         </div>
       </section>
 

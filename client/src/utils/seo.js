@@ -181,6 +181,8 @@ export function applyPageSEO(tabName) {
 
   // Page Specific Schema.org JSON-LD
   updateRouteSchema(tabName, config);
+  updateBreadcrumbSchema(tabName, config);
+  updateFaqSchema(tabName);
 }
 
 function setMeta(key, value, attribute = 'name') {
@@ -193,6 +195,41 @@ function setMeta(key, value, attribute = 'name') {
   tag.setAttribute('content', value);
 }
 
+export const commonFAQs = [
+  {
+    question: "Do dynamic QR codes created on QRLoop expire?",
+    answer: "No. QRLoop dynamic QR codes feature lifetime active redirection with zero 14-day trial expirations, scan caps, or subscription paywalls. Once created, your printed dynamic QR code continues redirecting indefinitely."
+  },
+  {
+    question: "How do I edit a QR code's destination URL after printing?",
+    answer: "Because dynamic QR codes encode a short redirect link, you can log in to your QRLoop dashboard anytime, select the code, and update the destination URL. The physical QR code printed on menus, flyers, or packaging will immediately redirect visitors to the new address without re-printing."
+  },
+  {
+    question: "What is the difference between a static and a dynamic QR code?",
+    answer: "Static QR codes encode the raw destination directly into the pixel pattern, meaning they work 100% offline but can never be edited or tracked. Dynamic QR codes route through an ultra-fast edge redirect server, allowing real-time destination editing, scan volume tracking, device telemetry, and smaller, cleaner QR module patterns."
+  },
+  {
+    question: "What is the 10:1 QR code scanning distance rule?",
+    answer: "The 10:1 scanning distance rule states that the minimum printed width of a QR code should be approximately one-tenth of the distance from which users scan it. For example, a restaurant table standee scanned from 20 inches away should be at least 2.0 inches (5 cm) wide, while a poster viewed from 10 feet away should be at least 1.0 foot (30 cm) wide."
+  },
+  {
+    question: "Are QRLoop QR scan analytics privacy-compliant?",
+    answer: "Yes. QRLoop operates on a zero-cookie telemetry architecture and anonymizes visitor IP addresses before storage, ensuring full compliance with GDPR, CCPA, and international data privacy regulations without placing tracking cookies on scanners' devices."
+  },
+  {
+    question: "Which file formats can I download for printing?",
+    answer: "QRLoop offers three export formats: Lossless Vector SVG (ideal for professional commercial printing and billboards without pixelation), High-Resolution 300 DPI PNG (ideal for digital graphics and office printing), and Print-Ready A4 PDF standees with built-in folding and cut guidelines."
+  },
+  {
+    question: "What is QR code phishing (quishing) and how can I protect my brand?",
+    answer: "Quishing is a social engineering attack where malicious actors place unauthorized sticker overlays onto legitimate QR codes to redirect victims to phishing sites. Businesses can protect consumers by using branded custom domains with HTTPS previews, conducting periodic physical inspections of table standees, and using dynamic redirect platforms like QRLoop that allow immediate destination revocation if an asset is compromised."
+  },
+  {
+    question: "Is QRLoop compatible with the GS1 Digital Link standard?",
+    answer: "Yes. QRLoop dynamic redirects can resolve standardized GS1 Digital Link URIs, enabling a single 2D barcode to be scanned by point-of-sale cash registers for inventory and pricing while also connecting consumers' smartphones to digital product information."
+  }
+];
+
 function updateRouteSchema(tabName, config) {
   let schemaScript = document.getElementById('qrloop-page-schema');
   if (!schemaScript) {
@@ -204,7 +241,39 @@ function updateRouteSchema(tabName, config) {
 
   let schemaData = null;
 
-  if (tabName === 'about') {
+  if (tabName === 'home') {
+    schemaData = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': 'https://qrloop4.vercel.app/#website',
+          url: 'https://qrloop4.vercel.app/',
+          name: 'QRLoop',
+          description: config.desc,
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: 'https://qrloop4.vercel.app/dynamic-qr?url={search_term_string}',
+            'query-input': 'required name=search_term_string',
+          },
+        },
+        {
+          '@type': 'WebApplication',
+          '@id': 'https://qrloop4.vercel.app/#webapp',
+          name: 'QRLoop - Free Dynamic QR Code Generator Pro',
+          url: 'https://qrloop4.vercel.app/',
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'All, Web, iOS, Android, Windows, macOS',
+          offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+          },
+        },
+      ],
+    };
+  } else if (tabName === 'about') {
     schemaData = {
       '@context': 'https://schema.org',
       '@type': 'AboutPage',
@@ -212,7 +281,7 @@ function updateRouteSchema(tabName, config) {
       url: 'https://qrloop4.vercel.app/about',
       name: config.title,
       description: config.desc,
-      publisher: {
+      mainEntity: {
         '@type': 'Organization',
         name: 'QRLoop Technologies',
         url: 'https://qrloop4.vercel.app/',
@@ -244,9 +313,17 @@ function updateRouteSchema(tabName, config) {
       description: config.article.summary,
       datePublished: '2026-09-01T00:00:00Z',
       dateModified: '2026-09-14T00:00:00Z',
+      inLanguage: 'en-US',
+      isAccessibleForFree: true,
+      keywords: `${config.article.category}, QR code generator, dynamic QR codes, print specs, 2D barcode, QRLoop`,
+      citation: config.article.citations || [],
+      speakable: {
+        '@type': 'SpeakableSpecification',
+        cssSelector: ['.prose'],
+      },
       author: {
         '@type': 'Organization',
-        name: 'QRLoop Editorial & Engineering Team',
+        name: 'QRLoop Research & Engineering Team',
         url: 'https://qrloop4.vercel.app/',
       },
       publisher: {
@@ -291,4 +368,85 @@ function updateRouteSchema(tabName, config) {
   }
 
   schemaScript.textContent = JSON.stringify(schemaData);
+}
+
+function updateBreadcrumbSchema(tabName, config) {
+  let breadcrumbScript = document.getElementById('qrloop-breadcrumb-schema');
+  if (!breadcrumbScript) {
+    breadcrumbScript = document.createElement('script');
+    breadcrumbScript.id = 'qrloop-breadcrumb-schema';
+    breadcrumbScript.type = 'application/ld+json';
+    document.head.appendChild(breadcrumbScript);
+  }
+
+  const itemListElement = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://qrloop4.vercel.app/',
+    }
+  ];
+
+  if (tabName === 'blog') {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Knowledge Hub & Guides',
+      item: 'https://qrloop4.vercel.app/blog',
+    });
+    if (config.article) {
+      itemListElement.push({
+        '@type': 'ListItem',
+        position: 3,
+        name: config.article.title,
+        item: config.canonical,
+      });
+    }
+  } else if (tabName !== 'home') {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: config.title.split('|')[0].trim(),
+      item: config.canonical,
+    });
+  }
+
+  const breadcrumbData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  };
+
+  breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+}
+
+function updateFaqSchema(tabName) {
+  let faqScript = document.getElementById('qrloop-faq-schema');
+  
+  if (['home', 'dynamic-qr', 'compare'].includes(tabName)) {
+    if (!faqScript) {
+      faqScript = document.createElement('script');
+      faqScript.id = 'qrloop-faq-schema';
+      faqScript.type = 'application/ld+json';
+      document.head.appendChild(faqScript);
+    }
+
+    const faqData = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: commonFAQs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    };
+
+    faqScript.textContent = JSON.stringify(faqData);
+  } else if (faqScript) {
+    faqScript.remove();
+  }
 }

@@ -1,25 +1,110 @@
 # robots.txt — https://qrloop4.vercel.app
-# Generated: 2026-09-13
+# Updated: 2026-09-14
 
 # -----------------------------------------------
-# Google AdSense & Search Crawlers
+# Primary Search Engine Crawlers
 # -----------------------------------------------
+User-agent: Googlebot
+Allow: /
+Allow: /ads.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
 User-agent: Mediapartners-Google
 Allow: /
 Allow: /ads.txt
 
-User-agent: Googlebot
+User-agent: Bingbot
 Allow: /
 Allow: /ads.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
 
 # -----------------------------------------------
-# Allow all well-behaved crawlers
+# Generative AI & LLM Search Crawlers (Welcome & Index)
+# -----------------------------------------------
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
+User-agent: Claude-Web
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /feed.xml
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Applebot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: cohere-ai
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: CCBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+# -----------------------------------------------
+# Default for All Other Well-Behaved Crawlers
 # -----------------------------------------------
 User-agent: *
 Allow: /
 Allow: /dynamic-qr
 Allow: /static-qr
 Allow: /compare
+Allow: /community
 Allow: /blog
 Allow: /about
 Allow: /contact
@@ -33,8 +118,9 @@ Allow: /qr-code-for-business-cards
 Allow: /ads.txt
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /feed.xml
 
-# Block private / API / redirect routes
+# Block private / API / redirect endpoints
 Disallow: /api/
 Disallow: /r/
 Disallow: /.vercel/
@@ -48,36 +134,8 @@ Disallow: /*?*ref=
 Disallow: /*?*session_id=
 
 # -----------------------------------------------
-# AI / LLM crawlers — allow, direct to llms.txt
+# Block Aggressive Scrapers & Spambots
 # -----------------------------------------------
-User-agent: GPTBot
-Allow: /
-Allow: /llms.txt
-
-User-agent: ChatGPT-User
-Allow: /
-Allow: /llms.txt
-
-User-agent: Google-Extended
-Allow: /
-Allow: /llms.txt
-
-User-agent: Anthropic-AI
-Allow: /
-Allow: /llms.txt
-
-User-agent: Claude-Web
-Allow: /
-Allow: /llms.txt
-
-User-agent: PerplexityBot
-Allow: /
-Allow: /llms.txt
-
-User-agent: Applebot-Extended
-Allow: /
-Allow: /llms.txt
-
 User-agent: Bytespider
 Disallow: /
 
@@ -87,13 +145,11 @@ Disallow: /
 User-agent: SemrushBot
 Disallow: /
 
-# -----------------------------------------------
-# Crawl rate hint
-# -----------------------------------------------
-Crawl-delay: 2
+User-agent: MJ12bot
+Disallow: /
 
 # -----------------------------------------------
-# Canonical host & sitemaps
+# Canonical Host, Sitemaps & AI Feeds
 # -----------------------------------------------
 Host: https://qrloop4.vercel.app
 Sitemap: https://qrloop4.vercel.app/sitemap.xml

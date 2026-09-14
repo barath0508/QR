@@ -9,7 +9,9 @@ import {
   Filter, 
   MessageSquare, 
   Sparkles, 
-  Calendar 
+  Calendar,
+  CheckCircle2,
+  ShieldCheck
 } from 'lucide-react';
 import AdBanner from '../components/AdBanner';
 import Breadcrumb from '../components/Breadcrumb';
@@ -137,9 +139,42 @@ export default function BlogPage({
             </div>
           </div>
 
+          {/* Executive Summary & Key Takeaways for AI & Readers */}
+          {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
+            <div className="rounded-2xl p-5 border border-brand-500/30 bg-brand-50/60 dark:bg-dark-900/90 shadow-xs space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+                <Sparkles className="w-4 h-4 text-brand-500" />
+                <span>Executive Summary & Key Takeaways</span>
+              </div>
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                {activeArticle.keyTakeaways.map((takeaway, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-brand-500 shrink-0 mt-0.5" />
+                    <span className="leading-snug">{takeaway}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line font-sans">
             {activeArticle.content}
           </div>
+
+          {/* Authoritative Standards & References Cited */}
+          {activeArticle.citations && activeArticle.citations.length > 0 && (
+            <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-dark-900/60 space-y-2.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-brand-500" />
+                <span>Authoritative Standards & Citations</span>
+              </h4>
+              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 pl-4 list-disc">
+                {activeArticle.citations.map((cite, i) => (
+                  <li key={i} className="leading-relaxed font-mono text-[11px]">{cite}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Community Discussion & User Comments */}
           <CommentSection
